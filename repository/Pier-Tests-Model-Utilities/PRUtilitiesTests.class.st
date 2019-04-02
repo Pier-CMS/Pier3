@@ -22,50 +22,36 @@ PRUtilitiesTests >> number3 [
 { #category : #'tests-escaper' }
 PRUtilitiesTests >> testEnsureEscape [
 	| visitor tag |
-	visitor := PRPath basicNew
-		initialize;
-		yourself.
+	visitor := PRPath basicNew initialize; yourself.
 	tag := nil.
-	self
-		assert:
-			(visitor
-				withEscaper: [ [ true ]
-						ensure: [ tag := 1 ] ]).
+
+	self assert: (visitor withEscaper: [
+		[ true ]
+			ensure: [ tag := 1 ] ]).
 	self assert: tag = 1.
-	self
-		assert:
-			(visitor
-				withEscaper: [ [ visitor escape: true ]
-						ensure: [ tag := 2 ] ]).
+
+	self assert: (visitor withEscaper: [
+		[ visitor escape: true ]
+			ensure: [ tag := 2 ] ]).
 	self assert: tag = 2
 ]
 
 { #category : #'tests-escaper' }
 PRUtilitiesTests >> testEscaper [
 	| visitor |
-	visitor := PRPath basicNew
-		initialize;
-		yourself.
+	visitor := PRPath basicNew initialize; yourself.
+
 	self assert: (visitor withEscaper: [ true ]).
 	self deny: (visitor withEscaper: [ false ]).
-	self
-		assert:
-			(visitor
-				withEscaper: [ visitor escape: true.
-					false ]).
-	self
-		deny:
-			(visitor
-				withEscaper: [ visitor escape: false.
-					true ])
+
+	self assert: (visitor withEscaper: [ visitor escape: true. false ]).
+	self deny: (visitor withEscaper: [ visitor escape: false. true ])
 ]
 
 { #category : #'tests-escaper' }
 PRUtilitiesTests >> testHasEscaper [
 	| visitor |
-	visitor := PRPath basicNew
-		initialize;
-		yourself.
+	visitor :=  PRPath basicNew initialize; yourself.
 	self deny: visitor hasEscaper.
 	self assert: (visitor withEscaper: [ visitor hasEscaper ])
 ]
