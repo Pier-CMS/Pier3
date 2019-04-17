@@ -79,7 +79,7 @@ JQueryInstanceTest >> testAttributeAtPut [
 { #category : #'tests-attributes' }
 JQueryInstanceTest >> testAttributes [
 	self 
-		assert: ((self jQuery: 'img') attributes: (GRSmallDictionary new
+		assert: ((self jQuery: 'img') attributes: (GRSmallDictionary2 new
 				at: 'src'
 					put: '/images/hat.gif';
 				at: 'title'
@@ -169,13 +169,6 @@ JQueryInstanceTest >> testContents [
 	self
 		assert: (((self jQuery: 'div')) contents)
 		equals: self function , '("div").contents()'
-]
-
-{ #category : #'tests-accessors' }
-JQueryInstanceTest >> testContext [
-	self
-		assert: ((self jQuery: 'div') context)
-		equals: self function , '("div").context'
 ]
 
 { #category : #'tests-css' }
@@ -342,7 +335,7 @@ JQueryInstanceTest >> testEventsDom [
 		equals: self function , '("a").dblclick(function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onError: self mock)
-		equals: self function , '("a").error(function(){mock})'.
+		equals: self function , '("a").on("error",function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onFocus: self mock)
 		equals: self function , '("a").focus(function(){mock})'.
@@ -352,6 +345,9 @@ JQueryInstanceTest >> testEventsDom [
 	self
 		assert: ((self jQuery: 'a') onFocusIn: self mock)
 		equals: self function , '("a").focusin(function(){mock})'.
+	self
+ 		assert: ((self jQuery: 'a') onInput: self mock)
+ 		equals: self function , '("a").on("input",function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onKeyDown: self mock)
 		equals: self function , '("a").keydown(function(){mock})'.
@@ -363,7 +359,7 @@ JQueryInstanceTest >> testEventsDom [
 		equals: self function , '("a").keyup(function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onLoad: self mock)
-		equals: self function , '("a").load(function(){mock})'.
+		equals: self function , '("a").on("load",function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onMouseDown: self mock)
 		equals: self function , '("a").mousedown(function(){mock})'.
@@ -399,7 +395,7 @@ JQueryInstanceTest >> testEventsDom [
 		equals: self function , '("a").submit(function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onUnload: self mock)
-		equals: self function , '("a").unload(function(){mock})'
+		equals: self function , '("a").on("unload",function(){mock})'
 ]
 
 { #category : #'tests-filtering' }
@@ -512,7 +508,7 @@ JQueryInstanceTest >> testLast [
 		equals: self function , '("div").last()'
 ]
 
-{ #category : #'tests-accessors' }
+{ #category : #'tests-accessors-smalltalk' }
 JQueryInstanceTest >> testLength [
 	self
 		assert: ((self jQuery: 'div') length)
@@ -694,7 +690,7 @@ JQueryInstanceTest >> testPreviousUntil [
 { #category : #'tests-attributes' }
 JQueryInstanceTest >> testProperties [
 	self 
-		assert: ((self jQuery: 'img') properties: (GRSmallDictionary new
+		assert: ((self jQuery: 'img') properties: (GRSmallDictionary2 new
 				at: 'src'
 					put: '/images/hat.gif';
 				at: 'title'
@@ -766,10 +762,13 @@ JQueryInstanceTest >> testRegister [
 		equals: self function , '("a").dblclick(function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onError: self mock)
-		equals: self function , '("a").error(function(){mock})'.
+		equals: self function , '("a").on("error",function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onFocus: self mock)
 		equals: self function , '("a").focus(function(){mock})'.
+	self
+ 		assert: ((self jQuery: 'a') onInput: self mock)
+ 		equals: self function , '("a").on("input",function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onKeyDown: self mock)
 		equals: self function , '("a").keydown(function(){mock})'.
@@ -781,7 +780,7 @@ JQueryInstanceTest >> testRegister [
 		equals: self function , '("a").keyup(function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onLoad: self mock)
-		equals: self function , '("a").load(function(){mock})'.
+		equals: self function , '("a").on("load",function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onMouseDown: self mock)
 		equals: self function , '("a").mousedown(function(){mock})'.
@@ -817,7 +816,7 @@ JQueryInstanceTest >> testRegister [
 		equals: self function , '("a").submit(function(){mock})'.
 	self
 		assert: ((self jQuery: 'a') onUnload: self mock)
-		equals: self function , '("a").unload(function(){mock})'
+		equals: self function , '("a").on("unload",function(){mock})'
 ]
 
 { #category : #'tests-modifying' }
@@ -896,13 +895,6 @@ JQueryInstanceTest >> testSiblings [
 	self
 		assert: ((self jQuery: 'div') siblings: 'p')
 		equals: self function , '("div").siblings("p")'
-]
-
-{ #category : #'tests-accessors-smalltalk' }
-JQueryInstanceTest >> testSize [
-	self
-		assert: ((self jQuery: 'div') size)
-		equals: self function , '("div").size()'
 ]
 
 { #category : #'tests-filtering' }

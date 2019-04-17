@@ -63,7 +63,7 @@ JQAnimate >> parameterAt: aKey put: aValue [
 
 { #category : #parameters }
 JQAnimate >> parameters [
-	^ parameters ifNil: [ parameters := GRSmallDictionary new ]
+	^ parameters ifNil: [ parameters := GRSmallDictionary2 new ]
 ]
 
 { #category : #parameters }

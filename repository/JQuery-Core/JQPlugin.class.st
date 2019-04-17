@@ -55,7 +55,7 @@ JQPlugin >> optionAt: aKey put: aValue [
 
 { #category : #options }
 JQPlugin >> options [
-	^ options ifNil: [ options := GRSmallDictionary new ]
+	^ options ifNil: [ options := GRSmallDictionary2 new ]
 ]
 
 { #category : #accessing }

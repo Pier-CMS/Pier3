@@ -46,15 +46,6 @@ JQueryInstance >> after: aRenderable [
 	self call: 'after' with: (self render: aRenderable)
 ]
 
-{ #category : #chaining }
-JQueryInstance >> andSelf [
-	"Add the previous set of elements on the stack to the current set."
-	self 
-		greaseDeprecatedApi: 'JQueryInstance>>#andSelf'
-		details: 'Replaced in jQuery 1.9 with addBack. See http://jquery.com/upgrade-guide/1.9/.'.
-	self call: 'addBack'
-]
-
 { #category : #effects }
 JQueryInstance >> animate [
 	"Perform a custom animation of a set of CSS properties."
@@ -119,15 +110,21 @@ JQueryInstance >> before: aRenderable [
 ]
 
 { #category : #events }
-JQueryInstance >> bind: aString data: aDataObject  do: anObject [ 
-	"Handle click and double-click for the paragraph. Note: the coordinates are window relative, so in this case relative to the demo iframe."
+JQueryInstance >> bind: aString data: aDataObject  do: anObject [
+
+	self 
+		greaseDeprecatedApi: 'JQueryInstance>>#bind:do:'
+		details: 'See https://jquery.com/upgrade-guide/3.0/#deprecated-bind-and-delegate'.
 	
 	self call: 'bind' with: aString with: aDataObject with: anObject asFunction
 ]
 
 { #category : #events }
 JQueryInstance >> bind: aString do: anObject [ 
-	"Handle click and double-click for the paragraph. Note: the coordinates are window relative, so in this case relative to the demo iframe."
+
+	self 
+		greaseDeprecatedApi: 'JQueryInstance>>#bind:do:'
+		details: 'See https://jquery.com/upgrade-guide/3.0/#deprecated-bind-and-delegate'.
 	
 	self call: 'bind' with: aString with: anObject asFunction
 ]
@@ -200,13 +197,6 @@ JQueryInstance >> contents [
 	"Get the children of each element in the set of matched elements, including text nodes."
 	
 	self call: 'contents'
-]
-
-{ #category : #accessors }
-JQueryInstance >> context [
-	"The DOM node context originally passed to jQuery(); if none was passed then context will likely be the document."
-	
-	self access: 'context'
 ]
 
 { #category : #css }
@@ -577,9 +567,9 @@ JQueryInstance >> last [
 	self call: 'last'
 ]
 
-{ #category : #accessors }
+{ #category : #private }
 JQueryInstance >> length [
-	"The number of elements in the jQuery object."
+	"Return the number of DOM elements matched by the jQuery object."
 	
 	self access: 'length'
 ]
@@ -770,7 +760,7 @@ JQueryInstance >> onDoubleClick: anObject [
 JQueryInstance >> onError: anObject [
 	"Bind an event handler to the 'error' JavaScript event."
 	
-	self call: 'error' with: anObject asFunction
+	self on: 'error' do: anObject asFunction
 ]
 
 { #category : #'events-register' }
@@ -826,7 +816,7 @@ JQueryInstance >> onKeyUp: anObject [
 JQueryInstance >> onLoad: anObject [
 	"Bind an event handler to the 'load' JavaScript event."
 	
-	self call: 'load' with: anObject asFunction
+	self on: 'load' do: anObject asFunction
 ]
 
 { #category : #'events-register' }
@@ -910,7 +900,7 @@ JQueryInstance >> onSubmit: anObject [
 JQueryInstance >> onUnload: anObject [
 	"Binds a function to the unload event of each matched element."
 	
-	self call: 'unload' with: anObject asFunction
+	self on: 'unload' do: anObject asFunction
 ]
 
 { #category : #events }
@@ -1219,13 +1209,6 @@ JQueryInstance >> siblings: aString [
 	self call: 'siblings' with: aString
 ]
 
-{ #category : #accessors }
-JQueryInstance >> size [
-	"Return the number of DOM elements matched by the jQuery object."
-	
-	self call: 'size'
-]
-
 { #category : #filtering }
 JQueryInstance >> sliceFrom: aStartInteger [
 	"Reduce the set of matched elements to a subset specified by a range of indices."
@@ -1330,17 +1313,17 @@ JQueryInstance >> toggle: aDuration callback: anObject [
 ]
 
 { #category : #classes }
-JQueryInstance >> toggleClass: aString [ 
+JQueryInstance >> toggleClass: aStringOrFunction [
 	"Add or remove a class from each element in the set of matched elements, depending on either the class's presence or the value of the switch argument."
 	
-	self call: 'toggleClass' with: aString
+	self call: 'toggleClass' with: aStringOrFunction
 ]
 
 { #category : #classes }
-JQueryInstance >> toggleClass: aString state: aBoolean [
+JQueryInstance >> toggleClass: aStringOrFunction state: aBoolean [
 	"Adds the specified class if the switch is true, removes the specified class if the switch is false."
 	
-	self call: 'toggleClass' with: aString with: aBoolean
+	self call: 'toggleClass' with: aStringOrFunction with: aBoolean
 ]
 
 { #category : #events }
@@ -1437,6 +1420,9 @@ JQueryInstance >> triggerSubmit [
 { #category : #events }
 JQueryInstance >> unbind: aString [
 	"Remove a previously-attached event handler from the elements."
+	self 
+		greaseDeprecatedApi: 'JQueryInstance>>#bind:do:'
+		details: 'See https://jquery.com/upgrade-guide/3.0/#deprecated-bind-and-delegate'.
 	
 	self call: 'unbind' with: aString
 ]
@@ -1444,6 +1430,9 @@ JQueryInstance >> unbind: aString [
 { #category : #events }
 JQueryInstance >> undelegate [
 	"Remove a handler from the event for all elements which match the current selector, now or in the future, based upon a specific set of root elements."
+	self 
+		greaseDeprecatedApi: 'JQueryInstance>>#bind:do:'
+		details: 'See https://jquery.com/upgrade-guide/3.0/#deprecated-bind-and-delegate'.
 	
 	self call: 'undelegate'
 ]
@@ -1451,6 +1440,9 @@ JQueryInstance >> undelegate [
 { #category : #events }
 JQueryInstance >> undelegate: aSelectorString on: anEventString [
 	"Remove a handler from the event for all elements which match the current selector, now or in the future, based upon a specific set of root elements."
+	self 
+		greaseDeprecatedApi: 'JQueryInstance>>#bind:do:'
+		details: 'See https://jquery.com/upgrade-guide/3.0/#deprecated-bind-and-delegate'.
 	
 	self call: 'undelegate' with: aSelectorString with: anEventString
 ]

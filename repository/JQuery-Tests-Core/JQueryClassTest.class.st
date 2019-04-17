@@ -188,13 +188,6 @@ JQueryClassTest >> testType [
 ]
 
 { #category : #'tests-utilities' }
-JQueryClassTest >> testUnique [
-	self
-		assert: (self jQuery unique: #(1 2 2 3))
-		equals: self function , '.unique([1,2,2,3])'
-]
-
-{ #category : #'tests-utilities' }
 JQueryClassTest >> testUniqueSort [
 	self
 		assert: (self jQuery uniqueSort: #(1 2 2 3))

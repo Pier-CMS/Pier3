@@ -138,7 +138,7 @@ JQEffect >> fold [
 JQEffect >> from [
 	^ self options 
 		at: 'from'
-		ifAbsentPut: [ GRSmallDictionary new ]
+		ifAbsentPut: [ GRSmallDictionary2 new ]
 ]
 
 { #category : #options }
@@ -314,7 +314,7 @@ JQEffect >> times: anInteger [
 JQEffect >> to [
 	^ self options 
 		at: 'to'
-		ifAbsentPut: [ GRSmallDictionary new ]
+		ifAbsentPut: [ GRSmallDictionary2 new ]
 ]
 
 { #category : #options }

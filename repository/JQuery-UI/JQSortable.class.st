@@ -279,10 +279,3 @@ JQSortable >> tolerance: aString [
 
 	self optionAt: 'tolerance' put: aString
 ]
-
-{ #category : #'options-generated' }
-JQSortable >> zIndex: anInteger [
-	"Z-index for element/helper while being sorted."
-
-	self optionAt: 'zIndex' put: anInteger
-]

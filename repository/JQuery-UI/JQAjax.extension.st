@@ -1,13 +1,13 @@
 Extension { #name : #JQAjax }
 
-{ #category : #'*jquery-ui-private' }
+{ #category : #'*JQuery-UI-private' }
 JQAjax >> callback: aBlock forEvent: anArraySpec [
 	self 
 		callback: [ :value | aBlock value: (self smalltalkForEvent: anArraySpec value: value) ]
 		value: (self javascriptForEvent: anArraySpec)
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callback: aBlock passengers: aQuery [
 	"Trigger the callback aBlock with the passengers of aQuery. Nodes that have no passenger are ignored."
 
@@ -19,7 +19,7 @@ JQAjax >> callback: aBlock passengers: aQuery [
 		value: (JSStream on: JQuery functionName , '.map(' , aQuery greaseString , '.get(),function(each){return each.id}).join(",")')
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackAccordion: aBlock [
 	"Trigger aBlock with the accordion event object."
 	
@@ -30,7 +30,7 @@ JQAjax >> callbackAccordion: aBlock [
 		(passenger oldContent "previous content"))
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackDraggable: aBlock [
 	"Trigger aBlock with the draggable event object."
 	
@@ -40,7 +40,7 @@ JQAjax >> callbackDraggable: aBlock [
 		(position offset "current absolute position of the helper"))
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackDroppable: aBlock [
 	"Trigger aBlock with the droppable event object."
 	
@@ -51,7 +51,7 @@ JQAjax >> callbackDroppable: aBlock [
 		(position offset "current absolute position of the draggable helper"))
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackResizable: aBlock [
 	"Trigger aBlock with the resizeable event object."
 	
@@ -63,7 +63,7 @@ JQAjax >> callbackResizable: aBlock [
 		(size size "current size"))
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackSlider: aBlock [
 	"Trigger aBlock with the slider event object."
 	
@@ -72,7 +72,7 @@ JQAjax >> callbackSlider: aBlock [
 		(number value "the current handle's value"))
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackSortable: aBlock [
 	"Trigger aBlock with the selectable event object."
 	
@@ -85,7 +85,7 @@ JQAjax >> callbackSortable: aBlock [
 		(position offset "current absolute position of the helper"))
 ]
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> callbackTabs: aBlock [
 	"Trigger aBlock with the tabs event object."
 	
@@ -95,7 +95,7 @@ JQAjax >> callbackTabs: aBlock [
 		(number index "zero-based index of the selected (clicked) tab"))
 ]
 
-{ #category : #'*jquery-ui-private' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> javascriptForEvent: anArraySpec [
 	| stream |
 	stream := JSStream new.
@@ -113,11 +113,11 @@ JQAjax >> javascriptForEvent: anArraySpec [
 	^ stream
 ]
 
-{ #category : #'*jquery-ui-private' }
+{ #category : #'*JQuery-UI' }
 JQAjax >> smalltalkForEvent: anArraySpec value: aString [
 	| stream result |
 	stream := aString readStream.
-	result := GRSmallDictionary new.
+	result := GRSmallDictionary2 new.
 	anArraySpec do: [ :spec |
 		(spec first = #number)
 			ifTrue: [ result at: spec last put: (stream upTo: $,) greaseInteger ].
@@ -126,7 +126,7 @@ JQAjax >> smalltalkForEvent: anArraySpec value: aString [
 		(spec first = #passenger)
 			ifTrue: [ result at: spec last put: (self renderContext callbacks passengerAt: (stream upTo: $,)) ].
 		(spec first = #position)
-			ifTrue: [ result at: spec last put: (GRSmallDictionary new add: 'top' -> (stream upTo: $,) greaseInteger; add: 'left' -> (stream upTo: $,) greaseInteger; yourself) ].
+			ifTrue: [ result at: spec last put: (GRSmallDictionary2 new add: 'top' -> (stream upTo: $,) greaseInteger; add: 'left' -> (stream upTo: $,) greaseInteger; yourself) ].
 		(spec first = #size)
 			ifTrue: [ result at: spec last put: (stream upTo: $,) greaseInteger @ (stream upTo: $,) greaseInteger ] ].
 	^ result

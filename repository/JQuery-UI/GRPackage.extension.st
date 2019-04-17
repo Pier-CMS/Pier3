@@ -1,6 +1,6 @@
 Extension { #name : #GRPackage }
 
-{ #category : #'*jquery-ui' }
+{ #category : #'*JQuery-UI' }
 GRPackage class >> jQueryUI [
 	^ self new
 		name: 'JQuery-UI';

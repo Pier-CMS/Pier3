@@ -214,10 +214,3 @@ JQDraggable >> stack: aSelector [
 
 	self optionAt: 'stack' put: aSelector
 ]
-
-{ #category : #'options-generated' }
-JQDraggable >> zIndex: anInteger [
-	"z-index for the helper while being dragged."
-
-	self optionAt: 'zIndex' put: anInteger
-]

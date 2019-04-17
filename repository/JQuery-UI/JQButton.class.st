@@ -20,7 +20,7 @@ JQButton >> disabled: aBoolean [
 
 { #category : #accessing }
 JQButton >> icons [
-	^ self options at: 'icons' ifAbsentPut: [ GRSmallDictionary new ]
+	^ self options at: 'icons' ifAbsentPut: [ GRSmallDictionary2 new ]
 ]
 
 { #category : #'options-generated' }
