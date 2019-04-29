@@ -26,7 +26,8 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec repository: 'github://pillar-markup/pillar' ];
 				baseline: 'PillarExporter'
 					with: [ spec repository: 'github://pillar-markup/pillar' ];
-				package: 'Bootstrap-Core-Libraries';
+				package: 'Bootstrap-Core-Libraries'
+					with: [ spec requires: #('Seaside3' 'Magritte' 'Pillar' 'PillarExporter') ];
 				package: 'Bootstrap-Core-Components'
 					with: [ spec requires: #('Bootstrap-Core-Libraries') ];
 				package: 'Bootstrap-Core-Canvas'
