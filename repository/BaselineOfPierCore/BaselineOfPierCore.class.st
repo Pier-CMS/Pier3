@@ -20,8 +20,6 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'Seaside3'
 					with: [ spec repository: 'github://SeasideSt/Seaside' ];
-				baseline: 'Seaside3'
-					with: [ spec repository: 'github://SeasideSt/Seaside' ];
 				baseline: 'Magritte'
 					with: [ spec repository: 'github://jborden23/magritte' ];
 				baseline: 'Pillar'
