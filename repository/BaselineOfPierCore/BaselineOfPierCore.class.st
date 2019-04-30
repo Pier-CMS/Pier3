@@ -27,5 +27,40 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'PillarExporter'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				package: 'Bootstrap-Core-Libraries'
-					with: [ spec requires: #('Seaside3' 'Magritte' 'Pillar' 'PillarExporter') ] ]
+					with: [ spec requires: #('Seaside3' 'Magritte' 'Pillar' 'PillarExporter') ];
+				package: 'Bootstrap-Core-Components'
+					with: [ spec requires: #('Bootstrap-Core-Libraries') ];
+				package: 'Bootstrap-Core-Canvas'
+					with: [ spec requires: #('Bootstrap-Core-Components') ];
+				package: 'Bootstrap-Jasny-Libraries'
+					with: [ spec requires: #('Bootstrap-Core-Canvas') ];
+				package: 'Bootstrap-Jasny-Canvas'
+					with: [ spec requires: #('Bootstrap-Jasny-Libraries') ];
+				package: 'Bootstrap-Widget-Libraries'
+					with: [ spec requires: #('Bootstrap-Jasny-Canvas') ];
+				package: 'Bootstrap-Widget-Components'
+					with: [ spec requires: #('Bootstrap-Widget-Libraries') ];
+				package: 'bootstrap-widget'
+					with: [ spec requires: #('Bootstrap-Widget-Components') ];
+				package: 'Bootstrap-Examples-Core'
+					with: [ spec requires: #('bootstrap-widget') ];
+				package: 'Bootstrap-Examples-Core'
+					with: [ spec requires: #('bootstrap-widget') ];
+				package: 'Bootstrap-Examples-Jasny'
+					with: [ spec requires: #('Bootstrap-Examples-Core') ];
+				package: 'Bootstrap-Examples-Browser'
+					with: [ spec requires: #('Bootstrap-Examples-Jasny') ];
+				package: 'Bootstrap-Examples-Widgets-Components'
+					with: [ spec requires: #('Bootstrap-Examples-Browser') ];
+				package: 'Bootstrap-Examples-Widgets-Canvas'
+					with: [ spec requires: #('Bootstrap-Examples-Widgets-Components') ];
+				package: 'Bootstrap-Examples-Widgets-Table'
+					with: [ spec requires: #('Bootstrap-Examples-Widgets-Canvas') ];
+				package: 'Bootstrap-Examples-Widgets-VerticalTab'
+					with: [ spec requires: #('Bootstrap-Examples-Widgets-Table') ];
+				package: 'RSS-Core-Model'
+					with: [ spec requires: #('Bootstrap-Examples-Widgets-VerticalTab') ];
+				package: 'RSS-Core-Tags'
+					with: [ spec requires: #('RSS-Core-Model') ];
+				package: 'RSS-Core' with: [ spec requires: #('RSS-Core-Tags') ] ]
 ]
