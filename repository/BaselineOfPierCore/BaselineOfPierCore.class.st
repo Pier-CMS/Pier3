@@ -28,10 +28,10 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				package: 'Bootstrap-Core-Libraries'
 					with: [ spec requires: #('Seaside3' 'Magritte' 'Pillar' 'PillarExporter') ];
-				package: 'Bootstrap-Core-Components'
+				package: 'Bootstrap-Core-Component'
 					with: [ spec requires: #('Bootstrap-Core-Libraries') ];
 				package: 'Bootstrap-Core-Canvas'
-					with: [ spec requires: #('Bootstrap-Core-Components') ];
+					with: [ spec requires: #('Bootstrap-Core-Component') ];
 				package: 'Bootstrap-Jasny-Libraries'
 					with: [ spec requires: #('Bootstrap-Core-Canvas') ];
 				package: 'Bootstrap-Jasny-Canvas'
