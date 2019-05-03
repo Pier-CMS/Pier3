@@ -54,10 +54,10 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Bootstrap-Examples-Widgets-Components') ];
 				package: 'Bootstrap-Examples-Widgets-Table'
 					with: [ spec requires: #('Bootstrap-Examples-Widgets-Canvas') ];
-				package: 'Bootstrap-Examples-Widgets-VerticalTab'
+				package: 'Bootstrap-Examples-Widgets-VerticalTabs'
 					with: [ spec requires: #('Bootstrap-Examples-Widgets-Table') ];
 				package: 'RSS-Core-Model'
-					with: [ spec requires: #('Bootstrap-Examples-Widgets-VerticalTab') ];
+					with: [ spec requires: #('Bootstrap-Examples-Widgets-VerticalTabs') ];
 				package: 'RSS-Core-Tags'
 					with: [ spec requires: #('RSS-Core-Model') ];
 				package: 'RSS-Core' with: [ spec requires: #('RSS-Core-Tags') ] ]
