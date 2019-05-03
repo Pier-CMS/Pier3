@@ -19,9 +19,9 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'Seaside3'
-					with: [ spec repository: 'github://SeasideSt/Seaside' ];
+					with: [ spec repository: 'github://SeasideSt/Seaside:develop' ];
 				baseline: 'Magritte'
-					with: [ spec repository: 'github://jborden23/magritte' ];
+					with: [ spec repository: 'github://magritte-metamodel/magritte:master' ];
 				baseline: 'Pillar'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				baseline: 'PillarExporter'
@@ -36,12 +36,12 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Bootstrap-Core-Canvas') ];
 				package: 'Bootstrap-Jasny-Canvas'
 					with: [ spec requires: #('Bootstrap-Jasny-Libraries') ];
-				package: 'Bootstrap-Widget-Libraries'
+				package: 'Bootstrap-Widgets-Libraries'
 					with: [ spec requires: #('Bootstrap-Jasny-Canvas') ];
-				package: 'Bootstrap-Widget-Components'
-					with: [ spec requires: #('Bootstrap-Widget-Libraries') ];
+				package: 'Bootstrap-Widgets-Components'
+					with: [ spec requires: #('Bootstrap-Widgets-Libraries') ];
 				package: 'bootstrap-widget'
-					with: [ spec requires: #('Bootstrap-Widget-Components') ];
+					with: [ spec requires: #('Bootstrap-Widgets-Components') ];
 				package: 'Bootstrap-Examples-Core'
 					with: [ spec requires: #('bootstrap-widget') ];
 				package: 'Bootstrap-Examples-Core'
