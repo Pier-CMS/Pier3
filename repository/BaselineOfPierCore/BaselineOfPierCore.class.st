@@ -21,7 +21,7 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'Seaside3'
 					with: [ spec repository: 'github://SeasideSt/Seaside:develop' ];
 				baseline: 'Magritte'
-					with: [ spec repository: 'github://magritte-metamodel/magritte:master' ];
+					with: [ spec repository: 'github://jborden23/magritte' ];
 				baseline: 'Pillar'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				baseline: 'PillarExporter'
@@ -40,12 +40,10 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Bootstrap-Jasny-Canvas') ];
 				package: 'Bootstrap-Widgets-Components'
 					with: [ spec requires: #('Bootstrap-Widgets-Libraries') ];
-				package: 'bootstrap-widget'
+				package: 'bootstrap-widgets'
 					with: [ spec requires: #('Bootstrap-Widgets-Components') ];
 				package: 'Bootstrap-Examples-Core'
-					with: [ spec requires: #('bootstrap-widget') ];
-				package: 'Bootstrap-Examples-Core'
-					with: [ spec requires: #('bootstrap-widget') ];
+					with: [ spec requires: #('bootstrap-widgets') ];
 				package: 'Bootstrap-Examples-Jasny'
 					with: [ spec requires: #('Bootstrap-Examples-Core') ];
 				package: 'Bootstrap-Examples-Browser'
