@@ -60,5 +60,46 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Bootstrap-Examples-Widgets-VerticalTabs') ];
 				package: 'RSS-Core-Tags'
 					with: [ spec requires: #('RSS-Core-Model') ];
-				package: 'RSS-Core' with: [ spec requires: #('RSS-Core-Tags') ] ]
+				package: 'RSS-Core' with: [ spec requires: #('RSS-Core-Tags') ];
+				package: 'Pier-Model-Document'
+					with: [ spec requires: #('RSS-Core') ];
+				package: 'Pier-Model-Magritte'
+					with: [ spec requires: #('Pier-Model-Document') ];
+				package: 'Pier-Model-Visitor'
+					with: [ spec requires: #('Pier-Model-Magritte') ];
+				package: 'Pier-Model-Command'
+					with: [ spec requires: #('Pier-Model-Visitor') ];
+				package: 'Pier-Model-Structure'
+					with: [ spec requires: #('Pier-Model-Command') ];
+				package: 'pier-seaside-converting'
+					with: [ spec requires: #('Pier-Model-Structure') ];
+				package: 'pier-seaside-defaults'
+					with: [ spec requires: #('pier-seaside-converting') ];
+				package: 'pier-seaside-protected'
+					with: [ spec requires: #('pier-seaside-defaults') ];
+				package: 'Pier-Model'
+					with: [ spec requires: #('pier-seaside-protected') ];
+				package: 'Pier-Documents'
+					with: [ spec requires: #('Pier-Model') ];
+				package: 'pier-pharo-model'
+					with: [ spec requires: #('Pier-Documents') ];
+				package: 'pier-security'
+					with: [ spec requires: #('pier-pharo-model') ];
+				package: 'pier-jquery'
+					with: [ spec requires: #('pier-security') ];
+				package: 'Pier-Bootstrap'
+					with: [ spec requires: #('pier-jquery') ];
+				package: 'pier-admin'
+					with: [ spec requires: #('Pier-Bootstrap') ];
+				package: 'Pier-Admin-UI' with: [ spec requires: #('pier-admin') ];
+				package: 'pier-pharo-persistency'
+					with: [ spec requires: #('Pier-Admin-UI') ];
+				package: 'Pier-Exporter-Code'
+					with: [ spec requires: #('pier-pharo-persistency') ];
+				package: 'Pier-Exporter-Pharo'
+					with: [ spec requires: #('Pier-Exporter-Code') ];
+				package: 'Pier-Pharo-Seaside'
+					with: [ spec requires: #('Pier-Exporter-Pharo') ];
+				package: 'Pier-LinkChecker'
+					with: [ spec requires: #('Pier-Pharo-Seaside') ] ]
 ]
