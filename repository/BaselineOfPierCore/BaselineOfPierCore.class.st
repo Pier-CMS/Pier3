@@ -77,29 +77,6 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('pier-seaside-converting') ];
 				package: 'pier-seaside-protected'
 					with: [ spec requires: #('pier-seaside-defaults') ];
-				package: 'Pier-Model'
-					with: [ spec requires: #('pier-seaside-protected') ];
-				package: 'Pier-Documents'
-					with: [ spec requires: #('Pier-Model') ];
-				package: 'pier-pharo-model'
-					with: [ spec requires: #('Pier-Documents') ];
-				package: 'pier-security'
-					with: [ spec requires: #('pier-pharo-model') ];
-				package: 'pier-jquery'
-					with: [ spec requires: #('pier-security') ];
-				package: 'Pier-Bootstrap'
-					with: [ spec requires: #('pier-jquery') ];
-				package: 'pier-admin'
-					with: [ spec requires: #('Pier-Bootstrap') ];
-				package: 'Pier-Admin-UI' with: [ spec requires: #('pier-admin') ];
-				package: 'pier-pharo-persistency'
-					with: [ spec requires: #('Pier-Admin-UI') ];
-				package: 'Pier-Exporter-Code'
-					with: [ spec requires: #('pier-pharo-persistency') ];
-				package: 'Pier-Exporter-Pharo'
-					with: [ spec requires: #('Pier-Exporter-Code') ];
-				package: 'Pier-Pharo-Seaside'
-					with: [ spec requires: #('Pier-Exporter-Pharo') ];
-				package: 'Pier-LinkChecker'
-					with: [ spec requires: #('Pier-Pharo-Seaside') ] ]
+				package: 'pier-seaside'
+					with: [ spec requires: #('pier-seaside-protected') ] ]
 ]
