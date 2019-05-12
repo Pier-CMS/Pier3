@@ -21,7 +21,9 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'Seaside3'
 					with: [ spec repository: 'github://SeasideSt/Seaside' ];
 				baseline: 'Magritte'
-					with: [ spec repository: 'github://jborden23/magritte' ];
+					with: [ spec
+						repository: 'github://jborden23/magritte';
+						loads: #('Seaside') ];
 				baseline: 'Pillar'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				baseline: 'PillarExporter'
