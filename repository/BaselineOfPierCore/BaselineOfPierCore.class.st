@@ -88,6 +88,8 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Pier-Documents') ];
 				package: 'pier-security'
 					with: [ spec requires: #('pier-pharo-model') ];
+				package: 'pier-seaside-accessing'
+					with: [ spec requires: #('pier-security') ];
 				package: 'pier-jquery'
 					with: [ spec requires: #('pier-security') ];
 				package: 'Pier-Bootstrap'
@@ -113,5 +115,7 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'jqwidgetbox-formexample-core'
 					with: [ spec requires: #('jqwidgetbox-uilayout-core') ];
 				package: 'Pier-JQuery-Widgets'
-					with: [ spec requires: #('jqwidgetbox-formexample-core') ] ]
+					with: [ spec requires: #('jqwidgetbox-formexample-core') ];
+				package: 'Pier-Design'
+					with: [ spec requires: #('Pier-JQuery-Widgets') ] ]
 ]
