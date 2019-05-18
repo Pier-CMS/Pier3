@@ -107,5 +107,13 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'JQWidgetBox-Core-Libraries'
 					with: [ spec requires: #('Pier-LinkChecker') ];
 				package: 'JQWidgetBox-JSTree-Core'
-					with: [ spec requires: #('JQWidgetBox-Core-Libraries') ] ]
+					with: [ spec requires: #('JQWidgetBox-Core-Libraries') ];
+				package: 'jqwidgetbox-uilayout-core'
+					with: [ spec requires: #('JQWidgetBox-JSTree-Core') ];
+				package: 'jqwidgetbox-formexample-core'
+					with: [ spec requires: #('jqwidgetbox-uilayout-core') ];
+				package: 'Pier-JQuery-Widgets'
+					with: [ spec requires: #('jqwidgetbox-formexample-core') ];
+				package: 'pier-jquery'
+					with: [ spec requires: #('Pier-JQuery-Widgets') ] ]
 ]
