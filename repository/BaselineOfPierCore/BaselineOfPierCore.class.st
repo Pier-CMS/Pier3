@@ -113,7 +113,5 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'jqwidgetbox-formexample-core'
 					with: [ spec requires: #('jqwidgetbox-uilayout-core') ];
 				package: 'Pier-JQuery-Widgets'
-					with: [ spec requires: #('jqwidgetbox-formexample-core') ];
-				package: 'pier-jquery'
-					with: [ spec requires: #('Pier-JQuery-Widgets') ] ]
+					with: [ spec requires: #('jqwidgetbox-formexample-core') ] ]
 ]
