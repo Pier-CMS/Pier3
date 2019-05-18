@@ -93,5 +93,19 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'Pier-Bootstrap'
 					with: [ spec requires: #('pier-jquery') ];
 				package: 'pier-admin'
-					with: [ spec requires: #('Pier-Bootstrap') ] ]
+					with: [ spec requires: #('Pier-Bootstrap') ];
+				package: 'pier-pharo-persistency'
+					with: [ spec requires: #('pier-admin') ];
+				package: 'Pier-Exporter-Code'
+					with: [ spec requires: #('pier-pharo-persistency') ];
+				package: 'Pier-Exporter-Pharo'
+					with: [ spec requires: #('Pier-Exporter-Code') ];
+				package: 'Pier-Pharo-Seaside'
+					with: [ spec requires: #('Pier-Exporter-Pharo') ];
+				package: 'Pier-LinkChecker'
+					with: [ spec requires: #('Pier-Pharo-Seaside') ];
+				package: 'JQWidgetBox-Core-Libraries'
+					with: [ spec requires: #('Pier-LinkChecker') ];
+				package: 'JQWidgetBox-JSTree-Core'
+					with: [ spec requires: #('JQWidgetBox-Core-Libraries') ] ]
 ]
