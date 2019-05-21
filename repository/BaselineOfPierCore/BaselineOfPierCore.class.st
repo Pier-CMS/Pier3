@@ -119,5 +119,14 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'Pier-Design'
 					with: [ spec requires: #('Pier-JQuery-Widgets') ];
 				package: 'pier-seaside-testing'
-					with: [ spec requires: #('Pier-Design') ] ]
+					with: [ spec
+						requires: #('Pier-Design');
+						postLoadDoIt: #registerPierInSeaside ] ]
+]
+
+{ #category : #doits }
+BaselineOfPierCore >> registerPierInSeaside [
+	^ PRPierFrame
+		registerAsApplication: 'pier'
+		kernel: (PRKernel instanceNamed: 'pier')
 ]
