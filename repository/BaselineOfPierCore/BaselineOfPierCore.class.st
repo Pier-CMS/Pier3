@@ -121,7 +121,15 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'pier-seaside-testing'
 					with: [ spec
 						requires: #('Pier-Design');
-						postLoadDoIt: #registerPierInSeaside ] ]
+						postLoadDoIt: #registerPierInSeaside ];
+				package: 'pier-tests-model'
+					with: [ spec requires: #('Pier-Design') ];
+				package: 'Pier-Tests-Model-Utilities'
+					with: [ spec requires: #('pier-tests-model') ];
+				package: 'Pier-Tests-Model-Mocks'
+					with: [ spec requires: #('Pier-Tests-Model-Utilities') ];
+				package: 'Pier-Tests-Model-Structure'
+					with: [ spec requires: #('Pier-Tests-Model-Mocks') ] ]
 ]
 
 { #category : #doits }
