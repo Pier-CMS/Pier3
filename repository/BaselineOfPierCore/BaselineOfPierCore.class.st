@@ -23,7 +23,7 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'Magritte'
 					with: [ spec
 						repository: 'github://jborden23/magritte';
-						loads: #('Seaside') ];
+						loads: #('Seaside' 'Tests') ];
 				baseline: 'Pillar'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				baseline: 'PillarExporter'
@@ -129,7 +129,21 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'Pier-Tests-Model-Mocks'
 					with: [ spec requires: #('Pier-Tests-Model-Utilities') ];
 				package: 'Pier-Tests-Model-Structure'
-					with: [ spec requires: #('Pier-Tests-Model-Mocks') ] ]
+					with: [ spec requires: #('Pier-Tests-Model-Mocks') ];
+				package: 'Pier-Tests-Model-Kernel'
+					with: [ spec requires: #('Pier-Tests-Model-Structure') ];
+				package: 'Pier-Tests-Model-Document'
+					with: [ spec requires: #('Pier-Tests-Model-Kernel') ];
+				package: 'Pier-Tests-Model-Command'
+					with: [ spec requires: #('Pier-Tests-Model-Document') ];
+				package: 'Pier-Tests-Model-Persistence'
+					with: [ spec requires: #('Pier-Tests-Model-Command') ];
+				package: 'Pier-Tests-Pharo-Persistency'
+					with: [ spec requires: #('Pier-Tests-Model-Persistence') ];
+				package: 'pier-tests-security'
+					with: [ spec requires: #('Pier-Tests-Pharo-Persistency') ];
+				package: 'pier-tests-seaside-model'
+					with: [ spec requires: #('pier-tests-security') ] ]
 ]
 
 { #category : #doits }
