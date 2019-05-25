@@ -143,7 +143,9 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'pier-tests-security'
 					with: [ spec requires: #('Pier-Tests-Pharo-Persistency') ];
 				package: 'pier-tests-seaside-model'
-					with: [ spec requires: #('pier-tests-security') ] ]
+					with: [ spec requires: #('pier-tests-security') ];
+				package: 'Pier-Tests-Model-Magritte'
+					with: [ spec requires: #('pier-tests-seaside-model') ] ]
 ]
 
 { #category : #doits }
