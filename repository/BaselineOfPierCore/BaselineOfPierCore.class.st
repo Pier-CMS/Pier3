@@ -20,6 +20,9 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'Bootstrap'
 					with: [ spec repository: 'github://astares/Seaside-Bootstrap' ];
+				baseline: 'Seaside3'
+					with: [ spec repository: 'github://SeasideSt/Seaside';
+						loads: #('RSS') ];
 				baseline: 'Magritte'
 					with: [ spec
 						repository: 'github://jborden23/magritte';
@@ -28,13 +31,8 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				baseline: 'PillarExporter'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
-				package: 'RSS-Core-Model'
-					with: [ spec requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter') ];
-				package: 'RSS-Core-Tags'
-					with: [ spec requires: #('RSS-Core-Model') ];
-				package: 'RSS-Core' with: [ spec requires: #('RSS-Core-Tags') ];
 				package: 'Pier-Model-Document'
-					with: [ spec requires: #('RSS-Core') ];
+					with: [ spec requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter' 'Seaside') ];
 				package: 'Pier-Model-Magritte'
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'

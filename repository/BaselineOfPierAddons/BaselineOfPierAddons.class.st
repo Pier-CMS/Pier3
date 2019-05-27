@@ -15,5 +15,9 @@ BaselineOfPierAddons >> baseline: spec [
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'PierCore'
 					with: [ spec repository: 'github://jborden23/Pier3' ];
-				package: 'Pier-Blog-Model' with: [ spec requires: #('PierCore') ] ]
+				package: 'Pier-Blog-Model' with: [ spec requires: #('PierCore') ];
+				package: 'pier-blog-seaside'
+					with: [ spec requires: #('Pier-Blog-Model') ];
+				package: 'pier-blog'
+					with: [ spec requires: #('pier-blog-seaside') ] ]
 ]
