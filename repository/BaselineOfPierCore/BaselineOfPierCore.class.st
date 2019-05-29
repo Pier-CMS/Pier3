@@ -21,7 +21,8 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'Bootstrap'
 					with: [ spec repository: 'github://astares/Seaside-Bootstrap' ];
 				baseline: 'Seaside3'
-					with: [ spec repository: 'github://SeasideSt/Seaside';
+					with: [ spec
+						repository: 'github://SeasideSt/Seaside';
 						loads: #('RSS') ];
 				baseline: 'Magritte'
 					with: [ spec
@@ -32,7 +33,8 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'PillarExporter'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
 				package: 'Pier-Model-Document'
-					with: [ spec requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter' 'Seaside3') ];
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter' 'Seaside3') ];
 				package: 'Pier-Model-Magritte'
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
@@ -90,6 +92,7 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						requires: #('Pier-Design');
 						postLoadDoIt: #registerPierInSeaside ];
+				package: 'Pier-Setup' with: [ spec requires: #('Pier-Design') ];
 				package: 'pier-tests-model'
 					with: [ spec requires: #('Pier-Design') ];
 				package: 'Pier-Tests-Model-Utilities'
