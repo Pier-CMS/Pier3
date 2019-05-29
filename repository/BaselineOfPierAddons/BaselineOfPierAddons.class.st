@@ -10,8 +10,7 @@ BaselineOfPierAddons >> baseline: spec [
 	spec
 		for: #common
 		do:
-			[ "package: 'Pier-Book-Deprecated' depends: BOPublication, which is in structures, structures depends on BOSubsection which is in deprecated.'"
-			spec blessing: #baseline.
+			[ spec blessing: #baseline.
 			spec
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
@@ -41,10 +40,10 @@ BaselineOfPierAddons >> baseline: spec [
 					with: [ spec requires: #('Pier-Wysiwyg' 'pier-book') ];
 				package: 'Pier-TagCloud'
 					with: [ spec requires: #('Pier-Kernel-Distributions') ];
-				package: 'Pier-Admin-Setup-ExistingKernel'
-					with: [ spec requires: #('Pier-TagCloud') ];
 				package: 'Pier-Admin-Setup-Core'
-					with: [ spec requires: #('Pier-Admin-Setup-ExistingKernel') ];
+					with: [ spec requires: #('Pier-TagCloud') ];
+				package: 'Pier-Admin-Setup-ExistingKernel'
+					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-Setup-NewKernelFromDistribution'
 					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-Setup-ConfiguredInstances'
