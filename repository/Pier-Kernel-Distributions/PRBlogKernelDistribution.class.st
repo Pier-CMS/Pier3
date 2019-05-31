@@ -87,7 +87,7 @@ PRBlogKernelDistribution >> blogPostCodeHighlighting [
 	^ (PBPost named: 'code-highlighting')
 		title: 'Smalltalk code highlighting';
 		tags: #('Smalltalk' 'code' 'highlighting');
-		publication: TimeStamp now;
+		publication: GRPlatform current magritteTimeStampClass now;
 		contents:
 'Pier uses the Shout code highlighter. To highlight small quantity of code, start the line with: \=\= For example:
 
@@ -134,7 +134,7 @@ PRBlogKernelDistribution >> blogPostEmbeddingComponents [
 	^ (PBPost named: 'embedding-components')
 		title: 'Embedding components';
 		tags: #('components' 'embedding' 'Seaside');
-		publication: TimeStamp now;
+		publication: GRPlatform current magritteTimeStampClass now;
 		contents:
 'Embedding Seaside components is straightforward. Simply add a component to a node within the site''s tree structure, then add a reference to that component within a blog post. For example if you add a component as a child of this post, you can then then embed the component using the syntax. \+mychild\+. Here is an embedded ajaxified counter:
 
@@ -159,7 +159,7 @@ PRBlogKernelDistribution >> blogPostInstallation [
 	^ (PBPost named: 'installation')
 		title: 'Installing PierAdmin';
 		tags: #('installation' 'metacello');
-		publication: TimeStamp now;
+		publication: GRPlatform current magritteTimeStampClass now;
 		contents: self installationInstructions;
 		yourself
 ]
@@ -169,7 +169,7 @@ PRBlogKernelDistribution >> blogPostOverview [
 	^ (PBPost named: 'overview')
 		title: 'What can Pier blogs do for me?';
 		tags: #('features' 'overview');
-		publication: TimeStamp now;
+		publication: GRPlatform current magritteTimeStampClass now;
 		contents:
 'The following posts illustrate some of the powerful features available in Pier powered blogs. Some highlights:
 
@@ -202,7 +202,7 @@ PRBlogKernelDistribution >> blogPostWikiMarkup [
 	^ (PBPost named: 'wiki-markup')
 		title: 'Wiki markup';
 		tags: #('wiki' 'markup');
-		publication: TimeStamp now;
+		publication: GRPlatform current magritteTimeStampClass now;
 		contents: PRKernel defaultInfoSyntax contents;
 		yourself.
 ]
