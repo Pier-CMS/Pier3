@@ -92,7 +92,6 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						requires: #('Pier-Design');
 						postLoadDoIt: #registerPierInSeaside ];
-				package: 'Pier-Setup' with: [ spec requires: #('Pier-Design') ];
 				package: 'pier-tests-model'
 					with: [ spec requires: #('Pier-Design') ];
 				package: 'Pier-Tests-Model-Utilities'
