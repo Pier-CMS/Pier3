@@ -33,6 +33,7 @@ BaselineOfPierAddons >> baseline: spec [
 				package: 'Pier-Book-View'
 					with: [ spec requires: #('Pier-Book-Utilities') ];
 				package: 'pier-book' with: [ spec requires: #('Pier-Book-View') ];
+				package: 'Pier-Setup' with: [ spec requires: #('pier-book') ];		
 				package: 'Pier-EditorEnh' with: [ spec requires: #('pier-book') ];
 				package: 'Pier-Wysiwyg'
 					with: [ spec requires: #('Pier-EditorEnh' 'pier-book') ];
