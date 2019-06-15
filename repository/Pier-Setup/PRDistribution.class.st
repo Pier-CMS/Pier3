@@ -8,7 +8,6 @@ Class {
 		'metaEnvironmentPage',
 		'breadcrumbWidget',
 		'commandsPage',
-		'googleAnalyticsWidget',
 		'siteTitlePage',
 		'sitemapPage',
 		'stylesheetFile',
@@ -254,16 +253,6 @@ PRDistribution >> footerPage [
 ]
 
 { #category : #structures }
-PRDistribution >> googleAnalyticsWidget [
-	^ googleAnalyticsWidget ifNil: [ 
-		googleAnalyticsWidget := 
-			(PRComponent named: 'googleanalytics')
-				title: 'Google Analytics';
-				prototypeInstance: PRGoogleAnalyticsWidget new;
-				yourself ]
-]
-
-{ #category : #structures }
 PRDistribution >> headerPage [
 	^ headerPage ifNil: [
 		headerPage := (PRPage named: 'header')
@@ -441,7 +430,6 @@ PRDistribution >> root [
 				addChild: self menuPage;
 				addChild: self childrenWidget;
 				addChild: self breadcrumbWidget;
-				addChild: self googleAnalyticsWidget;
 				addChild: self sitemapPage;
 				addChild: self viewsPage;
 				addChild: self commandsPage;

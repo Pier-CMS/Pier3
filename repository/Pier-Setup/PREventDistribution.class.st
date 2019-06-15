@@ -127,7 +127,6 @@ PREventDistribution >> root [
 				addChild: self menuPage;
 				addChild: self childrenWidget;
 				addChild: self breadcrumbWidget;
-				addChild: self googleAnalyticsWidget;
 				addChild: self sitemapPage;
 				addChild: self viewsPage;
 				addChild: self commandsPage;

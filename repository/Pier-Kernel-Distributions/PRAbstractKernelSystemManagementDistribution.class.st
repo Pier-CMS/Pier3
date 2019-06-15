@@ -118,15 +118,6 @@ PRAbstractKernelSystemManagementDistribution >> footerPage [
 		yourself ]
 ]
 
-{ #category : #components }
-PRAbstractKernelSystemManagementDistribution >> googleAnalyticsWidget [
-	^ googleAnalyticsWidget ifNil: [ 
-		googleAnalyticsWidget := (PRComponent named: 'googleanalytics')
-			title: 'Google Analytics';
-			prototypeInstance: PRGoogleAnalyticsWidget new;
-			yourself ]
-]
-
 { #category : #'sample content' }
 PRAbstractKernelSystemManagementDistribution >> installationInstructions [
 	^ 'Install Pier Admin with:

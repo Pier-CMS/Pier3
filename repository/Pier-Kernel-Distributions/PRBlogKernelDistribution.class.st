@@ -257,7 +257,6 @@ PRBlogKernelDistribution >> components [
 		add: self blogTagWidget;
 		add: self blogPostTickerWidget;
 		add: self footerPage;
-		add: self googleAnalyticsWidget;
 		add: self headerPage;
 		add: self poweredPage;
 		add: self searchWidget;
