@@ -26,7 +26,7 @@ BaselineOfPierCore >> baseline: spec [
 						loads: #('RSS') ];
 				baseline: 'Magritte'
 					with: [ spec
-						repository: 'github://jborden23/magritte';
+						repository: 'github://magritte-metamodel/magritte';
 						loads: #('Seaside' 'Tests') ];
 				baseline: 'Pillar'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
