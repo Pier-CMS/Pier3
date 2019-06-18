@@ -33,18 +33,16 @@ BaselineOfPierAddons >> baseline: spec [
 				package: 'Pier-Book-View'
 					with: [ spec requires: #('Pier-Book-Utilities') ];
 				package: 'pier-book' with: [ spec requires: #('Pier-Book-View') ];
-				package: 'Pier-Setup' with: [ spec requires: #('pier-book') ];		
+				package: 'Pier-Setup' with: [ spec requires: #('pier-book') ];
+				package: 'Pier-TagCloud'
+					with: [ spec requires: #('Pier-Setup') ];
 				package: 'Pier-EditorEnh' with: [ spec requires: #('pier-book') ];
 				package: 'Pier-Wysiwyg'
 					with: [ spec requires: #('Pier-EditorEnh' 'pier-book') ];
 				package: 'Pier-Kernel-Distributions'
-					with: [ spec requires: #('Pier-Wysiwyg' 'pier-book') ];
-				package: 'Pier-TagCloud'
-					with: [ spec requires: #('Pier-Kernel-Distributions') ];
+					with: [ spec requires: #('Pier-Wysiwyg' 'pier-book' 'Pier-TagCloud') ];
 				package: 'Pier-Admin-Setup-Core'
 					with: [ spec requires: #('Pier-TagCloud') ];
-				package: 'Pier-Admin-Setup-ExistingKernel'
-					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-Setup-NewKernelFromDistribution'
 					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-Setup-ConfiguredInstances'
@@ -52,5 +50,7 @@ BaselineOfPierAddons >> baseline: spec [
 				package: 'Pier-Admin-Setup-RecreateExportedKernel'
 					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-UI'
-					with: [ spec requires: #('Pier-Admin-Setup-Core') ] ]
+					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
+				package: 'Pier-Admin-Setup-ExistingKernel'
+					with: [ spec requires: #('Pier-Admin-UI') ] ]
 ]
