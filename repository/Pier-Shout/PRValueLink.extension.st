@@ -15,7 +15,7 @@ PRValueLink >> sourceIn: aContext [
 			ifTrue: [ ^ 'class name unknown' ].
 			
 		(self hasParameter: 'comment') ifTrue: [
-			^ PRDocumentParser parse:  class comment ].
+			^ PRPillarParser parse:  class comment ].
 					
 		symbol := self parameterAt: 'selector'.
 		shouter := SPHighlightedCode new.

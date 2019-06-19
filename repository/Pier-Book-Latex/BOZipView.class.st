@@ -23,7 +23,7 @@ BOZipView >> addFilesTo: anArchive [
 BOZipView >> addLatexTo: anArchive [
 	| contents |
 	contents := (self writer write: self book)
-		copyReplaceAll: MAExternalFileModel baseDirectory fullName , FileDirectory slash
+		copyReplaceAll: MAExternalFileModel baseDirectory fullName , GRPlatform current pathSeparator
 		with: String new.
 	anArchive
 		addString: (self requestContext codec encode: contents)
