@@ -1,3 +1,24 @@
+"
+I am the model for the tag-cloud component.  I provide a tag cloud for a blog, I know how to count tags and references.
+
+    Instance Variables
+	dataDescriptions:		<Object>
+	deviation:		<Object>
+	focus:		<Object>
+	ignoredTags:		<String>
+	maxItems:		<Object>
+	mean:		<Object>
+	optionsAndLabels:		<Object>
+	showExponential:		<Object>
+	showFrequencies:		<Object>
+	startAt:		<Object>
+	tags:		<Object>
+	tagsByCount:		<Object>
+	tagsByName:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #PRTagCloudWidget,
 	#superclass : #PRWidget,
@@ -152,7 +173,7 @@ PRTagCloudWidget >> focus: anAssocation [
 
 { #category : #accessing }
 PRTagCloudWidget >> ignoredTags [
-	^ ignoredTags
+	^ ignoredTags ifNil: [ ignoredTags := '' ]
 ]
 
 { #category : #accessing }
@@ -177,7 +198,7 @@ PRTagCloudWidget >> mean [
 	^ mean
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PRTagCloudWidget >> optionsAndLabels [
 	^ optionsAndLabels ifNil: [ optionsAndLabels := Dictionary new.
 		PRStructure
