@@ -1,10 +1,19 @@
+"
+I was originally in Pier-Admin-Setup-ConfiguredInstances, but moved to core due to a reference.  I may be obsolete.
+
+    Instance Variables
+	configuredInstancesKernelPathsPairs:		<Collection of Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #PRAdminListConfiguredInstances,
 	#superclass : #PRAdminSetupOverlaySupportBase,
 	#instVars : [
 		'configuredInstancesKernelPathsPairs'
 	],
-	#category : #'Pier-Admin-Setup-ConfiguredInstances'
+	#category : #'Pier-Admin-Setup-Core'
 }
 
 { #category : #accessing }

@@ -45,8 +45,6 @@ BaselineOfPierAddons >> baseline: spec [
 					with: [ spec requires: #('Pier-TagCloud') ];
 				package: 'Pier-Admin-Setup-NewKernelFromDistribution'
 					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
-				package: 'Pier-Admin-Setup-ConfiguredInstances'
-					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-Setup-RecreateExportedKernel'
 					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
 				package: 'Pier-Admin-UI'
