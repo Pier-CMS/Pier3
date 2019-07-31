@@ -37,7 +37,7 @@ PRWorkoutTest >> doChinupsOnFirstDayAndSquatsAndBenchOnSecondAndChinupsOnThirdRe
 
 	| workout exercise |
 	workout := PRWorkout new.
-	workout date: Date today - 7 days.
+	workout date: (Date today subtractDays: 7).
 	workout
 		addExerciseEntry:
 			(PRExerciseEntry
@@ -54,7 +54,7 @@ PRWorkoutTest >> doChinupsOnFirstDayAndSquatsAndBenchOnSecondAndChinupsOnThirdRe
 				times: 13).
 	self instance addWorkout: workout.
 	workout := PRWorkout new.
-	workout date: Date today - 6 days.
+	workout date: (Date today subtractDays: 6).
 	workout
 		addExerciseEntry:
 			(PRExerciseEntry
@@ -107,7 +107,7 @@ PRWorkoutTest >> doChinupsOnFirstDayAndSquatsOnSecondAndReturnChinupExercise [
 
 	| workout exercise |
 	workout := PRWorkout new.
-	workout date: Date today - 9 days.
+	workout date: (Date today subtractDays: 9).
 	workout
 		addExerciseEntry:
 			(PRExerciseEntry
@@ -129,7 +129,7 @@ PRWorkoutTest >> doChinupsOnFirstDayAndSquatsOnSecondAndReturnChinupExercise [
 				times: 13).
 	self instance addWorkout: workout.
 	workout := PRWorkout new.
-	workout date: Date today - 8 days.
+	workout date: (Date today subtractDays: 8).
 	workout
 		addExerciseEntry:
 			(PRExerciseEntry
