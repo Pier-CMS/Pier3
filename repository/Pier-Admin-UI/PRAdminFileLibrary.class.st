@@ -1,3 +1,6 @@
+"
+I store several hard-coded resources used by several other admin UI elements.
+"
 Class {
 	#name : #PRAdminFileLibrary,
 	#superclass : #WAFileLibrary,
