@@ -100,7 +100,7 @@ There is some sugar for font formatting:
 -To make something __underlined__, surround it with ==\_\_==
 
 !Verbatim
-If you want to include verbatim text (i.e. markup) into a page you must enclose it in ==\{{{== and ==\}}}==, otherwise Pier ensures that all text appears as you type it. For example: ==<i>italic</i>== appears as is, but ==\{{{<i>italic</i>\}}}== appears as {{{<i>italic</i>}}} text if displayed using HTML.
+If you want to include verbatim text (i.e. markup) into a page you must enclose it in ==\{{{== and ==\}}}==, otherwise Pier ensures that all text appears as you type it. For example: ==<i>italic</i>== appears as is, but ==\{{{html: <i>italic</i>\}}}== appears as {{{html: <i>italic</i>}}} text if displayed using HTML.
 
 !Links
 To create a link, put it between ==\*==. All links have the following form ==\*reference\*==, or ==\*alias>reference|parameters\*== for the complete form. The ''''reference'''' depends on the kind of link that is created (see below). The ''''alias'''' is a string being used as the text of the link, if left out a default is used. The ''''parameters'''' are optional parameters to further configure the behavior on the link, again this depends on the kind of link you create. The contents of some links, e.g. links pointing to image-files, downloads or other pages, can be embedded into the current document by adding the parameter: ==embedded=true==.  For example: ==\*reference|embedded=true\*==.  Not all types of links support embedding and quietly ignore it.
@@ -123,6 +123,9 @@ The expressions that work on structures (==children==, ==parent==, ==structure==
 =	thenCollect: [ :each | each parameterName ]
 All value expressions that work on structures can be combined like ==\*value:structure|display={title} is owned by {owner}\*==. Furthermore these expressions become an internal link if you add the parameter ==link==.  By default all value links are embedded. The expressions on contexts (==context== and ==edited==) also support ==display== parameters, namely ==date==, ==time== and ==user==, for example: ==\*value:edited|display=date\*==
 !!Example Embedded Link to the License
+This text:
+= */information/license|embedded=true*
+is displayed as:
 */information/license|embedded=true*
 ';
 		yourself
