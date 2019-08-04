@@ -57,24 +57,23 @@ PREventDistribution >> environmentPage [
 		contents: 
 '{{{<div class="header">
 	<div class="container">
-		<div class="eventTitle">}}}+/system/components/eventtitle+{{{</div>
-		<div class="menu">}}}+/system/components/menu|menu+{{{</div>
+		<div class="eventTitle">}}}*/system/components/eventtitle|embedded=true*{{{</div>
+		<div class="menu">}}}*/system/components/menu|menu|embedded=true**{{{</div>
 	</div>
 </div>
 <div class="container">
 	<div class="column span-24 last mainbody">
 		<h1>}}}*value:structure*{{{</h1>
 		<div class="column span-12 contents">
-			}}}+/system/components/contents+{{{
+			}}}*/system/components/contents|embedded=true*{{{
 		</div>
 		<div class="column span-6 prepend-6 last sidebar">
 			<h2>What''s new</h2>
-			<div class="postticker">}}}+/system/components/postticker+{{{</div>
+			<div class="postticker">}}}*/system/components/postticker|embedded=true*{{{</div>
 		</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
-+/system/components/googleanalytics+
 ';
 		yourself
 	]

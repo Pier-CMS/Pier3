@@ -252,7 +252,6 @@ PRBookKernelDistribution >> bookEntryPierAdminInsidePackages [
 -- Pier-Design - allows editing of the site''s template and stylesheet.
 -- Pier-Documents - Pier widget that contains a Pier document.
 -- Pier-EditorEnh - Wiki editor''s toolbar and help support.
--- Pier-Google - support for *Google analytics>http://www.google.com/analytics/*
 -- Pier-JQuery - jQuery widgets in Pier cycler and search
 -- Pier-LinkChecker - shows all links in a document and allows them to be checked (contains bugs)
 -- Pier-TagCloud - tag cloud
@@ -262,10 +261,6 @@ PRBookKernelDistribution >> bookEntryPierAdminInsidePackages [
 - JQWidgetBox-UILayout-Core layout allowing the left column to be collapsed
 - JQWidgetBox-JSTree-Core - tree widget.';
 		yourself
-		
-		
-		
-	
 ]
 
 { #category : #'sample content' }
@@ -711,7 +706,7 @@ PRBookKernelDistribution >> bookTemplate [
   <div class="body">
     <div class="main">
       <h1 class="capt"><span>}}}*>value:structure|display=number*{{{</span>}}}*value:structure|link*{{{</h1>
-      }}}+/system/contents+{{{
+      }}}*/system/contents|embedded=true*{{{
     </div>
     <div class="side">}}}
       *>value:book.parent*
@@ -720,9 +715,8 @@ PRBookKernelDistribution >> bookTemplate [
     <div class="clear"></div>
   </div>
 </div>}}}
-+/system/components/notes+{{{
-<div class="foot">}}}+/system/components/footer+{{{</div>}}}
-+/system/components/googleanalytics+
+*/system/components/notes|embedded=true*{{{
+<div class="foot">}}}*/system/components/footer|embedded=true*{{{</div>}}}
 ';
 		yourself ]
 ]
@@ -801,14 +795,13 @@ PRBookKernelDistribution >> mainTemplate [
   <div class="body">
     <div class="main">
       <h1 class="capt">}}}*>value:structure*{{{</h1>
-      }}}+/system/contents+{{{
+      }}}*/system/contents|embedded=true*{{{
     </div>
     <div class="clear"></div>
   </div>
 </div>}}}
-+/system/components/notes+{{{
-<div class="foot">}}}+/system/components/footer+{{{</div>}}}
-+/system/components/googleanalytics+
+*/system/components/notes|embedded=true*{{{
+<div class="foot">}}}*/system/components/footer|embedded=true*{{{</div>}}}
 ';
 		yourself ]
 ]

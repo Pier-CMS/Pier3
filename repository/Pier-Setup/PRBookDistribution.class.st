@@ -239,7 +239,7 @@ PRBookDistribution >> environmentPage [
   <div class="body">
     <div class="main">
       <h1 class="capt"><span>}}}*>value:structure|display=number*{{{</span>}}}*value:structure|link*{{{</h1>
-      }}}+/system/components/contents+{{{
+      }}}*/system/components/contents|embedded=true*{{{
     </div>
     <div class="side">}}}
       *>value:book.parent*
@@ -248,9 +248,8 @@ PRBookDistribution >> environmentPage [
     <div class="clear"></div>
   </div>
 </div>}}}
-+/system/components/notes+{{{
-<div class="foot">}}}+/system/components/footer+{{{</div>}}}
-+/system/components/googleanalytics+
+*/system/components/notes|embedded=true*{{{
+<div class="foot">}}}*/system/components/footer|embedded=true*{{{</div>}}}
 ';
 		yourself
 	]
@@ -273,9 +272,9 @@ PRBookDistribution >> introduction [
 	^ introduction ifNil: [ introduction := (BOPortion named: 'introduction')
 		type: #chapter;
 		contents: 'A book is formed by chapters. This is a chapter.
-You can define references like: +ref:section+.
+You can define references like: *ref:section*.
 
-You can define +index:keywords!keywords+ keywords that appear automatically in the keyword index.';
+You can define *index:keywords!keywords* keywords that appear automatically in the keyword index.';
 		yourself ]
 
 ]
@@ -295,14 +294,13 @@ PRBookDistribution >> mainEnvironmentPage [
 		title: '_Main Environment';
 		contents: 
 '{{{<div class="container">}}}
-	+/system/components/header+{{{
+	*/system/components/header|embedded=true*{{{
 	<div class="column span-24 last mainbody">
 		<h1 class="heading">}}}*value:structure*{{{</h1>
-		<div class="contents column span-12">}}}+/system/components/contents+{{{</div>
+		<div class="contents column span-12">}}}*/system/components/contents|embedded=true*{{{</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
-+/system/components/googleanalytics+
 ';
 		yourself
 	]
