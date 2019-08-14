@@ -361,7 +361,7 @@ PRAdminUI >> renderIFrameViewOn: html [
 	jqPost := html jQuery post
 		callback: [ :value | 
 			| parameters |
-			parameters := value subStrings:  ','.
+			parameters := value substrings:  ','.
 			self assert: parameters size = 2.
 			callbackUrl contents: (WAUrl absolute: parameters first).
 			requestType contents: parameters second ] 
@@ -525,7 +525,7 @@ PRAdminUI >> renderViewOn: html [
 	jqPost := html jQuery post
 		callback: [ :value |
 			| parameters |
-			parameters := value subStrings: ','.
+			parameters := value substrings: ','.
 			self assert: parameters size = 2.
 			callbackUrl contents: (WAUrl absolute: parameters first).
 			requestType contents: parameters second ] 
