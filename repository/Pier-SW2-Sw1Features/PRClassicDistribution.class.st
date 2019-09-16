@@ -36,21 +36,20 @@ PRClassicDistribution >> blogEnvironmentPage [
 		title: '_Blog Environment';
 		contents: 
 '{{{<div class="container">
-	}}}+/system/components/header+{{{
+	}}}*/system/components/header|embedded=true*{{{
 	<div class="column span-16 last mainbody">
 		<h1 class="heading">}}}*>value:structure|level=2*{{{</h1>
 		<h1>}}}*>value:structure|level=0|lower=3*{{{</h1>
 		<div class="column span-10 contents">
-			}}}+/system/components/contents+{{{
+			}}}*/system/components/contents|embedded=true*{{{
 		</div>
 		<div class="column span-6 prepend-6 last sidebar">
 			<h2>Archive</h2>
-			}}}+/system/components/blogarchive+{{{
+			}}}*/system/components/blogarchive|embedded=true*{{{
 		</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
-+/system/components/googleanalytics+
 ';
 		yourself
 	]
@@ -63,16 +62,15 @@ PRClassicDistribution >> environmentPage [
 		title: '_Environment';
 		contents: 
 '{{{<div class="container">
-	}}}+/system/components/header+{{{
+	}}}*/system/components/header|embedded=true*{{{
 	<div class="column span-16 last mainbody">
 		<h1 class="heading">}}}*value:structure*{{{</h1>
 		<div class="column contents">
-			}}}+/system/components/contents+{{{
+			}}}*/system/components/contents|embedded=true*{{{
 		</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
-+/system/components/googleanalytics+
 ';
 		yourself
 	]

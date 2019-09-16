@@ -13,7 +13,6 @@ GRPackage class >> pierSetup [
 		addDependency: 'Pier-Documents';
 		addDependency: 'Pier-EditorEnh';
 		addDependency: 'Pier-LinkChecker';
-		addDependency: 'Pier-Google';
 		addDependency: 'Pier-JQuery';
 		url: #pierAddonsUrl;
 		yourself

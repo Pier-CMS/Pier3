@@ -224,27 +224,26 @@ PRBlogKernelDistribution >> blogTemplate [
 		contents: 
 '{{{<div class="header">
 	<div class="container">
-		<div class="siteTitle">}}}+/system/components/sitetitle+{{{</div>
-		<div class="menu">}}}+/system/components/menu|menu+{{{</div>
+		<div class="siteTitle">}}}*/system/components/sitetitle|embedded=true*{{{</div>
+		<div class="menu">}}}*/system/components/menu|menu|embedded=true*{{{</div>
 	</div>
 </div>
 <div class="container">
 	<div class="column span-24 last mainbody">
 		<div class="column span-15 contents">
-			}}}+/system/contents+{{{
+			}}}*/system/contents|embedded=true*{{{
 		</div>
 		<div class="column span-6 prepend-3 last sidebar">
 			<h2 class="blogArchiveTitle">Archive</h2>
-			<div class="blogArchive">}}}+/system/components/blogArchive+{{{</div>
+			<div class="blogArchive">}}}*/system/components/blogArchive|embedded=true*{{{</div>
 			<h2 class="blogTagsTitle">Tags</h2>
-			<div class="blogTags">}}}+/system/components/blogTags+{{{</div>
+			<div class="blogTags">}}}*/system/components/blogTags|embedded=true*{{{</div>
 			<h2 class="blogCloudTitle">Cloud</h2>
-			<div class="blogCloud">}}}+/system/components/blogCloud+{{{</div>
+			<div class="blogCloud">}}}*/system/components/blogCloud|embedded=true*{{{</div>
 		</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
-+/system/components/googleanalytics+
 ';
 		yourself ]
 ]
@@ -359,24 +358,23 @@ PRBlogKernelDistribution >> mainTemplate [
 		contents: 
 '{{{<div class="header">
 	<div class="container">
-		<div class="siteTitle">}}}+/system/components/sitetitle+{{{</div>
-		<div class="menu">}}}+/system/components/menu|menu+{{{</div>
+		<div class="siteTitle">}}}*/system/components/sitetitle|embedded=true*{{{</div>
+		<div class="menu">}}}*/system/components/menu|menu|embedded=true*{{{</div>
 	</div>
 </div>
 <div class="container">
 	<div class="column span-24 last mainbody">
 		<div class="column span-15 contents">
-			}}}+/system/contents+{{{
+			}}}*/system/contents|embedded=true*{{{
 		</div>
 		<div class="column span-6 prepend-3 last sidebar">
 			<h2>What''s new</h2>
-			<div class="blogPostTicker">}}}+/system/components/blogPostTicker+{{{</div>
-			<div class="sidebarDocument">}}}+/system/components/sidebarDocumentWidget+{{{</div>
+			<div class="blogPostTicker">}}}*/system/components/blogPostTicker|embedded=true*{{{</div>
+			<div class="sidebarDocument">}}}*/system/components/sidebarDocumentWidget|embedded=true*{{{</div>
 		</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
-+/system/components/googleanalytics+
 ';
 		yourself ]
 ]
