@@ -16,7 +16,8 @@ Class {
 
 { #category : #testing }
 PRGoogleGadget class >> isAbstract [
-	^ false
+	"Change this to false when it is working again"
+	^ true
 ]
 
 { #category : #accessing }
