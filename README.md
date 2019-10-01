@@ -7,7 +7,15 @@ This can be loaded from Pharo 7 by running this in a workspace:
 ```
 Metacello new
   baseline:'PierCore';
-  repository: 'github://jborden23/Pier3:master/repository';
+  repository: 'github://Pier-CMS/Pier3:master/repository';
+  onConflict: [ :ex | ex allow ];
+  load.
+```
+A more complete system with extra goodies can be loaded with:
+```
+Metacello new
+  baseline:'PierAddons';
+  repository: 'github://Pier-CMS/Pier3:master/repository';
   onConflict: [ :ex | ex allow ];
   load.
 ```
