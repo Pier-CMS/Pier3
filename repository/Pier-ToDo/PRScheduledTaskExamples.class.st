@@ -156,7 +156,7 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 		do: [ :e | 
 			(e childrenDecoration children
 				anySatisfy: [ :child | 
-					(#(#PRPage #PRToDo #PRFile #PBBlog #PRComponent #PBPost #PRToDoTask #PRWorkout)
+					(#(#PRPage #PRToDo #PRFile #PBBlog #PRComponent #PBPost #PRToDoTask #PBComment #PRWorkoutLog)
 						includes: child class name) not ])
 				ifTrue: [ pagesWithUnusualChildren add: e decorated absolutePath ] ].
 	linksWithRaw := Set new.
