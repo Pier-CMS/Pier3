@@ -51,7 +51,7 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('pier-seaside-defaults') ];
 				package: 'Pier-Model'
 					with: [ spec requires: #('pier-seaside-protected') ];
-				package: 'pier-seaside' with: [ spec requires: #('Pier-Model') ];
+				package: 'Pier-Seaside' with: [ spec requires: #('Pier-Model') ];
 				package: 'Pier-Documents'
 					with: [ spec requires: #('pier-seaside') ];
 				package: 'pier-pharo-model'
