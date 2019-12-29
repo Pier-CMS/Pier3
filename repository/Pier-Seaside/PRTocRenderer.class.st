@@ -1,13 +1,5 @@
 "
-Visitor used for Table-of-Contents links: *value:toc*.
-
-    Instance Variables
-	counter:		<Object>
-	current:		<Object>
-	enabled:		<Object>
-
-
-    Implementation Points
+I render a table-of-contents for a page. Unlike other children of PRRenderer I redefine #start:in:on: to visit the parent of *value:toc* (ignoring the on: argument), this way embedded pages are displayed correctly.
 "
 Class {
 	#name : #PRTocRenderer,
@@ -52,6 +44,13 @@ PRTocRenderer >> start: anObject [
 	html unorderedList
 		class: 'toc';
 		with: [ super start: anObject ]
+]
+
+{ #category : #visiting }
+PRTocRenderer >> start: anObject in: aComponent on: aRenderer [
+	self component: aComponent.
+	self renderer: aRenderer.
+	self start: aComponent owner
 ]
 
 { #category : #'visiting-document' }

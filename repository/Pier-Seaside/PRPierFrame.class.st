@@ -278,14 +278,15 @@ PRPierFrame >> parseStructure: aRequest ifAbsent: aBlock [
 	| path consumer pathString |
 	path := OrderedCollection new.
 	consumer := self requestContext consumer.
-	[ consumer atEnd ]
-		whileFalse: [ path add: consumer next ].
-	pathString := path
-		inject: String new
-		into: [ :result :each | result , '/' , each ].
-	^ self context root
-		lookupPath: pathString
-		ifAbsent: aBlock
+	[ consumer atEnd ] whileFalse: [ path add: consumer next ].
+	pathString := String
+		streamContents: [ :stream | 
+			path
+				do: [ :pageName | 
+					stream
+						nextPut: $/;
+						nextPutAll: pageName ] ].
+	^ self context root lookupPath: pathString ifAbsent: aBlock
 ]
 
 { #category : #rendering }

@@ -132,7 +132,7 @@ PRViewRenderer >> visitPreformatted: anObject [
 						with: Character lf) ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'visiting-document' }
 PRViewRenderer >> visitRaw: anObject [
 	(anObject type isNil or: [ anObject type = 'html' ])
 		ifTrue: [ html html: anObject text ]

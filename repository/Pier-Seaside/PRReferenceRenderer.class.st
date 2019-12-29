@@ -1,3 +1,7 @@
+"
+I render links as titles, changing something like */path/name-space-name* to display as:
+ Name Space Name
+"
 Class {
 	#name : #PRReferenceRenderer,
 	#superclass : #PRLinkRenderer,

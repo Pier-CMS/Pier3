@@ -1,3 +1,6 @@
+"
+I am the class that renders broken links to allow logged in users to create new pages.
+"
 Class {
 	#name : #PRBrokenRenderer,
 	#superclass : #PRLinkRenderer,
