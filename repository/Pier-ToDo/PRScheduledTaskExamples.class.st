@@ -149,6 +149,57 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom
 ]
 
 { #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
+	| reportPage pagesWithUnusualChildren linksWithRaw |
+	pagesWithUnusualChildren := Set new.
+	self kernel root enumerator with all
+		do: [ :e | 
+			(e childrenDecoration children
+				anySatisfy: [ :child | 
+					(#(#PRPage #PRToDo #PRFile #PBBlog #PRComponent #PBPost #PRToDoTask #PBComment #PRWorkoutLog)
+						includes: child class name) not ])
+				ifTrue: [ pagesWithUnusualChildren add: e decorated absolutePath ] ].
+	linksWithRaw := Set new.
+	self kernel root enumerator with all
+		do: [ :page | 
+			page outgoingReferences
+				do: [ :link | 
+					(link children anySatisfy: [ :child | child class = PRRaw ])
+						ifTrue: [ linksWithRaw add: page absolutePath ] ] ].
+	reportPage := PRPathLookup start: self kernel root path: aPathString.
+	reportPage
+		contents:
+			(String
+				streamContents: [ :stream | 
+					self
+						printReportHeaderOn: stream
+						fields:
+							'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size'.
+					stream nextPut: $|.
+					pagesWithUnusualChildren isEmpty
+						ifTrue: [ stream nextPutAll: 'none' ]
+						ifFalse: [ pagesWithUnusualChildren
+								do: [ :string | 
+									stream
+										nextPut: $*;
+										nextPutAll: string;
+										nextPut: $*;
+										space ] ].
+					stream nextPut: $|.
+					linksWithRaw isEmpty
+						ifTrue: [ stream nextPutAll: 'none' ]
+						ifFalse: [ linksWithRaw
+								do: [ :string | 
+									stream
+										nextPut: $*;
+										nextPutAll: string;
+										nextPutAll: '* ' ] ].
+					stream
+						nextPutAll: ' | ';
+						nextPutAll: Smalltalk imageFile humanReadableSize ])
+]
+
+{ #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfHistoryOnPageAt: aPathString [
 	| reportPage |
 	reportPage := PRPathLookup start: self kernel root path: aPathString.

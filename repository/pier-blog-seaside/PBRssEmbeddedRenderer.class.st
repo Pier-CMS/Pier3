@@ -4,7 +4,7 @@ Class {
 	#category : #'Pier-Blog-Seaside'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'visiting-structure' }
 PBRssEmbeddedRenderer >> visitComponent: aStructure [
 	"render links to components, rather than embedding them"
 	html anchor

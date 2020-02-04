@@ -1,3 +1,17 @@
+"
+I am a parent of different lookup visitors. My main uses are validating page names, for example: 
+
+ PRPath isValidName: 'Name with spaces is invalid'.
+ PRPath isValidName: 'Name/with/slashes/is/invalid'.
+ PRPath isValidName: 'Name-with-dashes-or_underscores_or.dots.is-valid'.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	escaper:		<Block>
+	stream:		<Stream>
+
+"
 Class {
 	#name : #PRPath,
 	#superclass : #PRVisitor,
