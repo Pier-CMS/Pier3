@@ -173,7 +173,8 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 				streamContents: [ :stream | 
 					self
 						printReportHeaderOn: stream
-						fields: '|!!Count of Pages with Unusual Children|!!Links with Raw HTML'.
+						fields:
+							'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size'.
 					stream nextPut: $|.
 					pagesWithUnusualChildren isEmpty
 						ifTrue: [ stream nextPutAll: 'none' ]
@@ -192,7 +193,10 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 									stream
 										nextPut: $*;
 										nextPutAll: string;
-										nextPutAll: '* ' ] ] ])
+										nextPutAll: '* ' ] ].
+					stream
+						nextPutAll: ' | ';
+						nextPutAll: Smalltalk imageFile humanReadableSize ])
 ]
 
 { #category : #'wiki updates' }
