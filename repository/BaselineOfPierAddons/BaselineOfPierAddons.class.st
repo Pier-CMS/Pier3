@@ -1,3 +1,6 @@
+"
+Additional packages that can be used with Pier.
+"
 Class {
 	#name : #BaselineOfPierAddons,
 	#superclass : #BaselineOf,
@@ -21,9 +24,7 @@ BaselineOfPierAddons >> baseline: spec [
 					with: [ spec requires: #('Pier-Blog-Model') ];
 				package: 'pier-blog'
 					with: [ spec requires: #('pier-blog-seaside') ];
-				package: 'Pier-Shout' with: [ spec requires: #('pier-blog') ];
-				package: 'Pier-Book-Structures'
-					with: [ spec requires: #('Pier-Shout') ];
+				package: 'Pier-Book-Structures' with: [ spec requires: #('pier-blog') ];
 				package: 'pier-book-model'
 					with: [ spec requires: #('Pier-Book-Structures') ];
 				package: 'Pier-Book-Latex'
