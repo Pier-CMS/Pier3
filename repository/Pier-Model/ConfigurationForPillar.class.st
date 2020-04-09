@@ -1,6 +1,6 @@
 Class {
 	#name : #ConfigurationForPillar,
-	#superclass : #Object,
+	#superclass : #PRObject,
 	#category : #'Pier-Model-Utilities'
 }
 
@@ -131,6 +131,11 @@ ConfigurationForPillar class >> chrysalDescriptions [
 		#explanation : ''Identify the file to be taken as input for the root of the table of contents. When it is not specified, the table of contents will not be computed and displayed''
 	}
 ]'
+]
+
+{ #category : #testing }
+ConfigurationForPillar class >> isAbstract [
+	^ false
 ]
 
 { #category : #accessing }
