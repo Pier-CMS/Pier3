@@ -1,5 +1,5 @@
 "
-A PRScheduledTaskExamples is a list of methods that can be ran as automated tasks in pre-formatted text of PRToDoTask.  An alternative is to have the code directly in the task, however then the normal Smalltalk tools can't be used.
+I am a list of methods that can be ran as automated tasks in pre-formatted text of PRToDoTask.  An alternative is to have the code directly in the task, however then the normal Smalltalk tools can't be used.
 
 Instance Variables
 	kernel:	<PRKernel>
