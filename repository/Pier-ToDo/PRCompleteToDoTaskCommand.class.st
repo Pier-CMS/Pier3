@@ -9,7 +9,11 @@ Class {
 
 { #category : #testing }
 PRCompleteToDoTaskCommand class >> isValidIn: aContext [
-	^ (super isValidIn: aContext) and: [ aContext structure isRoot not and: [ aContext structure parent isToDo ] ]
+	^ (super isValidIn: aContext)
+		and: [ aContext command class = self
+				or: [ aContext command isView
+						and: [ aContext command viewComponentClass isNotNil
+								and: [ aContext command viewComponentClass = PRChangesView ] ] ] ]
 ]
 
 { #category : #accessing }
