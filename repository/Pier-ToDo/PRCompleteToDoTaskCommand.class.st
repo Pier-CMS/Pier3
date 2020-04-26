@@ -10,13 +10,15 @@ Class {
 { #category : #testing }
 PRCompleteToDoTaskCommand class >> isValidIn: aContext [
 	^ (super isValidIn: aContext)
-		and: [ aContext command class = self
-				or: [ aContext command isView
-						and: [ aContext command viewComponentClass isNotNil
-								and: [ aContext command viewComponentClass = PRChangesView ] ] ] ]
+		and: [ aContext command shouldBeIncludedInCompleteHistory ]
 ]
 
 { #category : #accessing }
 PRCompleteToDoTaskCommand class >> label [
 	^ 'Complete'
+]
+
+{ #category : #testing }
+PRCompleteToDoTaskCommand >> shouldBeIncludedInCompleteHistory [
+	^ true
 ]
