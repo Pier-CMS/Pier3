@@ -9,10 +9,16 @@ Class {
 
 { #category : #testing }
 PRCompleteToDoTaskCommand class >> isValidIn: aContext [
-	^ (super isValidIn: aContext) and: [ aContext structure isRoot not and: [ aContext structure parent isToDo ] ]
+	^ (super isValidIn: aContext)
+		and: [ aContext command shouldBeIncludedInCompleteHistory ]
 ]
 
 { #category : #accessing }
 PRCompleteToDoTaskCommand class >> label [
 	^ 'Complete'
+]
+
+{ #category : #testing }
+PRCompleteToDoTaskCommand >> shouldBeIncludedInCompleteHistory [
+	^ true
 ]
