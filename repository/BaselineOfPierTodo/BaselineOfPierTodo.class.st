@@ -16,7 +16,7 @@ BaselineOfPierTodo >> baseline: spec [
 				baseline: 'PierAddons'
 					with: [ spec repository: 'github://jborden23/Pier3' ];
 				baseline: 'Scheduler'
-					with: [ spec repository: 'github://seandenigris/Scheduler' ];
+					with: [ spec repository: 'github://pharo-contributions/Scheduler' ];
 				package: 'Pier-SW2-Sw1Features'
 					with: [ spec requires: #('PierAddons') ];
 				package: 'Pier-ToDo'
