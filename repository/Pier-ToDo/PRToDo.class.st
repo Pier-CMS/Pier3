@@ -174,6 +174,7 @@ PRToDo >> smallGroupSize: aNumber [
 { #category : #accessing }
 PRToDo >> tasks [
 	^ self childrenDecoration children
+		reject: [ :task | task hideFromMenus ]
 ]
 
 { #category : #accessing }

@@ -289,6 +289,32 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 ]
 
 { #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOnLink: aUrlString using: contentCheckBlock onPageAt: aReportPathString [
+	| reportPage urlContents |
+	reportPage := PRPathLookup
+		start: self kernel root
+		path: aReportPathString.
+	urlContents := nil.
+	reportPage
+		contents:
+			(String
+				streamContents: [ :stream | 
+					[ urlContents := aUrlString asUrl retrieveContents ]
+						on: ConnectionTimedOut
+						do: [ stream
+								nextPutAll: 'Timed out connecting to: ''';
+								nextPutAll: aUrlString;
+								nextPutAll: ''' at: ' ].
+					stream
+						nextPutAll: Date today asString;
+						space.
+					Time now print24: true showSeconds: false on: stream.
+					stream nextPutAll: ' - '.
+					urlContents
+						ifNotNil: [ stream nextPutAll: (contentCheckBlock value: urlContents) ] ])
+]
+
+{ #category : #'wiki updates' }
 PRScheduledTaskExamples >> updateRepeatingTasksForPath: aString [
 	(PRPathLookup start: self kernel root path: aString) tasks
 		do: [ :task | task updateDueDateToCurrent ]
