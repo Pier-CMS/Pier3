@@ -118,6 +118,33 @@ PRScheduledTaskExamples >> printReportHeaderOn: stream fields: aString [
 ]
 
 { #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString using: contentCheckBlock onPageAt: aReportPathString [
+	| reportPage urlContents |
+	reportPage := PRPathLookup
+		start: self kernel root
+		path: aReportPathString.
+	urlContents := nil.
+	reportPage
+		contents:
+			(String
+				streamContents: [ :stream | 
+					stream
+						nextPutAll: Date today asString;
+						space.
+					Time now print24: true showSeconds: false on: stream.
+					stream nextPutAll: ' - '.
+					(checkBlock value: reportPage)
+						ifFalse: [ stream nextPutAll: 'Pre-Check failed.' ]
+						ifTrue: [ [ urlContents := aUrlString asUrl retrieveContents ]
+								on: ConnectionTimedOut
+								do: [ stream
+										nextPutAll: 'Timed out connecting to: ''';
+										nextPutAll: aUrlString ].
+							urlContents
+								ifNotNil: [ stream nextPutAll: (contentCheckBlock value: urlContents) ] ] ])
+]
+
+{ #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString [
 	self reportOfBrokenLinksOnPageAt: aPathString startingFrom: '/'
 ]
@@ -286,32 +313,6 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 								nextPut: $|;
 								nextPutAll: task runHistory size asString;
 								cr ] ])
-]
-
-{ #category : #'wiki updates' }
-PRScheduledTaskExamples >> reportOnLink: aUrlString using: contentCheckBlock onPageAt: aReportPathString [
-	| reportPage urlContents |
-	reportPage := PRPathLookup
-		start: self kernel root
-		path: aReportPathString.
-	urlContents := nil.
-	reportPage
-		contents:
-			(String
-				streamContents: [ :stream | 
-					[ urlContents := aUrlString asUrl retrieveContents ]
-						on: ConnectionTimedOut
-						do: [ stream
-								nextPutAll: 'Timed out connecting to: ''';
-								nextPutAll: aUrlString;
-								nextPutAll: ''' at: ' ].
-					stream
-						nextPutAll: Date today asString;
-						space.
-					Time now print24: true showSeconds: false on: stream.
-					stream nextPutAll: ' - '.
-					urlContents
-						ifNotNil: [ stream nextPutAll: (contentCheckBlock value: urlContents) ] ])
 ]
 
 { #category : #'wiki updates' }
