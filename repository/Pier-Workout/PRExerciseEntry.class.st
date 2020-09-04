@@ -67,7 +67,7 @@ PRExerciseEntry >> descriptionDetails [
 		accessor: #details;
 		label: 'Exercise Details';
 		lineCount: 2;
-		beReadonly;
+		beReadOnly;
 		priority: 170;
 		yourself
 ]

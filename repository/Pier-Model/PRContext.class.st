@@ -67,7 +67,7 @@ PRContext >> descriptionCommand [
 		chainAccessor: #(#command #label);
 		label: 'Command';
 		priority: 200;
-		beReadonly;
+		beReadOnly;
 		yourself
 ]
 
@@ -79,7 +79,7 @@ PRContext >> descriptionDate [
 		parameterName: 'date';
 		priority: 300;
 		label: 'Date';
-		beReadonly;
+		beReadOnly;
 		yourself
 ]
 
@@ -101,7 +101,7 @@ PRContext >> descriptionTime [
 		parameterName: 'time';
 		priority: 400;
 		label: 'Time';
-		beReadonly;
+		beReadOnly;
 		yourself
 ]
 

@@ -45,7 +45,7 @@ PRDelayedPersistency >> descriptionMessage [
 		label: 'Message';
 		group: 'Status';
 		priority: 200;
-		beReadonly;
+		beReadOnly;
 		yourself
 ]
 

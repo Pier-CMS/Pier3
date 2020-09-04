@@ -52,7 +52,7 @@ PRRemoveCommand >> descriptionConfirmation [
 	^ PRDocumentDescription new
 		accessor: #confirmation;
 		priority: 100;
-		beReadonly;
+		beReadOnly;
 		yourself
 ]
 

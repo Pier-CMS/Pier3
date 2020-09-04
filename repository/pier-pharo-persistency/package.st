@@ -1,1 +1,1 @@
-Package { #name : #'Pier-Pharo-Persistency' }
+Package { #name : #'pier-pharo-persistency' }

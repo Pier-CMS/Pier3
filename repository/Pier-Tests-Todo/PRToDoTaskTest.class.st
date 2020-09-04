@@ -1,5 +1,5 @@
 "
-A PRToDoTaskTest is for testing the UI aspects - see #testDescription - this should help keep PRToDoView in synch with PRToDoTask.
+A PRToDoTaskTest is for testing the UI aspects - see #testDescription - this should help keep PRToDoView in synch with PRToDoTask. It is somewhat difficult to test PRScheduledTaskExamples because there is no kernel.
 
 "
 Class {
@@ -36,8 +36,12 @@ PRToDoTaskTest >> testAutomate [
 = Transcript show: ''Test auotmated ran.''
 '.
 	self child automate.
-	self assert: self folder scheduler isNotNil.
-	self should: [ self child automate ] raise: Error ]
+	self
+		assert: self folder scheduler isNotNil;
+		assert: self folder scheduler taskCount equals: 1.
+	self should: [ self child automate ] raise: Error.
+	self child remove.
+	self assert: self folder scheduler taskCount equals: 0 ]
 		ensure: [ self folder scheduler ifNotNil: [ self folder scheduler stop ] ]
 ]
 
@@ -94,7 +98,8 @@ PRToDoTaskTest >> testPreformattedText [
 			((PRPreformattedTextSelector on: self child)
 				start: self child document;
 				text) isEmpty.
-	self child contents: 'This is not preformatted ==text==, it is inline'.
+	self child
+		contents: 'This is not preformatted ==text==, it is inline'.
 	self
 		assert:
 			((PRPreformattedTextSelector on: self child)
@@ -109,7 +114,7 @@ It should be able to find "text"'.
 		assert:
 			((PRPreformattedTextSelector on: self child)
 				start: self child document;
-				text) = 'text'
+				text) equals: 'text'
 ]
 
 { #category : #tests }
