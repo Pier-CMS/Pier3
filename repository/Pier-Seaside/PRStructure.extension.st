@@ -110,6 +110,14 @@ ul.toc li.toc-level-6 { margin-left: 5em; }
 	font-size: 0.8em;
 	margin-top: 1em;
 	text-align: center;
+}
+.note {
+	background-color: #f0f7fd;
+	border-color: #d0e3f0;
+}
+.todo {
+	color: red;
+		background-color: yellow;
 }';
 			yourself);
 		addChild: ((PRFile named: 'pier.png')

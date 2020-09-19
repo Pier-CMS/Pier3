@@ -58,7 +58,7 @@ PRCase >> descriptionPlainText [
 		accessor: #plainText;
 		label: 'Plain Text';
 		priority: 510;
-		beReadOnly;
+		beReadonly;
 		yourself
 ]
 

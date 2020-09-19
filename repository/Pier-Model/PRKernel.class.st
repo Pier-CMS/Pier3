@@ -68,7 +68,11 @@ An annotated paragraph starts a line with ==\@\@==, for example:
 
  ==\@\@==todo this is a todo annotation.
 
+@@todo this is a todo annotation.
+
  ==\@\@==note this is a note annotation.
+
+@@note this is a note annotation.
 
 !Sections
 A line starting with ==!== becomes a section heading. Use multiple ==!== to create a subsection.
