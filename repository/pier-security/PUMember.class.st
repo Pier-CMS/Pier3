@@ -54,7 +54,7 @@ PUMember >> descriptionName [
 		accessor: #name;
 		label: 'Name';
 		priority: 100;
-		beReadOnly;
+		beReadonly;
 		beRequired;
 		yourself
 ]

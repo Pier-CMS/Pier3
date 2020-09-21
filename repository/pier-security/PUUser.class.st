@@ -64,7 +64,7 @@ PUUser >> descriptionFullName [
 	^ MAStringDescription new
 		parameterName: 'full-name';
 		accessor: #fullName;
-		beReadOnly;
+		beReadonly;
 		beHidden;
 		yourself
 ]

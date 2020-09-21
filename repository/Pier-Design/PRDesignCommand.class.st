@@ -47,7 +47,7 @@ PRDesignCommand >> descriptionsForGroup: aString selector: aSelector index: anIn
 				accessor: accessor;
 				label: 'Location';
 				group: aString;
-				beReadOnly;
+				beReadonly;
 				yourself)
 		with:
 			(description

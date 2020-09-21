@@ -110,6 +110,28 @@ ul.toc li.toc-level-6 { margin-left: 5em; }
 	font-size: 0.8em;
 	margin-top: 1em;
 	text-align: center;
+}
+.annotated {
+	margin: 20px 0;
+	padding: 15px 30px 15px 15px;
+	border-left: 5px solid #eee;
+}
+.annotated p:last-child {
+	margin-bottom: 0;
+}
+.note {
+	background-color: #f0f7fd;
+	border-color: #d0e3f0;
+}
+.quote {
+	background-color: #f7f7f7;
+	border-color: #d0e3f0;
+	font-style: italic;
+	margin-left: 3em;
+}
+.todo {
+	color: red;
+	background-color: yellow;
 }';
 			yourself);
 		addChild: ((PRFile named: 'pier.png')
