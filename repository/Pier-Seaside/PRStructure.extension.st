@@ -128,10 +128,6 @@ ul.toc li.toc-level-6 { margin-left: 5em; }
 	border-color: #d0e3f0;
 	font-style: italic;
 	margin-left: 3em;
-}
-.todo {
-	color: red;
-	background-color: yellow;
 }';
 			yourself);
 		addChild: ((PRFile named: 'pier.png')

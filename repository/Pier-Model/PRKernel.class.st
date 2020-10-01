@@ -66,16 +66,18 @@ PRKernel class >> defaultInfoSyntax [
 A single newline has no effect on the layout. An empty line starts a new paragraph.
 An annotated paragraph starts a line with ==\@\@==, for example:
 
- ==\@\@==todo this is a todo annotation.
+ ==\@\@==quote this is a quote annotation.
 
-@@todo this is a todo annotation.
+@@quote this is a quote annotation.
 
  ==\@\@==note this is a note annotation.
 
 @@note this is a note annotation.
 
 !Sections
-A line starting with ==!== becomes a section heading. Use multiple ==!== to create a subsection.
+A line starting with ==!== becomes a section heading.
+!!Subsection
+Use multiple ==!== to create a subsection.
 
 !Horizontal Line
 A line starting with ==_== (underline) becomes a horizontal line. This is often used to separate topics.
