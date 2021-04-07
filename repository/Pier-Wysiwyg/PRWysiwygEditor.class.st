@@ -34,9 +34,25 @@ PRWysiwygEditor >> defineElementIds: html [
 { #category : #private }
 PRWysiwygEditor >> document [
 	| document |
-	document := PRPillarParserMain documentParser parse: self wikiText.
-	self structureOwner notNil ifTrue: [ document owner: self structureOwner ].
-	^ document 
+	document := [ PRPillarParserMain documentParser parse: self wikiText ] on: PRSyntaxError do: [ :ex | self documentManagedFor: ex ].
+	self structureOwner notNil
+		ifTrue: [ document owner: self structureOwner ].
+	^ document
+]
+
+{ #category : #private }
+PRWysiwygEditor >> documentManagedFor: exception [
+	| problemTag newWikiText |
+	('Pillar doesn''t support this tag : ''*}*'
+		match: exception messageText)
+		ifTrue: [ problemTag := exception messageText
+				withoutPrefix: 'Pillar doesn''t support this tag : '''.
+			problemTag := problemTag copyFrom: 1 to: (problemTag indexOf: $}).
+			newWikiText := self wikiText
+				copyReplaceAll: '${' , problemTag
+				with: '\${' , problemTag.
+			^ PRPillarParserMain documentParser parse: newWikiText ]
+		ifFalse: [ exception raise ]
 ]
 
 { #category : #rendering }
