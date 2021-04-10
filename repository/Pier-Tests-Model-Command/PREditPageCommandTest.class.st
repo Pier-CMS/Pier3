@@ -29,6 +29,18 @@ PREditPageCommandTest >> testContentsChanged [
 ]
 
 { #category : #'tests-contents' }
+PREditPageCommandTest >> testContentsEscapeChanged [
+	"This would fail if the fromString had a new line."
+
+	| document |
+	document := PRPage new descriptionDocument
+		fromString: 'text $\{tag} text'.
+	self command write: document using: PRPage new descriptionDocument.
+	self shouldnt: [ self command execute ] raise: PRStructureError.
+	self assert: self structure contents equals: 'text \$\{tag} text'
+]
+
+{ #category : #'tests-contents' }
 PREditPageCommandTest >> testContentsInitialized [
 	self assert: (self command readUsing: PRPage new descriptionDocument) = self structure document
 ]

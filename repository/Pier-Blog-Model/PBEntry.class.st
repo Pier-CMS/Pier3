@@ -58,7 +58,7 @@ PBEntry >> descriptionAuthor [
 { #category : #'accessing-descriptions' }
 PBEntry >> descriptionPublication [
 	<magritteDescription>
-	^ MATimeStampDescription new
+	^ MADateAndTimeDescription new
 		accessor: #publication;
 		comment: 'The publication date of the entry.';
 		label: 'Publication';
