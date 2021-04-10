@@ -34,7 +34,10 @@ PRWysiwygEditor >> defineElementIds: html [
 { #category : #private }
 PRWysiwygEditor >> document [
 	| document |
-	document := [ PRPillarParserMain documentParser parse: self wikiText ] on: PRSyntaxError do: [ :ex | self documentManagedFor: ex ].
+	"When there is a page that contains ${tag} this will raise a walkback, catching the exception does not actually run, it just is a work-around to present a 'Contents: Invalid input given' error. A real fix means replacing YUI with a supported editor"
+	document := [ PRPillarParserMain documentParser parse: self wikiText ]
+		on: PRSyntaxError
+		do: [ :ex | self documentManagedFor: ex ].
 	self structureOwner notNil
 		ifTrue: [ document owner: self structureOwner ].
 	^ document
