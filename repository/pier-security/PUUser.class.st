@@ -64,7 +64,7 @@ PUUser >> descriptionFullName [
 	^ MAStringDescription new
 		parameterName: 'full-name';
 		accessor: #fullName;
-		beReadonly;
+		beReadOnly;
 		beHidden;
 		yourself
 ]
@@ -78,7 +78,7 @@ PUUser >> descriptionGroups [
 	^ MAMultipleOptionDescription new
 		addCondition: (MACondition selector: #notEmpty) labelled: 'A user has to belong to at least one group';
 		options: self defaultGroups;
-		componentClass: MAListCompositonComponent;
+		componentClass: MAListCompositionComponent;
 		reference:
 				(defaultGroups anyOne descriptionContainer
 						add: defaultGroups anyOne descriptionName;

@@ -28,7 +28,7 @@ PRViewsWidget >> descriptionViewClasses [
 	^ MAMultipleOptionDescription new
 		default: self class defaultViewClasses;
 		options: self class defaultViewClasses;
-		componentClass: MAListCompositonComponent;
+		componentClass: MAListCompositionComponent;
 		reference: MAClassDescription new;
 		accessor: #viewClasses;
 		label: 'View Classes';

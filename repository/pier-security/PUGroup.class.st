@@ -26,7 +26,7 @@ PUGroup >> descriptionUsers [
 	
 	^ MAMultipleOptionDescription new
 		options: defaultUsers;
-		componentClass: MAListCompositonComponent;
+		componentClass: MAListCompositionComponent;
 		reference:
 				(defaultUsers anyOne descriptionContainer
 						add: defaultUsers anyOne descriptionName;

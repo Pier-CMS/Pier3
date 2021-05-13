@@ -37,7 +37,7 @@ PRCommandsWidget >> descriptionCommandClasses [
 	^ MAMultipleOptionDescription new
 		default: self class defaultCommandClasses;
 		options: self class defaultCommandClasses;
-		componentClass: MAListCompositonComponent;
+		componentClass: MAListCompositionComponent;
 		reference: MAClassDescription new;
 		accessor: #commandClasses;
 		label: 'Command Classes';
