@@ -15,8 +15,7 @@ A more complete system with extra goodies can be loaded with:
 ```
 Metacello new
   baseline:'PierAddons';
-  repository: 'github://Pier-CMS/Pier3:main
-  /repository';
+  repository: 'github://Pier-CMS/Pier3:main/repository';
   onConflictUseLoaded;
   load.
 ```
