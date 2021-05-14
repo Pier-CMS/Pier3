@@ -1,3 +1,6 @@
+"
+I am a baseline for loading the Pier Todo code, see http://myborden.com/pier/john-c-borden/smalltalk/pier/PierToDo
+"
 Class {
 	#name : #BaselineOfPierTodo,
 	#superclass : #BaselineOf,
