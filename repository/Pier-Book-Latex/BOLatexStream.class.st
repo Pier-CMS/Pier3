@@ -205,7 +205,7 @@ BOLatexStream >> rawLines: aString [
 	 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'convenience-raw' }
 BOLatexStream >> rawNextPutAll: aString [ 
 	stream nextPutAll: aString
 ]

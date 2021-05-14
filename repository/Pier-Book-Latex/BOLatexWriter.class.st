@@ -77,7 +77,7 @@ BOLatexWriter >> generatePublication: aStructure type: aString [
 		lf; lf
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 BOLatexWriter >> newLineSize [
 	^ 2
 ]

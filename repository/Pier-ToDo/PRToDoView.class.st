@@ -60,7 +60,10 @@ PRToDoView >> markComplete: aTask [
 { #category : #actions }
 PRToDoView >> open: aContext [
 	(self context isValidCommand: aContext command class)
-		ifFalse: [ self inform: 'Unable to open ' , aContext command label printString , ' in the current context.' ]
+		ifFalse: [ self
+				inform:
+					'Unable to open ' , aContext command label printString
+						, ' in the current context.' ]
 		ifTrue: [ self context: aContext ]
 ]
 
@@ -68,13 +71,12 @@ PRToDoView >> open: aContext [
 PRToDoView >> renderAccordionOn: html [
 	html div
 		script: html jQuery new accordion;
-		with:
-				[ self reports
-				with: names
-				do:
-					[ :report :name | 
-					html div: [ html anchor: name ].
-					html div: [ self renderReport: report on: html ] ] ]
+		with: [ self reports isEmpty
+				ifFalse: [ self reports
+						with: names
+						do: [ :report :name | 
+							html div: [ html anchor: name ].
+							html div: [ self renderReport: report on: html ] ] ] ]
 ]
 
 { #category : #rendering }

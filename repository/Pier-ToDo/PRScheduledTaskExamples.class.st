@@ -3,6 +3,7 @@ I am a list of methods that can be ran as automated tasks in pre-formatted text 
 
 Instance Variables
 	kernel:	<PRKernel>
+	todo: 		<PRToDo>
 
 Specifics:
 Calling #reportOfImagesOnPageAt: can cause a deadlock since it retrieves external resources.  It may be required to stop the task and have it re-run after the network issues are resolved.
@@ -11,7 +12,8 @@ Class {
 	#name : #PRScheduledTaskExamples,
 	#superclass : #Object,
 	#instVars : [
-		'kernel'
+		'kernel',
+		'todo'
 	],
 	#category : #'Pier-ToDo'
 }
@@ -21,6 +23,19 @@ PRScheduledTaskExamples class >> newForKernelNamed: aString [
 	^ self new
 		kernel: (PRKernel instanceNamed: aString);
 		yourself
+]
+
+{ #category : #'instance creation' }
+PRScheduledTaskExamples class >> newForKernelNamed: aString andTodoPath: aPathString [
+	| aKernel aToDo |
+	aKernel := PRKernel instanceNamed: aString.
+	^ (aToDo := PRPathLookup start: aKernel root path: aPathString)
+		isToDo
+		ifTrue: [ self newForKernelNamed: aString ]
+		ifFalse: [ self new
+				kernel: aKernel;
+				todo: aToDo;
+				yourself ]
 ]
 
 { #category : #wikibackup }
@@ -45,6 +60,7 @@ PRScheduledTaskExamples >> ftpFileToReport: userString pass: pwString host: host
 	"FTP is not secure, but available everywhere."
 
 	| reportPage client |
+	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		isNil
 		ifFalse: [ reportPage
@@ -83,6 +99,17 @@ PRScheduledTaskExamples >> ftpFileToReport: userString pass: pwString host: host
 ]
 
 { #category : #accessing }
+PRScheduledTaskExamples >> guessTodoFromPath: aPathString [
+	| aPage |
+	todo
+		ifNil: [ aPage := PRPathLookup start: self kernel root path: aPathString.
+			[ aPage isRoot ]
+				whileFalse: [ aPage isToDo
+						ifTrue: [ ^ self todo: aPage ]
+						ifFalse: [ aPage := aPage parent ] ] ]
+]
+
+{ #category : #accessing }
 PRScheduledTaskExamples >> kernel [
 	kernel ifNil: [ self kernel: PRKernel instances anyOne ].
 	^ kernel
@@ -98,10 +125,7 @@ PRScheduledTaskExamples >> printReportHeaderOn: stream fields: aString [
 	"This displays when the report was generated on the remote server, not in my local time."
 	stream
 		nextPutAll: 'Report generated on ';
-		nextPutAll: Date today asString;
-		space.
-	Time now print24: true showSeconds: false on: stream.
-	stream
+		nextPutAll: (self todo displayDateWithTimeZoneDifference: DateAndTime now);
 		cr;
 		cr.
 	aString isEmptyOrNil
@@ -114,6 +138,7 @@ PRScheduledTaskExamples >> printReportHeaderOn: stream fields: aString [
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString using: contentCheckBlock onPageAt: aReportPathString [
 	| reportPage urlContents |
+	self guessTodoFromPath: aReportPathString.
 	(reportPage := PRPathLookup
 		start: self kernel root
 		path: aReportPathString)
@@ -123,10 +148,8 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 					(String
 						streamContents: [ :stream | 
 							stream
-								nextPutAll: Date today asString;
-								space.
-							Time now print24: true showSeconds: false on: stream.
-							stream nextPutAll: ' - '.
+								nextPutAll: (self todo displayDateWithTimeZoneDifference: DateAndTime now);
+								nextPutAll: ' - '.
 							([ checkBlock value: reportPage ]
 								on: Error
 								do: [ false ])
@@ -152,6 +175,7 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString [
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom: aStartPageName [
 	| reportPage |
+	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [ reportPage
 				contents:
@@ -178,6 +202,7 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 	| reportPage pagesWithUnusualChildren linksWithRaw |
+	self guessTodoFromPath: aPathString.
 	pagesWithUnusualChildren := Set new.
 	self kernel root enumerator with all
 		do: [ :e | 
@@ -229,6 +254,7 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfHistoryOnPageAt: aPathString [
 	| reportPage |
+	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [ reportPage
 				contents:
@@ -245,6 +271,7 @@ PRScheduledTaskExamples >> reportOfHistoryOnPageAt: aPathString [
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfImagesOnPageAt: aPathString [
 	| reportPage search |
+	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [ (search := PRFullTextSearch on: self kernel root)
 				subString: 'src="http'.
@@ -286,10 +313,9 @@ PRScheduledTaskExamples >> reportOfImagesOnPageAt: aPathString [
 
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString [
-	| reportPage scheduler todo |
-	scheduler := (todo := PRPathLookup
-		start: self kernel root
-		path: pathToTodo) scheduler.
+	| reportPage scheduler |
+	self guessTodoFromPath: pathToTodo.
+	scheduler := self todo scheduler.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [ reportPage
 				contents:
@@ -301,7 +327,7 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 							scheduler tasks
 								do: [ :task | 
 									stream nextPut: $|.
-									(PRPathLookup start: todo path: task description)
+									(PRPathLookup start: self todo path: task description)
 										ifNil: [ stream nextPutAll: task description asString ]
 										ifNotNil: [ stream
 												nextPut: $*;
@@ -312,10 +338,21 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 									stream
 										nextPut: $|;
 										space;
-										nextPutAll: (todo displayDateWithTimeZoneDifference: task nextRunTime);
+										nextPutAll: (self todo displayDateWithTimeZoneDifference: task nextRunTime);
 										nextPut: $|;
 										nextPutAll: task runHistory size asString;
 										cr ] ]) ]
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples >> todo [
+	todo ifNil: [ self todo: PRToDo allInstances anyOne ].
+	^ todo
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples >> todo: aPRToDo [
+	todo := aPRToDo
 ]
 
 { #category : #'wiki updates' }
