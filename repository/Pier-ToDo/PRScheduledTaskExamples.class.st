@@ -153,7 +153,7 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 							([ checkBlock value: reportPage ]
 								on: Error
 								do: [ false ])
-								ifFalse: [ stream nextPutAll: 'Pre-Check failed.' ]
+								ifFalse: [ stream nextPutAll: 'Pre-Check reported no need to retrieve from '; nextPutAll: aUrlString asUrl host ]
 								ifTrue: [ [ urlContents := aUrlString asUrl retrieveContents ]
 										on: ConnectionTimedOut
 										do: [ stream
