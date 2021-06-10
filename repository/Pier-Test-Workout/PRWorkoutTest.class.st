@@ -516,30 +516,5 @@ PRWorkoutTest >> testWorkoutAssignment [
 
 { #category : #actions }
 PRWorkoutTest >> workoutsBasedOnString: aString [
-	| wos wo n exercise |
-	wos := OrderedCollection new.
-	wo := nil.
-	n := ''.
-	exercise := nil.
-	aString
-		linesDo: [ :str | 
-			| substrings |
-			(substrings := str trim substrings: '|') isEmpty
-				ifFalse: [ substrings second trim size > 2
-						ifTrue: [ n := substrings second ].
-					substrings first trim size > 3
-						ifTrue: [ wo ifNotNil: [ wos add: wo ].
-							wo := PRWorkout new.
-							wo date: substrings first asDate ].
-					exercise := PRExercise name: n weightUnits: 'lb' details: ''.
-					(substrings size > 4 and: [ exercise details isEmpty ])
-						ifTrue: [ exercise details: substrings fifth ].
-					wo
-						addFirstExerciseEntry:
-							(PRExerciseEntry
-								newOf: exercise
-								weight: substrings third trim
-								times: substrings fourth trim) ] ].
-	wos add: wo.
-	^ wos reverse
+	^ PRWorkoutLog workoutsBasedOnString: aString
 ]

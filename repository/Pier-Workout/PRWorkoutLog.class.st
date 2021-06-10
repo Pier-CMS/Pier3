@@ -89,6 +89,36 @@ PRWorkoutLog class >> label [
 	^ 'Workout Log'
 ]
 
+{ #category : #actions }
+PRWorkoutLog class >> workoutsBasedOnString: aString [
+	| workouts aWorkout n exercise |
+	workouts := OrderedCollection new.
+	aWorkout := nil.
+	n := ''.
+	exercise := nil.
+	aString
+		linesDo: [ :str | 
+			| substrings |
+			(substrings := str trim substrings: '|') isEmpty
+				ifFalse: [ substrings second trim size > 2
+						ifTrue: [ n := substrings second ].
+					substrings first trim size > 3
+						ifTrue: [ aWorkout ifNotNil: [ workouts add: aWorkout ].
+							aWorkout := PRWorkout new.
+							aWorkout date: substrings first asDate ].
+					exercise := PRExercise name: n weightUnits: 'lb' details: ''.
+					(substrings size > 4 and: [ exercise details isEmpty ])
+						ifTrue: [ exercise details: substrings fifth ].
+					aWorkout
+						addFirstExerciseEntry:
+							(PRExerciseEntry
+								newOf: exercise
+								weight: substrings third trim
+								times: substrings fourth trim) ] ].
+	workouts add: aWorkout.
+	^ workouts reverse
+]
+
 { #category : #accessing }
 PRWorkoutLog >> addExerciseEntry: anExerciseEntry [
 	(self workouts isEmpty or: [ self isWorkoutInProgress not ])
@@ -387,7 +417,7 @@ PRWorkoutLog >> workouts: aCollectionOfPRWorkouts [
 	workouts := (aCollectionOfPRWorkouts asOrderedCollection
 		collectAll: [ :e | 
 			e isString
-				ifTrue: [ PRWorkoutTest new workoutsBasedOnString: e ]
+				ifTrue: [ self class workoutsBasedOnString: e ]
 				ifFalse: [ OrderedCollection with: e ] ])
-		sorted: [ :a :b | a date > b date ]
+		sorted: [ :a :b | a date < b date ]
 ]
