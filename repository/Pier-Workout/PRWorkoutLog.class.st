@@ -141,9 +141,13 @@ PRWorkoutLog >> dayPassesForTesting [
 { #category : #accessing }
 PRWorkoutLog >> defaultExerciseEntry [
 	^ PRExerciseEntry
-						newOf: (PRExercise name: 'Bench Press' weightUnits: 'kg' details: 'Flat bench with bar')
-						weight: 100
-						times: 12
+		newOf:
+			(PRExercise
+				name: 'Bench Press'
+				weightUnits: 'kg'
+				details: 'Flat bench with bar')
+		weight: 100
+		times: 12
 ]
 
 { #category : #'accessing-description' }
@@ -380,5 +384,10 @@ PRWorkoutLog >> workouts [
 
 { #category : #accessing }
 PRWorkoutLog >> workouts: aCollectionOfPRWorkouts [
-	workouts := aCollectionOfPRWorkouts
+	workouts := (aCollectionOfPRWorkouts asOrderedCollection
+		collectAll: [ :e | 
+			e isString
+				ifTrue: [ PRWorkoutTest new workoutsBasedOnString: e ]
+				ifFalse: [ OrderedCollection with: e ] ])
+		sorted: [ :a :b | a date > b date ]
 ]

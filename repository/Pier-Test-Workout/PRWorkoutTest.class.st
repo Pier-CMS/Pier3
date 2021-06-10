@@ -502,6 +502,18 @@ PRWorkoutTest >> testRemoveExerciseEntry [
 	self assert: self instance workouts isEmpty
 ]
 
+{ #category : #tests }
+PRWorkoutTest >> testWorkoutAssignment [
+	self instance
+		workouts:
+			#('| 7 June 2021  |Back Squats|300lb|10
+|              |Back Squats|301lb|9
+| 3 June 2021 |Chinups    |25lb |15
+|              |Chinups    |30lb |13' '| 8 June 2021 |Bench Press    |110kg |15
+|              |Bench Press    |115kg |13').
+	self assert: self instance workouts size equals: 3
+]
+
 { #category : #actions }
 PRWorkoutTest >> workoutsBasedOnString: aString [
 	| wos wo n exercise |
