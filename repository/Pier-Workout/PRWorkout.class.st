@@ -183,9 +183,18 @@ PRWorkout >> numberOfSetsOf: anExercise [
 { #category : #printing }
 PRWorkout >> printOn: aStream [
 	aStream
-		nextPutAll: (self exercises size) asString;
-		nextPutAll: ' sets on ';
-		nextPutAll: self date printString
+		nextPut: $';
+		nextPut: $|;
+		space;
+		nextPutAll: self date asString;
+		space.
+	self exercises
+		do: [ :e | e pipeFormattedPrintOn: aStream ]
+		separatedBy: [ aStream
+				cr;
+				nextPut: $|;
+				space ].
+	aStream nextPut: $'
 ]
 
 { #category : #accessing }

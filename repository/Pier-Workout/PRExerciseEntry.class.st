@@ -149,6 +149,23 @@ PRExerciseEntry >> initialize [
 ]
 
 { #category : #printing }
+PRExerciseEntry >> pipeFormattedPrintOn: aStream [
+	aStream
+		nextPut: $|;
+		space;
+		nextPutAll: self exercise printString;
+		space;
+		nextPut: $|;
+		space;
+		nextPutAll: (self weight ifNil: [ '?' ]) asString;
+		nextPutAll: self exercise weightUnits;
+		space;
+		nextPut: $|;
+		space;
+		nextPutAll: (self reps ifNil: [ '?' ]) asString
+]
+
+{ #category : #printing }
 PRExerciseEntry >> printOn: aStream [
 	aStream
 		nextPutAll: (self reps ifNil: [ '?' ]) asString;

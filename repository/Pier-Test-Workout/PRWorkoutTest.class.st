@@ -502,32 +502,19 @@ PRWorkoutTest >> testRemoveExerciseEntry [
 	self assert: self instance workouts isEmpty
 ]
 
+{ #category : #tests }
+PRWorkoutTest >> testWorkoutAssignment [
+	self instance
+		workouts:
+			#('| 7 June 2021  |Back Squats|300lb|10
+|              |Back Squats|301lb|9
+| 3 June 2021 |Chinups    |25lb |15
+|              |Chinups    |30lb |13' '| 8 June 2021 |Bench Press    |110kg |15
+|              |Bench Press    |115kg |13').
+	self assert: self instance workouts size equals: 3
+]
+
 { #category : #actions }
 PRWorkoutTest >> workoutsBasedOnString: aString [
-	| wos wo n exercise |
-	wos := OrderedCollection new.
-	wo := nil.
-	n := ''.
-	exercise := nil.
-	aString
-		linesDo: [ :str | 
-			| substrings |
-			(substrings := str trim substrings: '|') isEmpty
-				ifFalse: [ substrings second trim size > 2
-						ifTrue: [ n := substrings second ].
-					substrings first trim size > 3
-						ifTrue: [ wo ifNotNil: [ wos add: wo ].
-							wo := PRWorkout new.
-							wo date: substrings first asDate ].
-					exercise := PRExercise name: n weightUnits: 'lb' details: ''.
-					(substrings size > 4 and: [ exercise details isEmpty ])
-						ifTrue: [ exercise details: substrings fifth ].
-					wo
-						addFirstExerciseEntry:
-							(PRExerciseEntry
-								newOf: exercise
-								weight: substrings third trim
-								times: substrings fourth trim) ] ].
-	wos add: wo.
-	^ wos reverse
+	^ PRWorkoutLog workoutsBasedOnString: aString
 ]
