@@ -142,7 +142,8 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 	(reportPage := PRPathLookup
 		start: self kernel root
 		path: aReportPathString)
-		ifNotNil: [ urlContents := nil.
+		ifNotNil: [ :arg | 
+			urlContents := nil.
 			reportPage
 				contents:
 					(String
@@ -152,19 +153,28 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 								nextPutAll: ' - '.
 							([ checkBlock value: reportPage ]
 								on: Error
-								do: [ false ])
-								ifFalse: [ stream nextPutAll: 'Pre-Check reported no need to retrieve from '; nextPutAll: aUrlString asUrl host ]
-								ifTrue: [ [ urlContents := aUrlString asUrl retrieveContents ]
+								do: [ :err | false ])
+								ifFalse: [ stream
+										nextPutAll: 'Pre-Check reported no need to retrieve from ';
+										nextPutAll: aUrlString asUrl host ]
+								ifTrue: [ [ [ urlContents := aUrlString asUrl retrieveContents ]
+										on: NameLookupFailure
+										do: [ :err | 
+											stream
+												nextPutAll: 'Name lookup failed for: ''';
+												nextPutAll: aUrlString asUrl host ] ]
 										on: ConnectionTimedOut
-										do: [ stream
+										do: [ :err | 
+											stream
 												nextPutAll: 'Timed out connecting to: ''';
 												nextPutAll: aUrlString ].
 									urlContents
-										ifNotNil: [ stream
+										ifNotNil: [ :arg | 
+											stream
 												nextPutAll:
 													([ contentCheckBlock value: urlContents ]
 														on: Error
-														do: [ 'Content block failed.' ]) ] ] ]) ]
+														do: [ :err | 'Content block failed.' ]) ] ] ]) ]
 ]
 
 { #category : #'wiki updates' }
