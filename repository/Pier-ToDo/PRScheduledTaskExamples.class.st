@@ -387,9 +387,9 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 { #category : #private }
 PRScheduledTaskExamples >> runCheckDiskSpace [
 	| dfOutput |
-	dfOutput := (LibC resultOfCommand: 'df -k .') lines last substrings.
+	dfOutput := (LibC resultOfCommand: 'df -h .') lines last substrings.
 	^ dfOutput size < 6
-		ifTrue: [ 'Failed to retrieve df -k output, found: ' , dfOutput asString ]
+		ifTrue: [ 'Failed to retrieve df -h output, found: ' , dfOutput asString ]
 		ifFalse: [ dfOutput size = 9
 				ifTrue: [ (dfOutput at: 5) , ' of ' , dfOutput second ]
 				ifFalse: [ (dfOutput last: 2) first , ' of ' , dfOutput second ] ]
