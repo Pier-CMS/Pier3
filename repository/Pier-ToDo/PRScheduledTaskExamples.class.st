@@ -7,6 +7,8 @@ Instance Variables
 
 Specifics:
 Calling #reportOfImagesOnPageAt: can cause a deadlock since it retrieves external resources.  It may be required to stop the task and have it re-run after the network issues are resolved.
+
+The class side ShouldCheckFSSpace is a flag for running the df command through LibC - it can be turned on/off with shouldCheckFSSpace/shouldNotCheckFSSpace and checked with: checkFSSpace.
 "
 Class {
 	#name : #PRScheduledTaskExamples,
@@ -15,8 +17,17 @@ Class {
 		'kernel',
 		'todo'
 	],
+	#classVars : [
+		'ShouldCheckFSSpace'
+	],
 	#category : #'Pier-ToDo'
 }
+
+{ #category : #asserting }
+PRScheduledTaskExamples class >> checkFSSpace [
+	ShouldCheckFSSpace ifNil: [ ShouldCheckFSSpace := true ].
+	^ ShouldCheckFSSpace
+]
 
 { #category : #'instance creation' }
 PRScheduledTaskExamples class >> newForKernelNamed: aString [
@@ -36,6 +47,16 @@ PRScheduledTaskExamples class >> newForKernelNamed: aString andTodoPath: aPathSt
 				kernel: aKernel;
 				todo: aToDo;
 				yourself ]
+]
+
+{ #category : #asserting }
+PRScheduledTaskExamples class >> shouldCheckFSSpace [
+	ShouldCheckFSSpace := true
+]
+
+{ #category : #asserting }
+PRScheduledTaskExamples class >> shouldNotCheckFSSpace [
+	ShouldCheckFSSpace := false
 ]
 
 { #category : #wikibackup }
@@ -142,7 +163,8 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 	(reportPage := PRPathLookup
 		start: self kernel root
 		path: aReportPathString)
-		ifNotNil: [ urlContents := nil.
+		ifNotNil: [ :arg | 
+			urlContents := nil.
 			reportPage
 				contents:
 					(String
@@ -152,19 +174,28 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 								nextPutAll: ' - '.
 							([ checkBlock value: reportPage ]
 								on: Error
-								do: [ false ])
-								ifFalse: [ stream nextPutAll: 'Pre-Check reported no need to retrieve from '; nextPutAll: aUrlString asUrl host ]
-								ifTrue: [ [ urlContents := aUrlString asUrl retrieveContents ]
+								do: [ :err | false ])
+								ifFalse: [ stream
+										nextPutAll: 'Pre-Check reported no need to retrieve from ';
+										nextPutAll: aUrlString asUrl host ]
+								ifTrue: [ [ [ urlContents := aUrlString asUrl retrieveContents ]
+										on: NameLookupFailure
+										do: [ :err | 
+											stream
+												nextPutAll: 'Name lookup failed for: ''';
+												nextPutAll: aUrlString asUrl host ] ]
 										on: ConnectionTimedOut
-										do: [ stream
+										do: [ :err | 
+											stream
 												nextPutAll: 'Timed out connecting to: ''';
 												nextPutAll: aUrlString ].
 									urlContents
-										ifNotNil: [ stream
+										ifNotNil: [ :arg | 
+											stream
 												nextPutAll:
 													([ contentCheckBlock value: urlContents ]
 														on: Error
-														do: [ 'Content block failed.' ]) ] ] ]) ]
+														do: [ :err | 'Content block failed.' ]) ] ] ]) ]
 ]
 
 { #category : #'wiki updates' }
@@ -200,6 +231,39 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom
 ]
 
 { #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString [
+	| reportPage |
+	self guessTodoFromPath: aPathString.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString)
+		ifNotNil: [ anOsPathAndFilename.
+			(File exists: anOsPathAndFilename)
+				ifFalse: [ reportPage
+						contents:
+							(String
+								streamContents: [ :stream | 
+									self
+										printReportHeaderOn: stream
+										fields: 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
+				ifTrue: [ ((File isReadable: anOsPathAndFilename)
+						and: [ File isRegular: anOsPathAndFilename ])
+						ifFalse: [ reportPage
+								contents:
+									(String
+										streamContents: [ :stream | 
+											self
+												printReportHeaderOn: stream
+												fields: 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
+						ifTrue: [ | file |
+							file := File openForReadFileNamed: anOsPathAndFilename.
+							[ reportPage
+								contents:
+									(String
+										streamContents:
+											[ :stream | self printReportHeaderOn: stream fields: file contents asString ]) ]
+								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
+]
+
+{ #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 	| reportPage pagesWithUnusualChildren linksWithRaw |
 	self guessTodoFromPath: aPathString.
@@ -223,10 +287,15 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 				contents:
 					(String
 						streamContents: [ :stream | 
-							self
-								printReportHeaderOn: stream
-								fields:
-									'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size'.
+							self class checkFSSpace
+								ifTrue: [ self
+										printReportHeaderOn: stream
+										fields:
+											'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size|!!Disk Space' ]
+								ifFalse: [ self
+										printReportHeaderOn: stream
+										fields:
+											'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size' ].
 							stream nextPut: $|.
 							pagesWithUnusualChildren isEmpty
 								ifTrue: [ stream nextPutAll: 'none' ]
@@ -248,7 +317,11 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 												nextPutAll: '* ' ] ].
 							stream
 								nextPutAll: ' | ';
-								nextPutAll: Smalltalk imageFile humanReadableSize ]) ]
+								nextPutAll: Smalltalk imageFile humanReadableSize.
+							self class checkFSSpace
+								ifTrue: [ stream
+										nextPutAll: ' | ';
+										nextPutAll: self runCheckDiskSpace ] ]) ]
 ]
 
 { #category : #'wiki updates' }
@@ -342,6 +415,17 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 										nextPut: $|;
 										nextPutAll: task runHistory size asString;
 										cr ] ]) ]
+]
+
+{ #category : #private }
+PRScheduledTaskExamples >> runCheckDiskSpace [
+	| dfOutput |
+	dfOutput := (LibC resultOfCommand: 'df -h .') lines last substrings.
+	^ dfOutput size < 6
+		ifTrue: [ 'Failed to retrieve df -h output, found: ' , dfOutput asString ]
+		ifFalse: [ dfOutput size = 9
+				ifTrue: [ (dfOutput at: 5) , ' of ' , dfOutput second ]
+				ifFalse: [ (dfOutput last: 2) first , ' of ' , dfOutput second ] ]
 ]
 
 { #category : #accessing }
