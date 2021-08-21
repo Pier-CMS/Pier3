@@ -223,6 +223,13 @@ PUUser >> password: aString [
 	password := GRPlatform current secureHashFor: aString
 ]
 
+{ #category : #printing }
+PUUser >> printOn: aStream [
+	"Needed so the changes view displays without 'PUUser[1234..] name: admin'."
+
+	aStream nextPutAll: self name
+]
+
 { #category : #utilties }
 PUUser >> removeGroup: aGroup [
 	self groups remove: aGroup.
