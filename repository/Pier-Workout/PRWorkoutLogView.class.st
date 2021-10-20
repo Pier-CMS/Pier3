@@ -1,30 +1,14 @@
 "
 This is the display for the PRWorkoutLog, it is based off of PRToDoView.
 
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
-
-For the Class part:  State a one line summary. For example, ""I represent a paragraph of text"".
-
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-
-    Implementation Points
+The instance variable daysToDisplay is the number of days to display, if there are more than 5k, it get rather slow.
 "
 Class {
 	#name : #PRWorkoutLogView,
 	#superclass : #PRViewComponent,
+	#instVars : [
+		'daysToDisplay'
+	],
 	#category : #'Pier-Workout'
 }
 
@@ -41,6 +25,11 @@ PRWorkoutLogView class >> isValidIn: aContext [
 { #category : #accessing }
 PRWorkoutLogView class >> label [
 	^ 'Workout'
+]
+
+{ #category : #accessing }
+PRWorkoutLogView >> daysToDisplay [
+	^ daysToDisplay ifNil: [ daysToDisplay := 40 ]
 ]
 
 { #category : #rendering }
@@ -73,7 +62,11 @@ PRWorkoutLogView >> renderAddOnLabel: aString control: aBlock model: anObject on
 			context structure isNewRecomendation
 				ifFalse: [ html submitButton
 						callback: [ context structure setRecommendedWorkout: nil ];
-						with: 'Reset Recommendation' ] ]
+						with: 'Reset Recommendation' ].
+			self daysToDisplay < context structure workouts size
+				ifTrue: [ html submitButton
+						callback: [ daysToDisplay := context structure workouts size ];
+						with: 'Reset Filter' ] ]
 ]
 
 { #category : #rendering }
@@ -85,30 +78,41 @@ PRWorkoutLogView >> renderContentOn: html [
 
 { #category : #rendering }
 PRWorkoutLogView >> renderTableBodyOn: html [
-	| index lastDate |
+	| index lastDate displayDays |
+	displayDays := self daysToDisplay + 1.
 	html
 		tableBody: [ index := 1.
 			lastDate := nil.
 			context structure
 				exercisesBasedOnRecommendationsWithDateDo: [ :e :d | 
-					html tableRow
-						class:
-							(index odd
-								ifTrue: [ 'odd' ]
-								ifFalse: [ 'even' ]);
-						with: [ lastDate = d
-								ifTrue: [ html tableData: ' ' ]
-								ifFalse: [ html tableData: d.
-									lastDate := d ].
-							self
-								sortColumns: context structure columnNames
-								andDo: [ :exerciseSymb | html tableData: (e perform: exerciseSymb) ].
-							((self context isValidCommand: PREditCommand) and: [ d > Date yesterday ])
-								ifTrue: [ html tableData
-										with: [ html anchor
-												callback: [ context structure removeExerciseEntry: e ];
-												with: 'remove' ] ].
-							index := index + 1 ] ] ]
+					displayDays isZero
+						ifFalse: [ html tableRow
+								class:
+									(index odd
+										ifTrue: [ 'odd' ]
+										ifFalse: [ 'even' ]);
+								with: [ lastDate = d
+										ifTrue: [ html tableData: ' ' ]
+										ifFalse: [ displayDays := displayDays - 1.
+											displayDays isZero
+												ifFalse: [ html tableData: d.
+													lastDate := d ] ].
+									displayDays isZero
+										ifFalse: [ context structure columnNames = #(#weight #exercise #reps)
+												ifTrue: [ html
+														tableData: e exercise;
+														tableData: e weight;
+														tableData: e reps ]
+												ifFalse: [ self
+														sortColumns: context structure columnNames
+														andDo: [ :exerciseSymb | html tableData: (e perform: exerciseSymb) ] ].
+											((self context isValidCommand: PREditCommand)
+												and: [ d > Date yesterday ])
+												ifTrue: [ html tableData
+														with: [ html anchor
+																callback: [ context structure removeExerciseEntry: e ];
+																with: 'remove' ] ].
+											index := index + 1 ] ] ] ] ]
 ]
 
 { #category : #rendering }
