@@ -18,13 +18,16 @@ Public API and Key Messages
    One simple example is simply gorgeous.
  
 Internal Representation and Key Implementation Points.
-
+	daysToDisplay <Natural Number>
 
     Implementation Points
 "
 Class {
 	#name : #PRWorkoutLogView,
 	#superclass : #PRViewComponent,
+	#instVars : [
+		'daysToDisplay'
+	],
 	#category : #'Pier-Workout'
 }
 
@@ -41,6 +44,11 @@ PRWorkoutLogView class >> isValidIn: aContext [
 { #category : #accessing }
 PRWorkoutLogView class >> label [
 	^ 'Workout'
+]
+
+{ #category : #accessing }
+PRWorkoutLogView >> daysToDisplay [
+	^ daysToDisplay ifNil: [ daysToDisplay := 40 ]
 ]
 
 { #category : #rendering }
@@ -73,7 +81,11 @@ PRWorkoutLogView >> renderAddOnLabel: aString control: aBlock model: anObject on
 			context structure isNewRecomendation
 				ifFalse: [ html submitButton
 						callback: [ context structure setRecommendedWorkout: nil ];
-						with: 'Reset Recommendation' ] ]
+						with: 'Reset Recommendation' ].
+			self daysToDisplay < context structure workouts size
+				ifTrue: [ html submitButton
+						callback: [ daysToDisplay := context structure workouts size ];
+						with: 'Reset Filter' ] ]
 ]
 
 { #category : #rendering }
@@ -85,30 +97,41 @@ PRWorkoutLogView >> renderContentOn: html [
 
 { #category : #rendering }
 PRWorkoutLogView >> renderTableBodyOn: html [
-	| index lastDate |
+	| index lastDate displayDays |
+	displayDays := self daysToDisplay + 1.
 	html
 		tableBody: [ index := 1.
 			lastDate := nil.
 			context structure
 				exercisesBasedOnRecommendationsWithDateDo: [ :e :d | 
-					html tableRow
-						class:
-							(index odd
-								ifTrue: [ 'odd' ]
-								ifFalse: [ 'even' ]);
-						with: [ lastDate = d
-								ifTrue: [ html tableData: ' ' ]
-								ifFalse: [ html tableData: d.
-									lastDate := d ].
-							self
-								sortColumns: context structure columnNames
-								andDo: [ :exerciseSymb | html tableData: (e perform: exerciseSymb) ].
-							((self context isValidCommand: PREditCommand) and: [ d > Date yesterday ])
-								ifTrue: [ html tableData
-										with: [ html anchor
-												callback: [ context structure removeExerciseEntry: e ];
-												with: 'remove' ] ].
-							index := index + 1 ] ] ]
+					displayDays isZero
+						ifFalse: [ html tableRow
+								class:
+									(index odd
+										ifTrue: [ 'odd' ]
+										ifFalse: [ 'even' ]);
+								with: [ lastDate = d
+										ifTrue: [ html tableData: ' ' ]
+										ifFalse: [ displayDays := displayDays - 1.
+											displayDays isZero
+												ifFalse: [ html tableData: d.
+													lastDate := d ] ].
+									displayDays isZero
+										ifFalse: [ context structure columnNames = #(#weight #exercise #reps)
+												ifTrue: [ html
+														tableData: e exercise;
+														tableData: e weight;
+														tableData: e reps ]
+												ifFalse: [ self
+														sortColumns: context structure columnNames
+														andDo: [ :exerciseSymb | html tableData: (e perform: exerciseSymb) ] ].
+											((self context isValidCommand: PREditCommand)
+												and: [ d > Date yesterday ])
+												ifTrue: [ html tableData
+														with: [ html anchor
+																callback: [ context structure removeExerciseEntry: e ];
+																with: 'remove' ] ].
+											index := index + 1 ] ] ] ] ]
 ]
 
 { #category : #rendering }
