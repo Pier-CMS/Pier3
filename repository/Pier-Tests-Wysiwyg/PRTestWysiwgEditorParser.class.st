@@ -184,21 +184,13 @@ describe("Parser", function() {
 	});	
 		
 	it("should translate preformatted", function() {
-		expect("<pre>line 1\nline 2</pre>").shouldParseInto("=line 1\n=line 2\n");
+		expect("<pre>line 1\nline 2</pre>").shouldParseInto("= line 1\n= line 2\n");
 	});	
 		
 	it("should translate tables", function() {
 		expect("<table><tr><th>Heading</th><td>normal</td></tr><tr><td>normal</td><td style=''text-align: right''>right</td></tr><tr><td style=''text-align: left''>left</td><td>normal</td></tr><tr><td style=''text-align: center''>centre</td><td>normal</td></tr></table>").shouldParseInto("\n|!Heading|normal\n|normal|}right\n|{left|normal\n||centre|normal");
 	});	
-		
-	it("should translate shout code highlighting", function() {
-		expect("<pre class=''shout''><span class=''undefinedIdentifier''>WAAdmin</span> <span class=''undefinedKeyword''>register:</span> <span class=''undefinedIdentifier''>ScrapBook</span> <span class=''undefinedKeyword''>asApplicationAt:</span> <span class=''string''>''hello''</span></pre>").shouldParseInto("==WAAdmin register: ScrapBook asApplicationAt: ''hello''\n");
-	});	
 
-	it("should translate multiline shout code highlighting", function() {
-		expect("<pre class=''shout''><span class=''globalVar''>WAComponent</span> <span class=''keyword''>subclass:</span> <span class=''symbol''>#</span><span class=''symbol''>ScrapBook</span><br>    <span class=''keyword''>instanceVariableNames:</span> <span class=''string''>''''</span><br>    <span class=''keyword''>classVariableNames:</span> <span class=''string''>''''</span><br>    <span class=''keyword''>poolDictionaries:</span> <span class=''string''>''''</span><br>    <span class=''keyword''>category:</span> <span class=''string''>''SeasideBook-Hello''</span></pre>").shouldParseInto("==WAComponent subclass: #ScrapBook\n==    instanceVariableNames: ''''\n==    classVariableNames: ''''\n==    poolDictionaries: ''''\n==    category: ''SeasideBook-Hello''\n");
-	});
-	
 	describe("escaped text", function() {
 		it("should escaped text containing code markup", function() {
 			expect("To make something <code>monospaced</code>, surround it with <code>==</code>").shouldParseInto("To make something ==monospaced==, surround it with ==\\=\\===");	
@@ -206,29 +198,6 @@ describe("Parser", function() {
 	
 		it("should escaped text containing link markup", function() {
 			expect("To create a link, put it between <code>*</code>").shouldParseInto("To create a link, put it between ==\\*==");	
-		});
-	});
-	describe("images", function() {
-		it("should convert embedded images into embedded links", function() {
-			expect("<img src=\"\/pier\/astructure\/logo.png\">").shouldParseInto(" +\/astructure\/logo.png+ ");	
-		});
-		it("should convert embedded images into embedded links without path", function() {
-			expect("<img src=\"\/pier\/logo.png\">").shouldParseInto(" +\/logo.png+ ");	
-		});
-		it("should convert embedded images into embedded links with attributes #1", function() {
-			expect("<img src=\"\/pier\/astructure\/logo.png\" align=\"left\">").shouldParseInto(" +\/astructure\/logo.png|align=left+ ");	
-		});
-		it("should convert embedded images into embedded links with attributes #2", function() {
-			expect("<img src=\"\/pier\/astructure\/logo.png\" style=\"display:block\">").shouldParseInto(" +\/astructure\/logo.png|style=display:block+ ");	
-		});
-		it("should convert embedded images into embedded links with attributes #3", function() {
-			expect("<img src=\"\/pier\/astructure\/logo.png\" style=\"display: block;\" align=\"center\">").shouldParseInto(" +\/astructure\/logo.png|style=display: block|align=center+ ");	
-		});
-		it("should convert embedded images into embedded links with attributes #4", function() {
-			expect("<img src=\"\/pier\/astructure\/logo.png\" style=\"display: block; align=center\">").shouldParseInto(" +\/astructure\/logo.png|style=display: block; align=center+ ");	
-		});
-		it("should convert external images into embedded links", function() {
-			expect("<img src=\"http://www.easyvectors.com/assets/images/vectors/afbig/flag-of-chiyoda-tokyo-clip-art.jpg\" style=\"display: block; align=center\">").shouldParseInto(" +http://www.easyvectors.com/assets/images/vectors/afbig/flag-of-chiyoda-tokyo-clip-art.jpg|style=display: block; align=center+ ");	
 		});
 	});
 });
