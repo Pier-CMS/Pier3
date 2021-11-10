@@ -51,6 +51,11 @@ PRWorkoutLogView >> daysToDisplay [
 	^ daysToDisplay ifNil: [ daysToDisplay := 40 ]
 ]
 
+{ #category : #accessing }
+PRWorkoutLogView >> doubleDaysToDisplay [
+	daysToDisplay := daysToDisplay * 2
+]
+
 { #category : #rendering }
 PRWorkoutLogView >> renderAddOn: html [
 	| selectList nextEntry |
@@ -84,8 +89,8 @@ PRWorkoutLogView >> renderAddOnLabel: aString control: aBlock model: anObject on
 						with: 'Reset Recommendation' ].
 			self daysToDisplay < context structure workouts size
 				ifTrue: [ html submitButton
-						callback: [ daysToDisplay := context structure workouts size ];
-						with: 'Reset Filter' ] ]
+						callback: [ self doubleDaysToDisplay ];
+						with: 'Double Day Filter' ] ]
 ]
 
 { #category : #rendering }
