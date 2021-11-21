@@ -131,7 +131,7 @@ PRWorkoutLogView >> renderTableBodyOn: html [
 														sortColumns: context structure columnNames
 														andDo: [ :exerciseSymb | html tableData: (e perform: exerciseSymb) ] ].
 											((self context isValidCommand: PREditCommand)
-												and: [ d > Date yesterday ])
+												and: [ d > Date yesterday previous ])
 												ifTrue: [ html tableData
 														with: [ html anchor
 																callback: [ context structure removeExerciseEntry: e ];
