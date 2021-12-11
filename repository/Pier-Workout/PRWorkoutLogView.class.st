@@ -85,12 +85,13 @@ PRWorkoutLogView >> renderAddOnLabel: aString control: aBlock model: anObject on
 				with: 'Add'.
 			context structure isNewRecomendation
 				ifFalse: [ html submitButton
-						callback: [ context structure setRecommendedWorkout: nil ];
+						callback: [ daysToDisplay := 40.
+							context structure setRecommendedWorkout: nil ];
 						with: 'Reset Recommendation' ].
 			self daysToDisplay < context structure workouts size
 				ifTrue: [ html submitButton
 						callback: [ self doubleDaysToDisplay ];
-						with: 'Double Day Filter' ] ]
+						with: 'Double Days Listed' ] ]
 ]
 
 { #category : #rendering }
