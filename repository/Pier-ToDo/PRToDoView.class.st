@@ -164,7 +164,7 @@ PRToDoView >> setReports [
 					reports last
 						addColumn:
 								(MACommandColumn new
-										label: 'is done?';
+										label: 'Is Done?';
 										addCommand: [ :toDoItem | 
 													self markComplete: toDoItem.
 													self setReports ]

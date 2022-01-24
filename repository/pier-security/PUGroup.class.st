@@ -50,6 +50,12 @@ PUGroup >> initialize [
 	users := Set new
 ]
 
+{ #category : #printing }
+PUGroup >> printOn: aStream [
+	"Display the name only, the user menu is too small to allow: 'a PUGroup[<hash>...'"
+	aStream nextPutAll: self name
+]
+
 { #category : #accessing }
 PUGroup >> users [
 	^ users

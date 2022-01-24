@@ -32,6 +32,11 @@ PRWorkoutLogView >> daysToDisplay [
 	^ daysToDisplay ifNil: [ daysToDisplay := 40 ]
 ]
 
+{ #category : #'as yet unclassified' }
+PRWorkoutLogView >> doubleDaysToDisplay [
+	daysToDisplay := daysToDisplay * 2
+]
+
 { #category : #rendering }
 PRWorkoutLogView >> renderAddOn: html [
 	| selectList nextEntry |
@@ -61,12 +66,13 @@ PRWorkoutLogView >> renderAddOnLabel: aString control: aBlock model: anObject on
 				with: 'Add'.
 			context structure isNewRecomendation
 				ifFalse: [ html submitButton
-						callback: [ context structure setRecommendedWorkout: nil ];
+						callback: [ daysToDisplay := 40.
+							context structure setRecommendedWorkout: nil ];
 						with: 'Reset Recommendation' ].
 			self daysToDisplay < context structure workouts size
 				ifTrue: [ html submitButton
-						callback: [ daysToDisplay := context structure workouts size ];
-						with: 'Reset Filter' ] ]
+						callback: [ self doubleDaysToDisplay ];
+						with: 'Double Days Listed' ] ]
 ]
 
 { #category : #rendering }
@@ -107,7 +113,7 @@ PRWorkoutLogView >> renderTableBodyOn: html [
 														sortColumns: context structure columnNames
 														andDo: [ :exerciseSymb | html tableData: (e perform: exerciseSymb) ] ].
 											((self context isValidCommand: PREditCommand)
-												and: [ d > Date yesterday ])
+												and: [ d > Date yesterday previous ])
 												ifTrue: [ html tableData
 														with: [ html anchor
 																callback: [ context structure removeExerciseEntry: e ];
