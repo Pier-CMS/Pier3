@@ -296,7 +296,7 @@ PRWysiwygFileLibrary >> parseHtmlToPierWikiSyntaxJs [
 			var isCode = true;
 			escapeText = false;
 
-			var markup = "=";
+			var markup = "= ";
 			
 			wikiOutput.push(markup);
 			var startLength = wikiOutput.length;
