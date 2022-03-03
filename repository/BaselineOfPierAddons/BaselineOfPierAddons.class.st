@@ -41,16 +41,6 @@ BaselineOfPierAddons >> baseline: spec [
 					with: [ spec requires: #('Pier-EditorEnh' 'pier-book') ];
 				package: 'Pier-Kernel-Distributions'
 					with: [ spec requires: #('Pier-Wysiwyg' 'pier-book' 'Pier-TagCloud') ];
-				package: 'Pier-Admin-Setup-Core'
-					with: [ spec requires: #('Pier-TagCloud') ];
-				package: 'Pier-Admin-Setup-NewKernelFromDistribution'
-					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
-				package: 'Pier-Admin-Setup-RecreateExportedKernel'
-					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
-				package: 'Pier-Admin-UI'
-					with: [ spec requires: #('Pier-Admin-Setup-Core') ];
-				package: 'Pier-Admin-Setup-ExistingKernel'
-					with: [ spec requires: #('Pier-Admin-UI') ];
 				package: 'Javascript-Jasmine'
 					with: [ spec requires: #('Pier-Wysiwyg') ];
 				package: 'Pier-Tests-Wysiwyg'
