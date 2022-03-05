@@ -66,10 +66,8 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('pier-security') ];
 				package: 'Pier-Bootstrap'
 					with: [ spec requires: #('pier-jquery') ];
-				package: 'pier-admin'
-					with: [ spec requires: #('Pier-Bootstrap') ];
 				package: 'pier-pharo-persistency'
-					with: [ spec requires: #('pier-admin') ];
+					with: [ spec requires: #('Pier-Bootstrap') ];
 				package: 'Pier-Exporter-Code'
 					with: [ spec requires: #('pier-pharo-persistency') ];
 				package: 'Pier-Exporter-Pharo'
