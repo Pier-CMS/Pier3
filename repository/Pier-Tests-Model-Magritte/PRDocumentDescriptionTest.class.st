@@ -14,6 +14,11 @@ PRDocumentDescriptionTest >> includedInstance [
 	^ self description fromString: '!Hello World'
 ]
 
+{ #category : #private }
+PRDocumentDescriptionTest >> shouldSkipStringTests [
+	^ true
+]
+
 { #category : #'tests-accessing' }
 PRDocumentDescriptionTest >> testAccessor [
 	"This doesn't work, as the document description wraps the accessor with an accessor-delegator."
