@@ -26,10 +26,13 @@ PRCustomLink class >> conversions: aCollection [
 
 { #category : #accessing }
 PRCustomLink class >> example [
+	"Change *google pharo smalltalk* => https://www.google.com/search?q=pharo+smalltalk"
+
 	self
 		addConversion: [ :aString | 
 			('google *' match: aString)
-				ifTrue: [ 'https://www.google.com/search?q=' , (aString copyReplaceAll: ' ' with: '+') ] ]
+				ifTrue: [ 'https://www.google.com/search?q='
+						, (aString copyReplaceAll: ' ' with: '+') ] ]
 ]
 
 { #category : #testing }
