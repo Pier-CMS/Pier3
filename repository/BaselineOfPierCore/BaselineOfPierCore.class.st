@@ -34,11 +34,9 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-8' ];
 				baseline: 'PillarExporter'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-8' ];
-				baseline: 'PillarApp'
-					with: [ spec repository: 'github://pillar-markup/pillar:dev-8' ];
 				package: 'Pier-Model-Document'
 					with: [ spec
-						requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter' 'Seaside3' 'PillarApp') ];
+						requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter' 'Seaside3') ];
 				package: 'Pier-Model-Magritte'
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
@@ -95,31 +93,7 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'pier-seaside-testing'
 					with: [ spec
 						requires: #('Pier-Design');
-						postLoadDoIt: #registerPierInSeaside ];
-				package: 'pier-tests-model'
-					with: [ spec requires: #('Pier-Design') ];
-				package: 'Pier-Tests-Model-Utilities'
-					with: [ spec requires: #('pier-tests-model') ];
-				package: 'Pier-Tests-Model-Mocks'
-					with: [ spec requires: #('Pier-Tests-Model-Utilities') ];
-				package: 'Pier-Tests-Model-Structure'
-					with: [ spec requires: #('Pier-Tests-Model-Mocks') ];
-				package: 'Pier-Tests-Model-Kernel'
-					with: [ spec requires: #('Pier-Tests-Model-Structure') ];
-				package: 'Pier-Tests-Model-Document'
-					with: [ spec requires: #('Pier-Tests-Model-Kernel') ];
-				package: 'Pier-Tests-Model-Command'
-					with: [ spec requires: #('Pier-Tests-Model-Document') ];
-				package: 'Pier-Tests-Model-Persistence'
-					with: [ spec requires: #('Pier-Tests-Model-Command') ];
-				package: 'Pier-Tests-Pharo-Persistency'
-					with: [ spec requires: #('Pier-Tests-Model-Persistence') ];
-				package: 'pier-tests-security'
-					with: [ spec requires: #('Pier-Tests-Pharo-Persistency') ];
-				package: 'pier-tests-seaside-model'
-					with: [ spec requires: #('pier-tests-security') ];
-				package: 'Pier-Tests-Model-Magritte'
-					with: [ spec requires: #('pier-tests-seaside-model') ] ]
+						postLoadDoIt: #registerPierInSeaside ] ]
 ]
 
 { #category : #doits }
