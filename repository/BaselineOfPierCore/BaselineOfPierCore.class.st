@@ -30,8 +30,6 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						repository: 'github://magritte-metamodel/magritte';
 						loads: #('Seaside' 'Tests') ];
-				baseline: 'Pillar'
-					with: [ spec repository: 'github://pillar-markup/pillar:dev-8' ];
 				baseline: 'PillarApp'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-8';
 						loads: #('parser') ];
