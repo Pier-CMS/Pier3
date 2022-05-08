@@ -35,7 +35,7 @@ BaselineOfPierCore >> baseline: spec [
 						loads: #('parser') ];
 				package: 'Pier-Model-Document'
 					with: [ spec
-						requires: #('Bootstrap' 'Magritte' 'Pillar' 'Seaside3') ];
+						requires: #('Bootstrap' 'Magritte' 'PillarApp' 'Seaside3') ];
 				package: 'Pier-Model-Magritte'
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
