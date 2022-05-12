@@ -30,12 +30,11 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						repository: 'github://magritte-metamodel/magritte';
 						loads: #('Seaside' 'Tests') ];						
-				baseline: 'PillarApp'
-					with: [ spec repository: 'github://pillar-markup/pillar:dev-8';
-						loads: #('ALL') ];
+				baseline: 'Pillar'
+					with: [ spec repository: 'github://pillar-markup/pillar:dev-8' ];
 				package: 'Pier-Model-Document'
 					with: [ spec
-						requires: #('Bootstrap' 'Magritte' 'PillarApp' 'Seaside3') ];
+						requires: #('Bootstrap' 'Magritte' 'Pillar' 'Seaside3') ];
 				package: 'Pier-Model-Document'
 					with: [ spec
 						requires: #('Bootstrap' 'Magritte' 'PillarApp' 'Seaside3') ];
@@ -91,10 +90,7 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'JQWidgetBox-Cycle-Core'
 					with: [ spec requires: #('Pier-JQuery-Widgets') ];
 				package: 'Pier-Design'
-					with: [ spec requires: #('Pier-JQuery-Widgets') ];
-				package: 'pier-seaside-testing'
-					with: [ spec
-						requires: #('Pier-Design');
+					with: [ spec requires: #('Pier-JQuery-Widgets');
 						postLoadDoIt: #registerPierInSeaside ] ]
 ]
 
