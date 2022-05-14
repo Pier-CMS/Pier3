@@ -89,8 +89,10 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('jqwidgetbox-formexample-core') ];
 				package: 'JQWidgetBox-Cycle-Core'
 					with: [ spec requires: #('Pier-JQuery-Widgets') ];
+				package: 'pier-seaside-testing'
+					with: [ spec requires: #('JQWidgetBox-Cycle-Core') ];
 				package: 'Pier-Design'
-					with: [ spec requires: #('Pier-JQuery-Widgets');
+					with: [ spec requires: #('pier-seaside-testing');
 						postLoadDoIt: #registerPierInSeaside ] ]
 ]
 
