@@ -5,11 +5,11 @@ This is a port of the code to Github, instructions on loading are: http://www.my
 
 This can be loaded from Pharo 7 by running this in a workspace:
 ```
-Metacello new
-  baseline:'PierCore';
-  repository: 'github://Pier-CMS/Pier3:main/repository';
-  onConflictUseLoaded;
-  load.
+[ Metacello new
+	baseline: 'PierCore';
+	repository: 'github://Pier-CMS/Pier3:LoadIn9/repository';
+	onConflictUseLoaded;
+	load ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
 ```
 A more complete system with extra goodies can be loaded with:
 ```
