@@ -35,12 +35,16 @@ BaselineOfPierCore >> baseline: spec [
 				baseline: 'Pillar'
 					with: [ spec repository: 'github://pillar-markup/pillar:dev-8' ];
 				baseline: 'PillarApp'
-					with: [ spec requires: #('Chrysal');
+					with: [ spec 
 						repository: 'github://pillar-markup/pillar:dev-8';
 						loads: #('parser') ];
+				baseline: 'PillarExporter'
+					with: [ spec 
+						repository: 'github://pillar-markup/pillar:dev-8';
+						loads: #('pillar exporter') ];
 				package: 'Pier-Model-Document'
 					with: [ spec
-						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Pillar' 'PillarApp') ];
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'Pillar' 'PillarApp' 'PillarExporter') ];
 				package: 'Pier-Model-Magritte'
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
