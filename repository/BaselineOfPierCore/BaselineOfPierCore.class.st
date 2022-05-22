@@ -94,7 +94,8 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('JQWidgetBox-Cycle-Core') ];
 				package: 'Pier-Design'
 					with: [ spec requires: #('pier-seaside-testing');
-						postLoadDoIt: #registerPierInSeaside ] ]
+						postLoadDoIt: #registerPierInSeaside ];
+				group: 'default' with: #('pier-seaside-testing') ]
 ]
 
 { #category : #doits }
