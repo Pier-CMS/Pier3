@@ -9,8 +9,6 @@ Class {
 
 { #category : #baselines }
 BaselineOfPierCore >> baseline: spec [
-	"baselines"
-
 	<baseline>
 	spec
 		for: #common
@@ -28,10 +26,10 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						repository: 'github://magritte-metamodel/magritte';
 						loads: #('Seaside' 'Tests') ];
- 				baseline: 'Chrysal' with: [ spec
- 					repository: 'github://Ducasse/Chrysal/src' ];						
+				baseline: 'Chrysal'
+					with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
 				baseline: 'PillarExporter'
-					with: [ spec 
+					with: [ spec
 						repository: 'github://pillar-markup/pillar:dev-8';
 						loads: #('pillar exporter' 'text exporter') ];
 				package: 'Pier-Model-Document'
@@ -41,8 +39,7 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
 					with: [ spec requires: #('Pier-Model-Magritte') ];
-				package: 'Pier-Model-Command'
-					with: [ spec requires: #('Pier-Model-Visitor') ];
+				with: [ spec requires: #('Pier-Model-Visitor') ];
 				package: 'Pier-Model-Structure'
 					with: [ spec requires: #('Pier-Model-Command') ];
 				package: 'pier-seaside-converting'
@@ -91,7 +88,8 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'pier-seaside-testing'
 					with: [ spec requires: #('JQWidgetBox-Cycle-Core') ];
 				package: 'Pier-Design'
-					with: [ spec requires: #('pier-seaside-testing');
+					with: [ spec
+						requires: #('pier-seaside-testing');
 						postLoadDoIt: #registerPierInSeaside ];
 				group: 'default' with: #('pier-seaside-testing') ]
 ]
