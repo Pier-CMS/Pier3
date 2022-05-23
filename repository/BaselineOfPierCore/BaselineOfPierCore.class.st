@@ -61,7 +61,7 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'pier-seaside-accessing'
 					with: [ spec requires: #('pier-security') ];
 				package: 'pier-jquery'
-					with: [ spec requires: #('pier-security') ];
+					with: [ spec requires: #('pier-seaside-accessing') ];
 				package: 'Pier-Bootstrap'
 					with: [ spec requires: #('pier-jquery') ];
 				package: 'pier-pharo-persistency'
@@ -92,7 +92,7 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						requires: #('pier-seaside-testing');
 						postLoadDoIt: #registerPierInSeaside ];
-				group: 'default' with: #('pier-seaside-testing') ]
+				group: 'default' with: #('Pier-Design') ]
 ]
 
 { #category : #doits }
