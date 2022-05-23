@@ -39,7 +39,8 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
 					with: [ spec requires: #('Pier-Model-Magritte') ];
-				with: [ spec requires: #('Pier-Model-Visitor') ];
+				package: 'Pier-Model-Command'
+					with: [ spec requires: #('Pier-Model-Visitor') ];
 				package: 'Pier-Model-Structure'
 					with: [ spec requires: #('Pier-Model-Command') ];
 				package: 'pier-seaside-converting'
