@@ -13,12 +13,13 @@ BaselineOfPierCoreTests >> baseline: spec [
 			spec
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
+				"Automation not working well, first load PierCore, then in Iceberg load Pillar-Tests-Core, then this.
 				baseline: 'PierCore'
 					with: [ spec repository: 'github://Pier-CMS/Pier3:LoadIn9/repository' ];
 				baseline: 'PillarCore'
 					with: [ spec
 						repository: 'github://pillar-markup/pillar:dev-8';
-						loads: #('tests') ];
+						loads: #('tests') ];"
 				baseline: 'PillarExporter'
 					with: [ spec
 						repository: 'github://pillar-markup/pillar:dev-8';
