@@ -20,8 +20,9 @@ BaselineOfPierCoreTests >> baseline: spec [
 						repository: 'github://pillar-markup/pillar:dev-8';
 						loads: #('tests') ];
 				baseline: 'PillarExporter'
-					with: [ spec repository: 'github://pillar-markup/pillar:dev-8';
-						loads: #('pillar exporter tests') ;
+					with: [ spec
+						repository: 'github://pillar-markup/pillar:dev-8';
+						loads: #('pillar exporter tests') ];
 				package: 'pier-tests-model'
 					with: [ spec requires: #('PierCore' 'PillarCore' 'PillarExporter') ];
 				package: 'Pier-Tests-Model-Utilities'
@@ -46,5 +47,5 @@ BaselineOfPierCoreTests >> baseline: spec [
 					with: [ spec requires: #('pier-tests-security') ];
 				package: 'Pier-Tests-Model-Magritte'
 					with: [ spec requires: #('pier-tests-seaside-model') ];
-				group: 'default' with: #('Pier-Tests-Model-Magritte') ] ]
+				group: 'default' with: #('Pier-Tests-Model-Magritte') ]
 ]
