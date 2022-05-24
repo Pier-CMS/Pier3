@@ -24,9 +24,5 @@ BaselineOfPierTodo >> baseline: spec [
 					with: [ spec requires: #('PierAddons') ];
 				package: 'Pier-ToDo'
 					with: [ spec requires: #('Pier-SW2-Sw1Features' 'Scheduler') ];
-				package: 'Pier-Workout' with: [ spec requires: #('Pier-ToDo') ];
-				package: 'Pier-Tests-Todo'
-					with: [ spec requires: #('Pier-ToDo') ];
-				package: 'Pier-Test-Workout'
-					with: [ spec requires: #('Pier-Workout') ] ]
+				package: 'Pier-Workout' with: [ spec requires: #('Pier-ToDo') ] ]
 ]
