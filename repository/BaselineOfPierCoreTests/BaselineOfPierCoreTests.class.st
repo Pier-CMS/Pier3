@@ -25,7 +25,7 @@ BaselineOfPierCoreTests >> baseline: spec [
 						repository: 'github://pillar-markup/pillar:dev-8';
 						loads: #('pillar exporter tests') ];
 				package: 'pier-tests-model'
-					with: [ spec requires: #('PierCore' 'PillarCore' 'PillarExporter') ];
+					with: [ spec requires: #('PillarExporter') ];
 				package: 'Pier-Tests-Model-Utilities'
 					with: [ spec requires: #('pier-tests-model') ];
 				package: 'Pier-Tests-Model-Mocks'
