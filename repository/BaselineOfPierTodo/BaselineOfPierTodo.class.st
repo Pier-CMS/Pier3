@@ -17,7 +17,7 @@ BaselineOfPierTodo >> baseline: spec [
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'PierAddons'
-					with: [ spec repository: 'github://jborden23/Pier3' ];
+					with: [ spec repository: 'github://Pier-CMS/Pier3' ];
 				baseline: 'Scheduler'
 					with: [ spec repository: 'github://pharo-contributions/Scheduler' ];
 				package: 'Pier-SW2-Sw1Features'
