@@ -20,15 +20,17 @@ BaselineOfPierTodo >> baseline: spec [
 					with: [ spec repository: 'github://Pier-CMS/Pier3' ];
 				baseline: 'Scheduler'
 					with: [ spec repository: 'github://pharo-contributions/Scheduler' ];
+				baseline: 'PierCoreTests'
+					with: [ spec repository: 'github://Pier-CMS/Pier3' ];
 				package: 'Pier-SW2-Sw1Features'
 					with: [ spec requires: #('PierAddons') ];
 				package: 'Pier-ToDo'
 					with: [ spec requires: #('Pier-SW2-Sw1Features' 'Scheduler') ];
 				package: 'Pier-Workout' with: [ spec requires: #('Pier-ToDo') ];
 				package: 'Pier-Tests-Todo'
-					with: [ spec requires: #('Pier-ToDo') ];
+					with: [ spec requires: #('PierCoreTests' 'Pier-ToDo') ];
 				package: 'Pier-Test-Workout'
-					with: [ spec requires: #('Pier-Workout') ];
+					with: [ spec requires: #('PierCoreTests' 'Pier-Workout') ];
 				group: 'default' with: #('Pier-Workout');
 				group: 'tests' with: #('Pier-Tests-Todo' 'Pier-Test-Workout') ]
 ]
