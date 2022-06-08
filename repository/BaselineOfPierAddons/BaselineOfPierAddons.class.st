@@ -44,5 +44,6 @@ BaselineOfPierAddons >> baseline: spec [
 				package: 'Javascript-Jasmine'
 					with: [ spec requires: #('Pier-Wysiwyg') ];
 				package: 'Pier-Tests-Wysiwyg'
-					with: [ spec requires: #('Javascript-Jasmine') ] ]
+					with: [ spec requires: #('Javascript-Jasmine') ];
+				group: 'default' with: #('Pier-Tests-Wysiwyg') ]
 ]
