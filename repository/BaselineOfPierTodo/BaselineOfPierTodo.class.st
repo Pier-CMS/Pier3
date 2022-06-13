@@ -27,8 +27,10 @@ BaselineOfPierTodo >> baseline: spec [
 				package: 'Pier-Workout' with: [ spec requires: #('Pier-ToDo') ];
 				package: 'Pier-Tests-Todo'
 					with: [ spec requires: #('Pier-ToDo') ];
+				package: 'Pier-Tests-SW2-Sw1Features'
+					with: [ spec requires: #('Pier-SW2-Sw1Features') ];
 				package: 'Pier-Test-Workout'
 					with: [ spec requires: #('Pier-Workout') ];
 				group: 'default' with: #('Pier-Workout');
-				group: 'tests' with: #('Pier-Tests-Todo' 'Pier-Test-Workout') ]
+				group: 'tests' with: #('Pier-Tests-Todo' 'Pier-Test-Workout' 'Pier-Tests-SW2-Sw1Features') ]
 ]
