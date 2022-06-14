@@ -17,7 +17,9 @@ BaselineOfPierTodo >> baseline: spec [
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'PierAddons'
-					with: [ spec repository: 'github://jborden23/Pier3' ];
+					with: [ spec repository: 'github://Pier-CMS/Pier3' ];
+				baseline: 'PierCoreTests'
+					with: [ spec repository: 'github://Pier-CMS/Pier3' ];
 				baseline: 'Scheduler'
 					with: [ spec repository: 'github://pharo-contributions/Scheduler' ];
 				package: 'Pier-SW2-Sw1Features'
@@ -26,11 +28,12 @@ BaselineOfPierTodo >> baseline: spec [
 					with: [ spec requires: #('Pier-SW2-Sw1Features' 'Scheduler') ];
 				package: 'Pier-Workout' with: [ spec requires: #('Pier-ToDo') ];
 				package: 'Pier-Tests-Todo'
-					with: [ spec requires: #('Pier-ToDo') ];
+					with: [ spec requires: #('PierCoreTests' 'Pier-ToDo') ];
 				package: 'Pier-Tests-SW2-Sw1Features'
 					with: [ spec requires: #('Pier-SW2-Sw1Features') ];
 				package: 'Pier-Test-Workout'
-					with: [ spec requires: #('Pier-Workout') ];
+					with: [ spec requires: #('PierCoreTests' 'Pier-Workout') ];
 				group: 'default' with: #('Pier-Workout');
-				group: 'tests' with: #('Pier-Tests-Todo' 'Pier-Test-Workout' 'Pier-Tests-SW2-Sw1Features') ]
+				group: 'tests'
+					with: #('Pier-Tests-Todo' 'Pier-Test-Workout' 'Pier-Tests-SW2-Sw1Features') ]
 ]
