@@ -91,12 +91,12 @@ PRClassicDistribution >> mainEnvironmentPage [
 		title: '_Main Environment';
 		contents: 
 '{{{<div class="container">
-	}}}+/system/components/header+{{{
+	}}}*/system/components/header|embedded=true*{{{
 	<div class="column span-16 last mainbody">
 		<h1 class="heading">}}}*value:structure*{{{</h1>
-		<div class="contents column">}}}+/system/components/contents+{{{</div>
+		<div class="contents column">}}}*/system/components/contents|embedded=true*{{{</div>
 	</div>
-	}}}+/system/components/footer+{{{
+	}}}*/system/components/footer|embedded=true*{{{
 </div>}}}
 ';
 		yourself
@@ -108,8 +108,8 @@ PRClassicDistribution >> menuPage [
 	^ menuWidget ifNil: 
 		[ menuWidget := (PRPage named: 'menu')
 			contents:
-'- +../LinkPath+
-- +../search+';
+'- *../LinkPath*
+- *../search|embedded=true*';
 			yourself ]
 ]
 
@@ -369,16 +369,16 @@ PRClassicDistribution >> systemManagementPage [
 				componentClass: PRKernelSettings;
 				yourself);
 		contents: '!Users
-+users+
+*users|embedded=true*
 
 !User Group
-+groups+
+*groups|embedded=true*
 
 !Persistency
-+persistency+
+*persistency|embedded=true*
 
 !Kernel Settings
-+kernel+';
+*kernel|embedded=true*';
 		yourself
 	]
 ]

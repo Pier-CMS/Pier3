@@ -36,7 +36,7 @@ Class {
 
 { #category : #actions }
 Pier2ToPier3Converter >> convertLine: aString [
-	| resultsBeforeTableFix inputStream outputStream currentChar lastChar |
+	| inputStream outputStream currentChar lastChar |
 	aString isEmpty
 		ifTrue: [ ^ '' ].
 	(aString includes: (Character value: 226))
@@ -45,13 +45,10 @@ Pier2ToPier3Converter >> convertLine: aString [
 	outputStream := WriteStream on: (String new: aString size).
 	lastChar := Character space.
 	[ inputStream atEnd ]
-		whileFalse: [ 
-			(currentChar := inputStream next) = (Character value: 226)
-				ifTrue: [ 
-					lastChar isSeparator
+		whileFalse: [ (currentChar := inputStream next) = (Character value: 226)
+				ifTrue: [ lastChar isSeparator
 						ifTrue: [ outputStream nextPut: $- ]
-						ifFalse: [ 
-							lastChar isLetter
+						ifFalse: [ lastChar isLetter
 								ifTrue: [ outputStream nextPut: $' ].
 							inputStream
 								next;
