@@ -62,5 +62,12 @@ BaselineOfPier >> baseline: spec [
 				package: 'Pier-Model-Document'
 					with: [ spec
 						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
-				group: 'default' with: #('Pier-Model-Document') ]
+				package: 'Pier-Model-Magritte'
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				package: 'Pier-Model-Document'
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				group: 'default'
+					with: #('Pier-Model-Document' 'Pier-Model-Magritte') ]
 ]
