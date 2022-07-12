@@ -78,15 +78,22 @@ BaselineOfPier >> baseline: spec [
 					with: [ spec
 						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
 				package: 'pier-seaside-converting'
-					with: [ spec
-						requires: #('Pier-Model-Command') ];
+					with: [ spec requires: #('Pier-Model-Command') ];
 				package: 'pier-seaside-defaults'
-					with: [ spec
-						requires: #('Pier-Model-Magritte') ];
+					with: [ spec requires: #('Pier-Model-Magritte') ];
 				package: 'pier-seaside-protected'
+					with: [ spec requires: #('Pier-Model-Structure' 'Pier-Model-Command') ];
+				package: 'Pier-Seaside'
 					with: [ spec
-						requires: #('Pier-Model' 'Pier-Model-Command') ];
-
+						requires:
+							#('Pier-Model' 'Pier-Model-Command' 'Pier-Model-Document' 'Pier-Model-Structure') ];
+				package: 'Pier-Documents'
+					with: [ spec requires: #('Pier-Model-Structure' 'Pier-Seaside') ];
+				package: 'pier-pharo-model'
+					with: [ spec requires: #('Pier-Model-Structure') ];
+				package: 'pier-security'
+					with: [ spec requires: #('Pier-Seaside') ];
 				group: 'default'
-					with: #('Pier-Model-Document' 'Pier-Model-Visitor' 'Pier-Model-Structure' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults') ]
+					with:
+					#('Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults' 'pier-pharo-model' 'pier-security') ]
 ]
