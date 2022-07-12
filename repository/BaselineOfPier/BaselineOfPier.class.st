@@ -65,9 +65,28 @@ BaselineOfPier >> baseline: spec [
 				package: 'Pier-Model-Magritte'
 					with: [ spec
 						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
-				package: 'Pier-Model-Document'
+				package: 'Pier-Model-Visitor'
 					with: [ spec
 						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				package: 'Pier-Model-Command'
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				package: 'Pier-Model-Structure'
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				package: 'Pier-Model'
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				package: 'pier-seaside-converting'
+					with: [ spec
+						requires: #('Pier-Model-Command') ];
+				package: 'pier-seaside-defaults'
+					with: [ spec
+						requires: #('Pier-Model-Magritte') ];
+				package: 'pier-seaside-protected'
+					with: [ spec
+						requires: #('Pier-Model' 'Pier-Model-Command') ];
+
 				group: 'default'
-					with: #('Pier-Model-Document' 'Pier-Model-Magritte') ]
+					with: #('Pier-Model-Document' 'Pier-Model-Visitor' 'Pier-Model-Structure' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults') ]
 ]
