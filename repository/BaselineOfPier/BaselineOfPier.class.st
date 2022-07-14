@@ -93,7 +93,48 @@ BaselineOfPier >> baseline: spec [
 					with: [ spec requires: #('Pier-Model-Structure') ];
 				package: 'pier-security'
 					with: [ spec requires: #('Pier-Seaside') ];
+				package: 'pier-seaside-accessing'
+					with: [ spec requires: #('Pier-Model' 'Pier-Model-Structure') ];
+				package: 'pier-jquery'
+					with: [ spec requires: #('Pier-Model-Document') ];
+				package: 'Pier-Bootstrap'
+					with: [ spec requires: #('pier-security') ];
+				package: 'pier-pharo-persistency'
+					with: [ spec requires: #('Pier-Model') ];
+				package: 'Pier-Exporter-Code'
+					with: [ spec requires: #('Pier-Model-Structure') ];
+				package: 'Pier-Exporter-Pharo'
+					with: [ spec
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
+				package: 'Pier-Pharo-Seaside'
+					with: [ spec requires: #('Pier-Seaside') ];
+				package: 'Pier-LinkChecker'
+					with: [ spec requires: #('pier-security' 'Pier-Seaside' 'Pier-Model') ];
+				package: 'JQWidgetBox-Core-Libraries'
+					with: [ spec requires: #('Bootstrap' 'Magritte' 'Seaside3') ];
+				package: 'jqwidgetbox-uilayout-core'
+					with: [ spec requires: #('JQWidgetBox-Core-Libraries') ];
+				package: 'jqwidgetbox-formexample-core'
+					with: [ spec requires: #('Bootstrap' 'Magritte' 'Seaside3') ];
+				package: 'Pier-JQuery-Widgets'
+					with: [ spec
+						requires: #('Pier-Seaside' 'Pier-Model-Magritte' 'JQWidgetBox-Core-Libraries') ];
+				package: 'JQWidgetBox-Cycle-Core'
+					with: [ spec requires: #('JQWidgetBox-Core-Libraries') ];
+				package: 'pier-seaside-testing'
+					with: [ spec requires: #('Pier-Model-Command' 'Pier-Model-Structure') ];
+				package: 'Pier-Design'
+					with: [ spec
+						requires: #('Pier-Model-Command');
+						postLoadDoIt: #registerPierInSeaside ];
 				group: 'default'
 					with:
-					#('Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults' 'pier-pharo-model' 'pier-security') ]
+					#('Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults' 'pier-pharo-model' 'pier-seaside-accessing' 'pier-jquery' 'Pier-Bootstrap' 'pier-pharo-persistency' 'Pier-Exporter-Code' 'Pier-Exporter-Pharo' 'Pier-Pharo-Seaside' 'Pier-LinkChecker' 'jqwidgetbox-uilayout-core' 'jqwidgetbox-formexample-core' 'Pier-JQuery-Widgets' 'JQWidgetBox-Cycle-Core' 'pier-seaside-testing' 'Pier-Design') ]
+]
+
+{ #category : #'do-its' }
+BaselineOfPier >> registerPierInSeaside [
+	^ PRPierFrame
+		registerAsApplication: 'pier'
+		kernel: (PRKernel instanceNamed: 'pier')
 ]
