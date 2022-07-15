@@ -154,7 +154,20 @@ BaselineOfPier >> baseline: spec [
 					with: [ spec requires: #('Pier-Wysiwyg') ];
 				group: 'addons'
 					with:
-					#('Pier-Blog-Model' 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures' 'pier-book-model' 'Pier-Book-Latex' 'Pier-Book-Utilities' 'Pier-Book-View' 'pier-book' 'Pier-Setup' 'Pier-TagCloud' 'Pier-EditorEnh' 'Pier-Kernel-Distributions' 'Javascript-Jasmine' 'Pier-Tests-Wysiwyg') ]
+					#('Pier-Blog-Model' 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures' 'pier-book-model' 'Pier-Book-Latex' 'Pier-Book-Utilities' 'Pier-Book-View' 'pier-book' 'Pier-Setup' 'Pier-TagCloud' 'Pier-EditorEnh' 'Pier-Kernel-Distributions' 'Javascript-Jasmine' 'Pier-Tests-Wysiwyg');
+				baseline: 'Scheduler'
+					with: [ spec repository: 'github://pharo-contributions/Scheduler' ];
+				package: 'Pier-SW2-Sw1Features'
+					with: [ spec requires: #('addons') ];
+				package: 'Pier-ToDo'
+					with: [ spec requires: #('addons' 'Scheduler') ];
+				package: 'Pier-Workout' with: [ spec requires: #('Pier-ToDo') ];
+				group: 'todo' with: #('Pier-SW2-Sw1Features' 'Pier-Workout');
+				baseline: 'XMLParser'
+					with: [ spec repository: 'github://pharo-contributions/XML-XMLParser' ];
+				package: 'Pier-Google'
+					with: [ spec requires: #('XMLParser' 'default') ];
+				group: 'google' with: #('Pier-Google') ]
 ]
 
 { #category : #'do-its' }
