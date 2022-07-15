@@ -129,7 +129,32 @@ BaselineOfPier >> baseline: spec [
 						postLoadDoIt: #registerPierInSeaside ];
 				group: 'default'
 					with:
-					#('Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults' 'pier-pharo-model' 'pier-seaside-accessing' 'pier-jquery' 'Pier-Bootstrap' 'pier-pharo-persistency' 'Pier-Exporter-Code' 'Pier-Exporter-Pharo' 'Pier-Pharo-Seaside' 'Pier-LinkChecker' 'jqwidgetbox-uilayout-core' 'jqwidgetbox-formexample-core' 'Pier-JQuery-Widgets' 'JQWidgetBox-Cycle-Core' 'pier-seaside-testing' 'Pier-Design') ]
+					#('Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected' 'pier-seaside-converting' 'pier-seaside-defaults' 'pier-pharo-model' 'pier-seaside-accessing' 'pier-jquery' 'Pier-Bootstrap' 'pier-pharo-persistency' 'Pier-Exporter-Code' 'Pier-Exporter-Pharo' 'Pier-Pharo-Seaside' 'Pier-LinkChecker' 'jqwidgetbox-uilayout-core' 'jqwidgetbox-formexample-core' 'Pier-JQuery-Widgets' 'JQWidgetBox-Cycle-Core' 'pier-seaside-testing' 'Pier-Design');
+				package: 'Pier-Blog-Model' with: [ spec requires: #('default') ];
+				package: 'pier-blog-seaside'
+					with: [ spec requires: #('default') ];
+				package: 'pier-blog' with: [ spec requires: #('default') ];
+				package: 'Pier-Book-Structures'
+					with: [ spec requires: #('default') ];
+				package: 'pier-book-model' with: [ spec requires: #('default') ];
+				package: 'Pier-Book-Latex' with: [ spec requires: #('default') ];
+				package: 'Pier-Book-Utilities'
+					with: [ spec requires: #('default') ];
+				package: 'Pier-Book-View' with: [ spec requires: #('default') ];
+				package: 'pier-book' with: [ spec requires: #('default') ];
+				package: 'Pier-Setup' with: [ spec requires: #('default') ];
+				package: 'Pier-TagCloud' with: [ spec requires: #('default') ];
+				package: 'Pier-EditorEnh' with: [ spec requires: #('default') ];
+				package: 'Pier-Wysiwyg' with: [ spec requires: #('default') ];
+				package: 'Pier-Kernel-Distributions'
+					with: [ spec requires: #('Pier-Wysiwyg') ];
+				package: 'Javascript-Jasmine'
+					with: [ spec requires: #('default') ];
+				package: 'Pier-Tests-Wysiwyg'
+					with: [ spec requires: #('Pier-Wysiwyg') ];
+				group: 'addons'
+					with:
+					#('Pier-Blog-Model' 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures' 'pier-book-model' 'Pier-Book-Latex' 'Pier-Book-Utilities' 'Pier-Book-View' 'pier-book' 'Pier-Setup' 'Pier-TagCloud' 'Pier-EditorEnh' 'Pier-Kernel-Distributions' 'Javascript-Jasmine' 'Pier-Tests-Wysiwyg') ]
 ]
 
 { #category : #'do-its' }
