@@ -25,6 +25,7 @@ PRKernelCreatorBase >> clearInternalLinkTargetsStartingAt: startingStructure [
 { #category : #creation }
 PRKernelCreatorBase >> createKernel [
 	" building the kernel takes time and may fail. We start doing so in a local variable "
+
 	| retVal |
 	retVal := PRKernel new
 		name: self kernelName;
@@ -33,8 +34,9 @@ PRKernelCreatorBase >> createKernel [
 	self addUsersToKernel: retVal.
 	retVal root: (self root: retVal).
 	self clearInternalLinkTargetsStartingAt: retVal root.
+	self postExportKernel: retVal root.
 	" and register this kernel. Make sure we do not create a new one, if there already was one. "
-	^kernel := (PRKernel instanceNamed: self kernelName)
+	^ kernel := (PRKernel instanceNamed: self kernelName)
 		root: retVal root;
 		groups: retVal groups andUsers: retVal users;
 		yourself
@@ -53,6 +55,20 @@ PRKernelCreatorBase >> kernel [
 { #category : #constants }
 PRKernelCreatorBase >> kernelName [
 	self subclassResponsibility
+]
+
+{ #category : #helpers }
+PRKernelCreatorBase >> postExportKernel: aKernel [
+	"This is the reverse of: PRKernelCodeExporter>>#preExportKernel: "
+	aKernel root enumerator
+		all;
+		do: [ :page | 
+			page outgoingReferences
+				do: [ :link | 
+					(link isInternal
+						and: [ link reference first = $/
+								and: [ page parents includes: link target ] ])
+						ifTrue: [ link reference: (page relativePathTo: link target) ] ] ]
 ]
 
 { #category : #creation }
