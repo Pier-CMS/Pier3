@@ -240,10 +240,11 @@ PRValueLinkTest >> testSelectorFor [
 
 { #category : #tests }
 PRValueLinkTest >> testSmoke [
-	| context kernel |
+	| kernel context |
 	kernel := PRKernel new
-		name: 'test';
+		name: 'smoketest';
 		root: (PRPage named: 'root');
+		persistency: PRNullPersistency new;
 		yourself.
 	context := PRContext kernel: kernel.
 	self instance pragmas

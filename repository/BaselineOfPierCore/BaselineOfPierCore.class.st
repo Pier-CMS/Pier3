@@ -1,7 +1,5 @@
 "
 I am a baseline for loading the minimal Pier code.  I'm based on BaselineOfPillarCore
-
-
 "
 Class {
 	#name : #BaselineOfPierCore,
@@ -11,8 +9,6 @@ Class {
 
 { #category : #baselines }
 BaselineOfPierCore >> baseline: spec [
-	"baselines"
-
 	<baseline>
 	spec
 		for: #common
@@ -30,13 +26,15 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec
 						repository: 'github://magritte-metamodel/magritte';
 						loads: #('Seaside' 'Tests') ];
-				baseline: 'Pillar'
-					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
+				baseline: 'Chrysal'
+					with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
 				baseline: 'PillarExporter'
-					with: [ spec repository: 'github://pillar-markup/pillar:dev-7' ];
+					with: [ spec
+						repository: 'github://pillar-markup/pillar:dev-8';
+						loads: #('pillar exporter' 'text exporter') ];
 				package: 'Pier-Model-Document'
 					with: [ spec
-						requires: #('Bootstrap' 'Magritte' 'Pillar' 'PillarExporter' 'Seaside3') ];
+						requires: #('Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter') ];
 				package: 'Pier-Model-Magritte'
 					with: [ spec requires: #('Pier-Model-Document') ];
 				package: 'Pier-Model-Visitor'
@@ -63,7 +61,7 @@ BaselineOfPierCore >> baseline: spec [
 				package: 'pier-seaside-accessing'
 					with: [ spec requires: #('pier-security') ];
 				package: 'pier-jquery'
-					with: [ spec requires: #('pier-security') ];
+					with: [ spec requires: #('pier-seaside-accessing') ];
 				package: 'Pier-Bootstrap'
 					with: [ spec requires: #('pier-jquery') ];
 				package: 'pier-pharo-persistency'
@@ -88,36 +86,13 @@ BaselineOfPierCore >> baseline: spec [
 					with: [ spec requires: #('jqwidgetbox-formexample-core') ];
 				package: 'JQWidgetBox-Cycle-Core'
 					with: [ spec requires: #('Pier-JQuery-Widgets') ];
-				package: 'Pier-Design'
-					with: [ spec requires: #('Pier-JQuery-Widgets') ];
 				package: 'pier-seaside-testing'
+					with: [ spec requires: #('JQWidgetBox-Cycle-Core') ];
+				package: 'Pier-Design'
 					with: [ spec
-						requires: #('Pier-Design');
+						requires: #('pier-seaside-testing');
 						postLoadDoIt: #registerPierInSeaside ];
-				package: 'pier-tests-model'
-					with: [ spec requires: #('Pier-Design') ];
-				package: 'Pier-Tests-Model-Utilities'
-					with: [ spec requires: #('pier-tests-model') ];
-				package: 'Pier-Tests-Model-Mocks'
-					with: [ spec requires: #('Pier-Tests-Model-Utilities') ];
-				package: 'Pier-Tests-Model-Structure'
-					with: [ spec requires: #('Pier-Tests-Model-Mocks') ];
-				package: 'Pier-Tests-Model-Kernel'
-					with: [ spec requires: #('Pier-Tests-Model-Structure') ];
-				package: 'Pier-Tests-Model-Document'
-					with: [ spec requires: #('Pier-Tests-Model-Kernel') ];
-				package: 'Pier-Tests-Model-Command'
-					with: [ spec requires: #('Pier-Tests-Model-Document') ];
-				package: 'Pier-Tests-Model-Persistence'
-					with: [ spec requires: #('Pier-Tests-Model-Command') ];
-				package: 'Pier-Tests-Pharo-Persistency'
-					with: [ spec requires: #('Pier-Tests-Model-Persistence') ];
-				package: 'pier-tests-security'
-					with: [ spec requires: #('Pier-Tests-Pharo-Persistency') ];
-				package: 'pier-tests-seaside-model'
-					with: [ spec requires: #('pier-tests-security') ];
-				package: 'Pier-Tests-Model-Magritte'
-					with: [ spec requires: #('pier-tests-seaside-model') ] ]
+				group: 'default' with: #('Pier-Design') ]
 ]
 
 { #category : #doits }

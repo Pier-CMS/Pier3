@@ -17,7 +17,7 @@ BaselineOfPierAddons >> baseline: spec [
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 				baseline: 'PierCore'
-					with: [ spec repository: 'github://jborden23/Pier3' ];
+					with: [ spec repository: 'github://Pier-CMS/Pier3' ];
 				package: 'Pier-Blog-Model' with: [ spec requires: #('PierCore') ];
 				package: 'pier-blog-seaside'
 					with: [ spec requires: #('Pier-Blog-Model') ];
@@ -44,5 +44,6 @@ BaselineOfPierAddons >> baseline: spec [
 				package: 'Javascript-Jasmine'
 					with: [ spec requires: #('Pier-Wysiwyg') ];
 				package: 'Pier-Tests-Wysiwyg'
-					with: [ spec requires: #('Javascript-Jasmine') ] ]
+					with: [ spec requires: #('Javascript-Jasmine') ];
+				group: 'default' with: #('Pier-Tests-Wysiwyg') ]
 ]

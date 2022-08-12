@@ -236,18 +236,19 @@ PRKernelCodeExporter >> exportWithPierKernelOrDispatchPath: kernelOrPierDispatch
 { #category : #exporting }
 PRKernelCodeExporter >> exportWithPierKernelOrDispatchPath: kernelOrPierDispatchPath save: aBoolean [
 	| kernel |
-	kernel := kernelOrPierDispatchPath isString 
-		ifTrue: [ 
-			dispatcherPathName := kernelOrPierDispatchPath.
+	kernel := kernelOrPierDispatchPath isString
+		ifTrue: [ dispatcherPathName := kernelOrPierDispatchPath.
 			self kernelFromDispatcherConfiguration: dispatcherPathName ]
-		ifFalse: [ 
-			dispatcherPathName := self selectorFromName: kernelOrPierDispatchPath name.
+		ifFalse: [ dispatcherPathName := self
+				selectorFromName: kernelOrPierDispatchPath name.
 			kernelOrPierDispatchPath ].
-	kernel isNil ifTrue: [
-		Error signal: 'Not Found, kernel or dispatcher named: ', dispatcherPathName	].
-	
+	kernel isNil
+		ifTrue: [ Error
+				signal: 'Not Found, kernel or dispatcher named: ' , dispatcherPathName ].
+	self preExportKernel: kernel.
 	self exportKernel: kernel.
-	aBoolean ifTrue: [ self saveExportFor: kernel ]
+	aBoolean
+		ifTrue: [ self saveExportFor: kernel ]
 ]
 
 { #category : #'exporting - permissions' }
@@ -294,6 +295,20 @@ PRKernelCodeExporter >> magritteSelector [
 	^ self isPier3  
 		ifTrue: [ #magritteDescription ]
 		ifFalse: [ #description ]
+]
+
+{ #category : #exporting }
+PRKernelCodeExporter >> preExportKernel: aKernel [
+	"Change the old Pier to prevent import problems - first modify *..* links to absolute paths"
+
+	aKernel root enumerator
+		all;
+		do: [ :page | 
+			page outgoingReferences
+				do: [ :link | 
+					(link isInternal
+						and: [ link target ~~ page and: [ page parents includes: link target ] ])
+						ifTrue: [ link reference: link target absolutePath ] ] ]
 ]
 
 { #category : #exporting }
