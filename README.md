@@ -7,7 +7,7 @@ This can be loaded from Pharo 8, 9, 10 by running this in a workspace:
 ```
 Metacello new
 	baseline: 'Pier';
-	repository: 'github://Pier-CMS/Pier3/repository';
+	repository: 'github://Pier-CMS/Pier3:main/repository';
 	onConflictUseLoaded;
 	load.
 ```
@@ -15,7 +15,7 @@ A more complete system with extra goodies can be loaded with:
 ```
 Metacello new
   baseline:'Pier';
-  repository: 'github://Pier-CMS/Pier3/repository';
+  repository: 'github://Pier-CMS/Pier3:main/repository';
   onConflictUseLoaded;
   load: 'addons'.
 ```
@@ -24,7 +24,7 @@ There are over 1200 tests for Pier. These can be loaded by following the above i
 ```
 Metacello new
 	baseline: 'PierTests';
-	repository: 'github://Pier-CMS/Pier3/repository';
+	repository: 'github://Pier-CMS/Pier3:main/repository';
 	onConflictUseLoaded;
 	load: #('default').
 ```
