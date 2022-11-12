@@ -7,7 +7,7 @@ This can be loaded from Pharo 8, 9, 10 by running this in a workspace:
 ```
 Metacello new
 	baseline: 'Pier';
-	repository: 'github://Pier-CMS/Pier3:main/repository';
+	repository: 'github://Pier-CMS/Pier3:UpdateEditor/repository';
 	onConflictUseLoaded;
 	load.
 ```
@@ -15,7 +15,7 @@ A more complete system with extra goodies can be loaded with:
 ```
 Metacello new
   baseline:'Pier';
-  repository: 'github://Pier-CMS/Pier3:main/repository';
+  repository: 'github://Pier-CMS/Pier3:UpdateEditor/repository';
   onConflictUseLoaded;
   load: 'addons'.
 ```
