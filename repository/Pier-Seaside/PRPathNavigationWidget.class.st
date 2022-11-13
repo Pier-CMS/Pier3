@@ -5,7 +5,7 @@ PRPathNavigationWidget is a widget that displays the link path to the current st
 Class {
 	#name : #PRPathNavigationWidget,
 	#superclass : #PRNavigationWidget,
-	#category : #'Pier-SW2-Sw1Features'
+	#category : #'Pier-Seaside-Widgets'
 }
 
 { #category : #accessing }
@@ -24,4 +24,9 @@ PRPathNavigationWidget >> renderParents: aCollection on: html [
 		goto: (self context structure: aCollection first);
 		with: '/'.
 	aCollection allButFirst do: [ :e | self renderItem: e on: html ] separatedBy: [ html text: '/' ]
+]
+
+{ #category : #accessing }
+PRPathNavigationWidget >> unfilteredItems [
+	self shouldNotImplement
 ]
