@@ -557,9 +557,9 @@ The translator also supports the following, although there are no editor buttons
 
 @@note an annotated paragraph
 
-=Some preformed text
-=more preformed stuff
-=whats is going on
+= Some preformed text
+= more preformed stuff
+= whats is going on
 
 A Definition List:
 ;Wysiwyg
@@ -573,8 +573,8 @@ Still to come support for tables. Support for internal links still needs to be e
 The editor attempts to support all the Pier Wiki markup, so the Wysiwyg editor can be used interchangeably with the standard editor without fear of loosing any markup so, for example, it should be possible to use for editing Pier book content. I''ve taken the approach of preserving verbatim, embedded and value links in the Wysiwyg editor, but not making them editable. The editor could be extended with custom dialogs in which the raw wiki syntax could be edited.
 
 Some non-editable wiki content:
-{{{<div class="pierIcon">verbatim test</div>}}}
-+value:time+
+{{{html: <div class="pierIcon">verbatim test</div>}}}
+*value:time*
 _
 
 !!! Thoughts and questions

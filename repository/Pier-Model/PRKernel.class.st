@@ -59,9 +59,9 @@ PRKernel class >> defaultInfoLicense [
 
 { #category : #configuration }
 PRKernel class >> defaultInfoSyntax [
+
 	^ (PRPage named: 'syntax')
-		contents:
-			'*value:toc*
+		  contents: '*value:toc*
 !Paragraphs
 A single newline has no effect on the layout. An empty line starts a new paragraph.
 An annotated paragraph starts a line with ==\@\@==, for example:
@@ -124,17 +124,12 @@ To add dynamic content to a page use a value link. For example, the expression =
 	*value:values*
 	
 The expressions that work on structures (==children==, ==parent==, ==structure== ...) support a wide variety of ==display== parameters, for example ==title==, ==name==, ==tags==, ==menu==, ==owner==, ==group==, that is any structure property with a magritte description that defines ==parameterName== eg for ==PRPage== the available properties are defined by evaluating:
-=PRPage new magritteDescription children 
-=	select: [ :each | each parameterName notNil ] 
-=	thenCollect: [ :each | each parameterName ]
+= PRPage new magritteDescription children 
+= 	select: [ :each | each parameterName notNil ] 
+= 	thenCollect: [ :each | each parameterName ]
 All value expressions that work on structures can be combined like ==\*value:structure|display={title} is owned by {owner}\*==. Furthermore these expressions become an internal link if you add the parameter ==link==.  By default all value links are embedded. The expressions on contexts (==context== and ==edited==) also support ==display== parameters, namely ==date==, ==time== and ==user==, for example: ==\*value:edited|display=date\*==
-!!Example Embedded Link to the License
-This text:
-= */information/license|embedded=true*
-is displayed as:
-*/information/license|embedded=true*
 ';
-		yourself
+		  yourself
 ]
 
 { #category : #configuration }
