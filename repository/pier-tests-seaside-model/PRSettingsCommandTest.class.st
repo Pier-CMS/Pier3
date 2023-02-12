@@ -7,28 +7,28 @@ This class was created for a specific problem in Pharo 9:
 5. The problem is: Page: Input is conflicting with concurrent modification
 "
 Class {
-	#name : #PRSettingCommandTest,
+	#name : #PRSettingsCommandTest,
 	#superclass : #PREditCommandTest,
 	#category : #'pier-tests-seaside-model'
 }
 
 { #category : #testing }
-PRSettingCommandTest class >> isAbstract [
+PRSettingsCommandTest class >> isAbstract [
 	^ false
 ]
 
 { #category : #accessing }
-PRSettingCommandTest >> actualClass [
+PRSettingsCommandTest >> actualClass [
 	^ PRSettingsCommand
 ]
 
 { #category : #private }
-PRSettingCommandTest >> structureInstance [
+PRSettingsCommandTest >> structureInstance [
 	^ PRPage named: 'command'
 ]
 
 { #category : #accessing }
-PRSettingCommandTest >> testHide [
+PRSettingsCommandTest >> testHide [
 	| settings |
 	settings := PRPage new settingsDescription.
 	settings beHidden.
@@ -39,4 +39,9 @@ PRSettingCommandTest >> testHide [
 		shouldnt: [ self command execute ]
 		raise: PRStructureError.
 	self assert: self structure settingsDescription = settings
+]
+
+{ #category : #'tests-testing' }
+PRSettingsCommandTest >> testIsEdit [
+	"It isn't necessary to test if this is an edit command."
 ]
