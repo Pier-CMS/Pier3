@@ -24,7 +24,21 @@ PRSettingsCommandTest >> actualClass [
 
 { #category : #private }
 PRSettingsCommandTest >> structureInstance [
-	^ PRPage named: 'command'
+	^ (PRPage named: 'command')
+			addChild: (PRFile named: 'sheet-with-style');
+			yourself
+]
+
+{ #category : #'tests-testing' }
+PRSettingsCommandTest >> testHasConflict [
+	"Pharo 8 does not have #hasModelChangedElsewhere"
+	| file memento |
+	memento := self command asComponent memento.
+	self deny: memento hasConflict.
+	file := self command structure enumerator all detect: [ :e | e isFile ].
+	self command structure localStyleSheet: file.
+	memento := self command asComponent memento.
+	self deny: memento hasConflict
 ]
 
 { #category : #accessing }
@@ -43,5 +57,5 @@ PRSettingsCommandTest >> testHide [
 
 { #category : #'tests-testing' }
 PRSettingsCommandTest >> testIsEdit [
-	"It isn't necessary to test if this is an edit command."
+	"It may not be necessary to test if PRSettingsCommand is an edit command."
 ]
