@@ -31,14 +31,13 @@ PRSettingsCommandTest >> structureInstance [
 
 { #category : #'tests-testing' }
 PRSettingsCommandTest >> testHasConflict [
-	"Pharo 8 does not have #hasModelChangedElsewhere"
 	| file memento |
 	memento := self command asComponent memento.
-	self deny: memento hasConflict.
+	self deny: memento hasModelChangedElsewhere.
 	file := self command structure enumerator all detect: [ :e | e isFile ].
 	self command structure localStyleSheet: file.
 	memento := self command asComponent memento.
-	self deny: memento hasConflict
+	self deny: memento hasModelChangedElsewhere
 ]
 
 { #category : #accessing }
