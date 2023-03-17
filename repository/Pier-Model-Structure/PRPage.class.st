@@ -12,6 +12,14 @@ PRPage class >> isAbstract [
 	^ false
 ]
 
+{ #category : #comparing }
+PRPage >> = anotherPage [
+
+	self == anotherPage ifTrue: [ ^ true ].
+	self species = anotherPage species ifFalse: [ ^ false ].
+	^ self contents = anotherPage contents
+]
+
 { #category : #visiting }
 PRPage >> accept: aVisitor [
 	aVisitor visitPage: self
@@ -24,4 +32,10 @@ PRPage >> defaultDocument [
 			add: (PRText content: 'Edit this page ...');
 			yourself);
 		yourself
+]
+
+{ #category : #comparing }
+PRPage >> hash [
+
+	^ super hash bitXor: self contents hash
 ]
