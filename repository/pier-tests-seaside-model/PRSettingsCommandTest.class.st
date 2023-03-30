@@ -24,18 +24,25 @@ PRSettingsCommandTest >> actualClass [
 
 { #category : #private }
 PRSettingsCommandTest >> structureInstance [
+
 	^ (PRPage named: 'command')
-			addChild: (PRFile named: 'sheet-with-style');
-			yourself
+		  addChild: (PRFile named: 'sheet-with-style');
+		  addChild: (PRPage named: 'template');
+		  yourself
 ]
 
 { #category : #'tests-testing' }
 PRSettingsCommandTest >> testHasConflict [
-	| file memento |
+
+	| file memento template |
 	memento := self command asComponent memento.
 	self deny: memento hasModelChangedElsewhere.
-	file := self command structure enumerator all detect: [ :e | e isFile ].
+	file := self command structure enumerator all detect: [ :e | 
+		        e isFile ].
 	self command structure localStyleSheet: file.
+	template := self command structure enumerator all detect: [ :e | 
+		        e isFile not and: [ e title = 'Template' ] ].
+	self command structure localEnvironment: template.
 	memento := self command asComponent memento.
 	self deny: memento hasModelChangedElsewhere
 ]

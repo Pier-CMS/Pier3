@@ -17,7 +17,9 @@ PRPage >> = anotherPage [
 
 	self == anotherPage ifTrue: [ ^ true ].
 	self species = anotherPage species ifFalse: [ ^ false ].
-	^ self contents = anotherPage contents
+	(self parent isNil or: [ anotherPage parent isNil ]) ifTrue: [ 
+		^ self document = anotherPage document and: [ self name = anotherPage name ] ].
+	^ self parent = anotherPage parent and: [ self name = anotherPage name ]
 ]
 
 { #category : #visiting }
@@ -37,5 +39,8 @@ PRPage >> defaultDocument [
 { #category : #comparing }
 PRPage >> hash [
 
-	^ super hash bitXor: self contents hash
+	self parent isNil
+		ifTrue: [ ^ super hash bitXor: self contents hash ]
+		ifFalse: [ 
+		^ (super hash bitXor: self parent hash) bitXor: self name hash ]
 ]
