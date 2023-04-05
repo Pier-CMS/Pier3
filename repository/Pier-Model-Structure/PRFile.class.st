@@ -20,13 +20,6 @@ PRFile class >> label [
 	^ 'File'
 ]
 
-{ #category : #testing }
-PRFile >> = anotherFile [
-	self == anotherFile ifTrue: [ ^ true ].
-	self species = anotherFile species ifFalse: [ ^ false ].
-	^ self contents = anotherFile contents
-]
-
 { #category : #visiting }
 PRFile >> accept: aVisitor [
 	aVisitor visitFile: self
@@ -75,12 +68,6 @@ PRFile >> fileModel [
 { #category : #'accessing-convenience' }
 PRFile >> filename: aString [
 	self file filename: aString
-]
-
-{ #category : #testing }
-PRFile >> hash [
-
-	^ super hash bitXor: self contents hash
 ]
 
 { #category : #testing }
