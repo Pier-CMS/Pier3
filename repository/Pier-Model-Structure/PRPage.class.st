@@ -7,6 +7,20 @@ Class {
 	#category : #'Pier-Model-Structure'
 }
 
+{ #category : #comparing }
+PRPage class >> = aPrPageClass [
+
+	^ super = aPrPageClass or: [ 
+		  self species = aPrPageClass species and: [ 
+			  self name = aPrPageClass name ] ]
+]
+
+{ #category : #comparing }
+PRPage class >> hash [
+
+	^ super hash bitXor: self name hash
+]
+
 { #category : #testing }
 PRPage class >> isAbstract [
 	^ false

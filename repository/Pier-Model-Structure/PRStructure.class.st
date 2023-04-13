@@ -240,7 +240,7 @@ PRStructure >> hasParent [
 	^ self parent notNil
 ]
 
-{ #category : #comparing }
+{ #category : #'as yet unclassified' }
 PRStructure >> hash [
 
 	self parent isNil
