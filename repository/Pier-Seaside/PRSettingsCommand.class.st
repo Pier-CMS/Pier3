@@ -22,6 +22,12 @@ PRSettingsCommand class >> label [
 	^ 'Settings'
 ]
 
+{ #category : #testing }
+PRSettingsCommand >> isEdit [
+	"Needed for settings commands to show up in the changes list"
+	^ true
+]
+
 { #category : #accessing }
 PRSettingsCommand >> magritteDescription [
 	^ self structure settingsDescription

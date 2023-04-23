@@ -35,6 +35,16 @@ PRStructure class >> named: aString [
 		yourself
 ]
 
+{ #category : #comparing }
+PRStructure >> = anotherPage [
+
+	self == anotherPage ifTrue: [ ^ true ].
+	self species = anotherPage species ifFalse: [ ^ false ].
+	(self parent isNil or: [ anotherPage parent isNil ]) ifTrue: [ 
+		^ self document = anotherPage document and: [ self name = anotherPage name ] ].
+	^ self parent = anotherPage parent and: [ self name = anotherPage name ]
+]
+
 { #category : #'querying-path' }
 PRStructure >> absolutePath [
 	"Answer an absolute path from the root to the receiver."
@@ -228,6 +238,15 @@ PRStructure >> hasParent [
 	"Answer ==true== if the receiver has got a parent. This is the negation of ==#isRoot==."
 
 	^ self parent notNil
+]
+
+{ #category : #'as yet unclassified' }
+PRStructure >> hash [
+
+	self parent isNil
+		ifTrue: [ ^ super hash bitXor: self contents hash ]
+		ifFalse: [ 
+		^ (super hash bitXor: self parent hash) bitXor: self name hash ]
 ]
 
 { #category : #'querying-relations' }

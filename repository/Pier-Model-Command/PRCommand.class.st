@@ -295,8 +295,8 @@ PRCommand >> validateName: aString of: aChildStructure in: aStructure [
 	child := aStructure childrenDecoration
 		at: aString
 		ifAbsent: [ ^ self ].
-	child ~= aChildStructure
-		ifTrue: [ PRConflictingNameError description: self magritteDescription signal: aString printString , ' conflicts in ' , aStructure title printString ]
+	child == aChildStructure
+		ifFalse: [ PRConflictingNameError description: self magritteDescription signal: aString printString , ' conflicts in ' , aStructure title printString ]
 ]
 
 { #category : #validating }

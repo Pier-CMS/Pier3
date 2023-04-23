@@ -87,6 +87,13 @@ PRExercise class >> name: aNameString weightUnits: kgLb details: aDescriptionStr
 			new ]
 ]
 
+{ #category : #comparing }
+PRExercise >> = anExercise [
+	self == anExercise ifTrue: [ ^ true ].
+	self species = anExercise species ifFalse: [ ^ false ].
+	^ self name = anExercise name
+]
+
 { #category : #'accessing-description' }
 PRExercise >> descriptionDetails [
 	<magritteDescription>
@@ -131,6 +138,11 @@ PRExercise >> details [
 { #category : #accessing }
 PRExercise >> details: aMultiLineString [
 	details := aMultiLineString
+]
+
+{ #category : #comparing }
+PRExercise >> hash [
+	^ self name hash
 ]
 
 { #category : #initialization }

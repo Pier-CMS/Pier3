@@ -116,9 +116,9 @@ PRStructureTest >> testCopyChildren [
 	childCopy := folderCopy childrenDecoration at: 'child'.
 	structureCopy := folderCopy childrenDecoration at: 'structure'.
 
-	self deny: self folder = folderCopy.
-	self deny: self child = childCopy.
-	self deny: self structure = structureCopy.
+	self deny: self folder == folderCopy.
+	self deny: self child == childCopy.
+	self deny: self structure == structureCopy.
 
 	self assert: self folder parent = self root.
 	self assert: self child parent = self folder.

@@ -48,7 +48,7 @@ PRDiffView >> labelFor: aContext [
 	^ String streamContents: [ :stream |
 		stream print: aContext command date; space.
 		stream print: aContext command time; space.
-		(aContext respondsTo: #user)
+		((aContext respondsTo: #user) and: [ aContext user isNotNil ])
 			ifTrue: [ stream nextPut: $(; nextPutAll: aContext user name; nextPut: $) ] ]
 ]
 
