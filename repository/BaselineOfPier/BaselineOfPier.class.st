@@ -38,9 +38,6 @@ Class {
 BaselineOfPier >> baseline: spec [
 
 	<baseline>
-	| pharoDeps |
-	pharoDeps := #(  ).
-	spec for: #'pharo9.x' do: [ pharoDeps := #( 'Pier-Pharo9' ) ].	
 	spec for: #common do: [ 
 		spec blessing: #baseline.
 		spec
@@ -81,8 +78,10 @@ BaselineOfPier >> baseline: spec [
 			package: 'Pier-Model' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
+			package: 'Pier-Pharo9'
+			with: [ spec requires: #( 'Magritte' 'Seaside3' ) ];
 			package: 'pier-seaside-converting'
-			with: [ spec requires: #( 'Pier-Model-Command' ), pharoDeps ];
+			with: [ spec requires: #( 'Pier-Model-Command' ) ];
 			package: 'pier-seaside-defaults'
 			with: [ spec requires: #( 'Pier-Model-Magritte' ) ];
 			package: 'pier-seaside-protected'
@@ -92,9 +91,9 @@ BaselineOfPier >> baseline: spec [
 			spec requires:
 				#( 'Pier-Model' 'Pier-Model-Command' 'Pier-Model-Document'
 				   'Pier-Model-Structure' ) ];
-			package: 'Pier-Documents'
-			with: [ spec requires: #( 'Pier-Model-Structure'
-			   'Pier-Seaside' ) ];
+			package: 'Pier-Documents' with: [ 
+			spec requires:
+				#( 'Pier-Model-Structure' 'Pier-Seaside' 'Pier-Pharo9' ) ];
 			package: 'pier-pharo-model'
 			with: [ spec requires: #( 'Pier-Model-Structure' ) ];
 			package: 'pier-security'
