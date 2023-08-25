@@ -215,7 +215,13 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 								 nextPutAll: aUrlString asUrl host ]
 						 ifTrue: [ 
 							 [ 
-							 [ urlContents := aUrlString asUrl retrieveContents ]
+							 [ 
+							 urlContents := ZnClient new
+								                beOneShot;
+								                timeout: 45;
+								                retryDelay: 15;
+								                numberOfRetries: 3;
+								                get: aUrlString asUrl ]
 								 on: NameLookupFailure
 								 do: [ :ignoreError | 
 									 stream
