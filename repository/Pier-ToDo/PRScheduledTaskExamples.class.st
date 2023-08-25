@@ -507,7 +507,7 @@ PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aSt
 								 aStreamBlock value: convertStream ] ] ensure: [ 
 								 fileStream close ].
 							 stream nextPutAll:
-								 'INFO: Successfully truncated and wrote file' ] ]
+								 'INFO: Successfully appended to the file' ] ]
 						 on: FileException
 						 do: [ 
 							 stream
