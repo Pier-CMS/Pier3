@@ -272,35 +272,46 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom
 
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString [
+
+	self
+		reportOfFile: anOsPathAndFilename
+		onPageAt: aPathString
+		modifyUsing: [ :str | str ]
+]
+
+{ #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString modifyUsing: aStringBlock [
+
 	| reportPage |
 	self guessTodoFromPath: aPathString.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString)
-		ifNotNil: [ anOsPathAndFilename.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
+		ifNotNil: [ 
+			anOsPathAndFilename.
 			(File exists: anOsPathAndFilename)
-				ifFalse: [ reportPage
-						contents:
-							(String
-								streamContents: [ :stream | 
-									self
-										printReportHeaderOn: stream
-										fields: 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
-				ifTrue: [ ((File isReadable: anOsPathAndFilename)
-						and: [ File isRegular: anOsPathAndFilename ])
-						ifFalse: [ reportPage
-								contents:
-									(String
-										streamContents: [ :stream | 
-											self
-												printReportHeaderOn: stream
-												fields: 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
-						ifTrue: [ | file |
+				ifFalse: [ 
+					reportPage contents: (String streamContents: [ :stream | 
+							 self
+								 printReportHeaderOn: stream
+								 fields:
+								 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
+				ifTrue: [ 
+					((File isReadable: anOsPathAndFilename) and: [ 
+						 File isRegular: anOsPathAndFilename ])
+						ifFalse: [ 
+							reportPage contents: (String streamContents: [ :stream | 
+									 self
+										 printReportHeaderOn: stream
+										 fields:
+										 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
+						ifTrue: [ 
+							| file |
 							file := File openForReadFileNamed: anOsPathAndFilename.
-							[ reportPage
-								contents:
-									(String
-										streamContents:
-											[ :stream | self printReportHeaderOn: stream fields: file contents asString ]) ]
-								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
+							[ 
+							reportPage contents: (String streamContents: [ :stream | 
+									 self
+										 printReportHeaderOn: stream
+										 fields: ( aStringBlock value: file contents asString ) ]) ] ensure: [ 
+								file ifNotNil: [ file close ] ] ] ] ]
 ]
 
 { #category : #'wiki updates' }
