@@ -153,7 +153,7 @@ BaselineOfPier >> baselineForCommon: spec [
 				   'Pier-Design' );
 			package: 'Pier-Blog-Model' with: [ spec requires: #( 'default' ) ];
 			package: 'pier-blog-seaside'
-			with: [ spec requires: #( 'default' ) ];
+			with: [ spec requires: #( 'Pier-Blog-Model' ) ];
 			package: 'pier-blog' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Book-Structures'
 			with: [ spec requires: #( 'default' ) ];
@@ -163,7 +163,7 @@ BaselineOfPier >> baselineForCommon: spec [
 			with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Book-View' with: [ spec requires: #( 'default' ) ];
 			package: 'pier-book' with: [ spec requires: #( 'default' ) ];
-			package: 'Pier-Setup' with: [ spec requires: #( 'default' ) ];
+			package: 'Pier-Setup' with: [ spec requires: #( 'Pier-Blog-Model' ) ];
 			package: 'Pier-TagCloud' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-EditorEnh' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Wysiwyg' with: [ spec requires: #( 'default' ) ];
@@ -175,7 +175,7 @@ BaselineOfPier >> baselineForCommon: spec [
 			with: [ spec requires: #( 'Pier-Wysiwyg' ) ];
 			group: 'addons'
 			with:
-				#( 'Pier-Blog-Model' 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures'
+				#( 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures'
 				   'pier-book-model' 'Pier-Book-Latex' 'Pier-Book-Utilities'
 				   'Pier-Book-View' 'pier-book' 'Pier-Setup' 'Pier-TagCloud'
 				   'Pier-EditorEnh' 'Pier-Kernel-Distributions'
@@ -309,7 +309,7 @@ BaselineOfPier >> baselineForPharo9: spec [
 				   'Pier-Design' );
 			package: 'Pier-Blog-Model' with: [ spec requires: #( 'default' ) ];
 			package: 'pier-blog-seaside'
-			with: [ spec requires: #( 'default' ) ];
+			with: [ spec requires: #( 'Pier-Blog-Model' ) ];
 			package: 'pier-blog' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Book-Structures'
 			with: [ spec requires: #( 'default' ) ];
@@ -319,7 +319,7 @@ BaselineOfPier >> baselineForPharo9: spec [
 			with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Book-View' with: [ spec requires: #( 'default' ) ];
 			package: 'pier-book' with: [ spec requires: #( 'default' ) ];
-			package: 'Pier-Setup' with: [ spec requires: #( 'default' ) ];
+			package: 'Pier-Setup' with: [ spec requires: #( 'Pier-Blog-Model' ) ];
 			package: 'Pier-TagCloud' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-EditorEnh' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Wysiwyg' with: [ spec requires: #( 'default' ) ];
@@ -331,7 +331,7 @@ BaselineOfPier >> baselineForPharo9: spec [
 			with: [ spec requires: #( 'Pier-Wysiwyg' ) ];
 			group: 'addons'
 			with:
-				#( 'Pier-Blog-Model' 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures'
+				#( 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures'
 				   'pier-book-model' 'Pier-Book-Latex' 'Pier-Book-Utilities'
 				   'Pier-Book-View' 'pier-book' 'Pier-Setup' 'Pier-TagCloud'
 				   'Pier-EditorEnh' 'Pier-Kernel-Distributions'
