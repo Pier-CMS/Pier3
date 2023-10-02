@@ -87,6 +87,46 @@ PRSearchView >> query: aString [
 	query := aString
 ]
 
+{ #category : #accessing }
+PRSearchView >> queryExplained [
+
+	| stringTokens |
+	self hasValidQuery ifFalse: [ ^ '' ].
+	^ String streamContents: [ :explainStream | 
+		  | lastIndex isPartOfQuotedString |
+		  stringTokens := self query findTokens: Character space.
+		  stringTokens first = '^' ifTrue: [ 
+			  stringTokens removeFirst.
+			  explainStream nextPutAll: '<CASE-SENSITIVE> ' ].
+		  isPartOfQuotedString := false.
+		  lastIndex := stringTokens size.
+		  stringTokens withIndexDo: [ :word :index | 
+			  (word first = $' and: [ 
+				   (stringTokens copyFrom: index to: stringTokens size) 
+					   anySatisfy: [ :w | w last = $' ] ]) ifTrue: [ 
+				  isPartOfQuotedString := true ].
+			  isPartOfQuotedString
+				  ifTrue: [ 
+					  explainStream nextPutAll: word.
+					  word last = $' ifTrue: [ isPartOfQuotedString := false ] ]
+				  ifFalse: [ 
+					  word first = $-
+						  ifTrue: [ 
+							  explainStream
+								  nextPutAll: 'NOT "';
+								  nextPutAll: word allButFirst;
+								  nextPut: $" ]
+						  ifFalse: [ 
+							  explainStream
+								  nextPut: $";
+								  nextPutAll: word;
+								  nextPut: $" ] ].
+			  index ~~ lastIndex ifTrue: [ 
+				  isPartOfQuotedString
+					  ifTrue: [ explainStream nextPut: Character space ]
+					  ifFalse: [ explainStream nextPutAll: ' AND ' ] ] ] ]
+]
+
 { #category : #configuration }
 PRSearchView >> queryFieldName [
 	^ 'query'
@@ -149,28 +189,32 @@ PRSearchView >> renderFormOn: html [
 
 { #category : #rendering }
 PRSearchView >> renderNoResultOn: html [
-	html paragraph: 'Your search for "' , self query , '" yielded no results.'.
-	html
-		unorderedList: [ html listItem: 'Check if your spelling is correct.'.
-			html listItem: 'Consider loosening your query by removing words.' ]
+
+	html paragraph:
+		'Your search for ' , self queryExplained , ' yielded no results.'.
+	html unorderedList: [ 
+		html listItem: 'Check if your spelling is correct.'.
+		html listItem: 'Consider loosening your query by removing words.' ]
 ]
 
 { #category : #rendering }
 PRSearchView >> renderResultOn: html [
+
 	| history |
-	self items isEmpty
-		ifTrue: [ ^ self ].
-	html paragraph: 'Search for "' , self query , '" results:'.
+	self items isEmpty ifTrue: [ ^ self ].
+	html paragraph: 'Search for ' , self queryExplained , ' results:'.
 	html definitionList
 		class: 'search-result';
-		with: [ self items
-				do: [ :structure | 
-					html
-						definitionTerm: [ html anchor
+		with: [ 
+			self items do: [ :structure | 
+					html definitionTerm: [ 
+							html anchor
 								goto: (self context structure: structure);
 								with: structure title.
-							(history := self context kernel persistency historyFor: structure) isEmpty
-								ifFalse: [ html text: ' updated on ' , history last command timestamp printString ] ].
+							(history := self context kernel persistency historyFor:
+								            structure) isEmpty ifFalse: [ 
+								html text:
+									' updated on ' , history last command timestamp printString ] ].
 					html definitionData: (self summaryOf: structure) ] ]
 ]
 

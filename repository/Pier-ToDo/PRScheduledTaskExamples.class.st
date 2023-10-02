@@ -18,6 +18,8 @@ Class {
 		'todo'
 	],
 	#classVars : [
+		'CodeLock',
+		'SequenceGenerator',
 		'ShouldCheckFSSpace'
 	],
 	#category : #'Pier-ToDo'
@@ -29,11 +31,31 @@ PRScheduledTaskExamples class >> checkFSSpace [
 	^ ShouldCheckFSSpace
 ]
 
+{ #category : #accessing }
+PRScheduledTaskExamples class >> codeLockCritical: aBlock [
+	CodeLock ifNil: [ CodeLock := Semaphore forMutualExclusion  ].
+	^ CodeLock critical: aBlock
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples class >> isCodeLocked [
+	^ CodeLock isSignaled not
+]
+
 { #category : #'instance creation' }
 PRScheduledTaskExamples class >> newForKernelNamed: aString [
+
+	| closestKernel |
+	closestKernel := PRKernel instances
+		                 detect: [ :k | k name = aString ]
+		                 ifNone: [ 
+			                 PRKernel instances
+				                 detect: [ :k | 
+				                 (k name alike: aString) > aString size ]
+				                 ifNone: [ PRKernel instanceNamed: aString ] ].
 	^ self new
-		kernel: (PRKernel instanceNamed: aString);
-		yourself
+		  kernel: closestKernel;
+		  yourself
 ]
 
 { #category : #'instance creation' }
@@ -47,6 +69,21 @@ PRScheduledTaskExamples class >> newForKernelNamed: aString andTodoPath: aPathSt
 				kernel: aKernel;
 				todo: aToDo;
 				yourself ]
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples class >> nextSequenceCount [
+
+	"self nextSequenceCount"
+
+	SequenceGenerator ifNil: [ 
+		SequenceGenerator := Generator on: [ :gen | 
+			                     | count |
+			                     count := 0.
+			                     [ 
+			                     count := count + 1.
+			                     gen yield: count ] repeat ] ].
+	^ SequenceGenerator next
 ]
 
 { #category : #asserting }
@@ -158,44 +195,47 @@ PRScheduledTaskExamples >> printReportHeaderOn: stream fields: aString [
 
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString using: contentCheckBlock onPageAt: aReportPathString [
-	| reportPage urlContents |
+
+	| urlContents |
 	self guessTodoFromPath: aReportPathString.
-	(reportPage := PRPathLookup
-		start: self kernel root
-		path: aReportPathString)
-		ifNotNil: [ :arg | 
+	(PRPathLookup start: self kernel root path: aReportPathString) 
+		ifNotNil: [ :reportPage | 
 			urlContents := nil.
-			reportPage
-				contents:
-					(String
-						streamContents: [ :stream | 
-							stream
-								nextPutAll: (self todo displayDateWithTimeZoneDifference: DateAndTime now);
-								nextPutAll: ' - '.
-							([ checkBlock value: reportPage ]
-								on: Error
-								do: [ :err | false ])
-								ifFalse: [ stream
-										nextPutAll: 'Pre-Check reported no need to retrieve from ';
-										nextPutAll: aUrlString asUrl host ]
-								ifTrue: [ [ [ urlContents := aUrlString asUrl retrieveContents ]
-										on: NameLookupFailure
-										do: [ :err | 
-											stream
-												nextPutAll: 'Name lookup failed for: ''';
-												nextPutAll: aUrlString asUrl host ] ]
-										on: ConnectionTimedOut
-										do: [ :err | 
-											stream
-												nextPutAll: 'Timed out connecting to: ''';
-												nextPutAll: aUrlString ].
-									urlContents
-										ifNotNil: [ :arg | 
-											stream
-												nextPutAll:
-													([ contentCheckBlock value: urlContents ]
-														on: Error
-														do: [ :err | 'Content block failed.' ]) ] ] ]) ]
+			reportPage contents: (String streamContents: [ :stream | 
+					 stream
+						 nextPutAll:
+							 (self todo displayDateWithTimeZoneDifference: DateAndTime now);
+						 nextPutAll: ' - '.
+					 ([ checkBlock value: reportPage ]
+						  on: Error
+						  do: [ :ignore | false ])
+						 ifFalse: [ 
+							 stream
+								 nextPutAll: 'Pre-Check reported no need to retrieve from ';
+								 nextPutAll: aUrlString asUrl host ]
+						 ifTrue: [ 
+							 [ 
+							 [ 
+							 urlContents := ZnClient new
+								                beOneShot;
+								                timeout: 45;
+								                retryDelay: 15;
+								                numberOfRetries: 3;
+								                get: aUrlString asUrl ]
+								 on: NameLookupFailure
+								 do: [ :ignoreError | 
+									 stream
+										 nextPutAll: 'Name lookup failed for: ''';
+										 nextPutAll: aUrlString asUrl host ] ]
+								 on: ConnectionTimedOut
+								 do: [ :er | 
+									 stream
+										 nextPutAll: 'Timed out connecting to: ''';
+										 nextPutAll: aUrlString ].
+							 urlContents ifNotNil: [ 
+								 stream nextPutAll: ([ contentCheckBlock value: urlContents ]
+										  on: Error
+										  do: [ :error | 'Content block failed.' ]) ] ] ]) ]
 ]
 
 { #category : #'wiki updates' }
@@ -232,35 +272,46 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom
 
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString [
+
+	self
+		reportOfFile: anOsPathAndFilename
+		onPageAt: aPathString
+		modifyUsing: [ :str | str ]
+]
+
+{ #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString modifyUsing: aStringBlock [
+
 	| reportPage |
 	self guessTodoFromPath: aPathString.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString)
-		ifNotNil: [ anOsPathAndFilename.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
+		ifNotNil: [ 
+			anOsPathAndFilename.
 			(File exists: anOsPathAndFilename)
-				ifFalse: [ reportPage
-						contents:
-							(String
-								streamContents: [ :stream | 
-									self
-										printReportHeaderOn: stream
-										fields: 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
-				ifTrue: [ ((File isReadable: anOsPathAndFilename)
-						and: [ File isRegular: anOsPathAndFilename ])
-						ifFalse: [ reportPage
-								contents:
-									(String
-										streamContents: [ :stream | 
-											self
-												printReportHeaderOn: stream
-												fields: 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
-						ifTrue: [ | file |
+				ifFalse: [ 
+					reportPage contents: (String streamContents: [ :stream | 
+							 self
+								 printReportHeaderOn: stream
+								 fields:
+								 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
+				ifTrue: [ 
+					((File isReadable: anOsPathAndFilename) and: [ 
+						 File isRegular: anOsPathAndFilename ])
+						ifFalse: [ 
+							reportPage contents: (String streamContents: [ :stream | 
+									 self
+										 printReportHeaderOn: stream
+										 fields:
+										 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
+						ifTrue: [ 
+							| file |
 							file := File openForReadFileNamed: anOsPathAndFilename.
-							[ reportPage
-								contents:
-									(String
-										streamContents:
-											[ :stream | self printReportHeaderOn: stream fields: file contents asString ]) ]
-								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
+							[ 
+							reportPage contents: (String streamContents: [ :stream | 
+									 self
+										 printReportHeaderOn: stream
+										 fields: ( aStringBlock value: file contents asString ) ]) ] ensure: [ 
+								file ifNotNil: [ file close ] ] ] ] ]
 ]
 
 { #category : #'wiki updates' }
@@ -443,4 +494,82 @@ PRScheduledTaskExamples >> todo: aPRToDo [
 PRScheduledTaskExamples >> updateRepeatingTasksForPath: aString [
 	(PRPathLookup start: self kernel root path: aString) tasks
 		do: [ :task | task updateDueDateToCurrent ]
+]
+
+{ #category : #'wiki updates' }
+PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
+
+	| reportPage file fileStream convertStream |
+	self guessTodoFromPath: aPathString.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
+		ifNotNil: [ 
+			reportPage contents: (String streamContents: [ :stream | 
+					 self printReportHeaderOn: stream fields: ''.
+					 [ 
+					 (file := File named: aFileString) exists
+						 ifFalse: [ 
+							 stream
+								 nextPutAll: 'ERROR: The file';
+								 nextPutAll: aFileString asString;
+								 nextPutAll: ' does not exist!' ]
+						 ifTrue: [ 
+							 fileStream := ZnCharacterWriteStream
+								               on: file writeStream
+								               encoding: ZnCharacterEncoder ascii.
+							 [ 
+							 fileStream setToEnd.
+							 convertStream := ZnNewLineWriterStream on: fileStream.
+							 convertStream forPlatformLineEnding.
+							 self class codeLockCritical: [ 
+								 aStreamBlock value: convertStream ] ] ensure: [ 
+								 fileStream close ].
+							 stream nextPutAll:
+								 'INFO: Successfully appended to the file' ] ]
+						 on: FileException
+						 do: [ 
+							 stream
+								 nextPutAll: 'ERROR: FS exception for: ';
+								 nextPutAll: aFileString asString ] ]) ]
+]
+
+{ #category : #'wiki updates' }
+PRScheduledTaskExamples >> writeAfterTruncateTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
+
+	"An example that creates a 2 line file:
+	  (PRScheduledTaskExamples newForKernelNamed: 'Pier') 
+		writeAfterTruncateTextFileNamed: '/tmp/example.txt'
+		using: [ :s | s nextPutAll: 'This replaces a file'; newLine; nextPutAll: 'append will add to a file'; newLine ]
+		reportOnPageAt: '/Epic Win/Test Task/Report'
+	This assumes that you created the file."
+
+	| reportPage file fileStream convertStream |
+	self guessTodoFromPath: aPathString.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
+		ifNotNil: [ 
+			reportPage contents: (String streamContents: [ :stream | 
+					 self printReportHeaderOn: stream fields: ''.
+					 [ 
+					 (file := File named: aFileString) exists
+						 ifFalse: [ 
+							 stream
+								 nextPutAll: 'ERROR: The file';
+								 nextPutAll: aFileString asString;
+								 nextPutAll: ' does not exist!' ]
+						 ifTrue: [ 
+							 fileStream := ZnCharacterWriteStream
+								               on: file writeStream
+								               encoding: ZnCharacterEncoder ascii.
+							 [ 
+							 self class codeLockCritical: [ 
+								 fileStream truncate.
+								 convertStream := ZnNewLineWriterStream on: fileStream.
+								 aStreamBlock value: convertStream ] ] ensure: [ 
+								 fileStream close ].
+							 stream nextPutAll:
+								 'INFO: Successfully truncated and wrote file' ] ]
+						 on: FileException
+						 do: [ 
+							 stream
+								 nextPutAll: 'ERROR: FS exception for: ';
+								 nextPutAll: aFileString asString ] ]) ]
 ]

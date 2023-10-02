@@ -414,10 +414,10 @@ PRWorkoutLog >> workouts [
 
 { #category : #accessing }
 PRWorkoutLog >> workouts: aCollectionOfPRWorkouts [
-	workouts := (aCollectionOfPRWorkouts asOrderedCollection
-		collectAll: [ :e | 
-			e isString
-				ifTrue: [ self class workoutsBasedOnString: e ]
-				ifFalse: [ OrderedCollection with: e ] ])
-		sorted: [ :a :b | a date < b date ]
+
+	workouts := SortedCollection sortBlock: [ :a :b | a date < b date ].
+	aCollectionOfPRWorkouts do: [ :e | 
+		e isString
+			ifTrue: [ workouts addAll: (self class workoutsBasedOnString: e) ]
+			ifFalse: [ workouts add: e ] ]
 ]
