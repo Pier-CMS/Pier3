@@ -77,9 +77,10 @@ PRAddCommandTest >> testSuggestName [
 
 { #category : #'tests-accessing' }
 PRAddCommandTest >> testType [
-	self assert: self command type = PRPage.
-	self command type: PRFile.
-	self assert: self command type = PRFile
+
+	self assert: self command type = #PRPage.
+	self command type: #PRFile.
+	self assert: self command type equals: #PRFile
 ]
 
 { #category : #'tests-utilties' }
