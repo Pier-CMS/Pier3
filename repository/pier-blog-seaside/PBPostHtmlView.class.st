@@ -81,16 +81,15 @@ PBPostHtmlView >> component [
 
 { #category : #private }
 PBPostHtmlView >> execute: anEditCommand [
+
 	| addCommand |
 	comment := component := command := nil.
 	anEditCommand ifNil: [ ^ self ].
 	addCommand := PRAddCommand new.
 	self context command: addCommand.
 	addCommand
-		name: (addCommand
-			uniqueName: 'comment'
-			in: self context structure);
-		type: PBComment;
+		name: (addCommand uniqueName: 'comment' in: self context structure);
+		type: #############PBComment;
 		beUnchecked;
 		execute.
 	self context

@@ -64,16 +64,15 @@ BONoteWidget >> component [
 
 { #category : #actions }
 BONoteWidget >> execute: anEditCommand [
+
 	| addCommand |
 	note := component := command := nil.
 	anEditCommand ifNil: [ ^ self ].
 	addCommand := PRAddCommand new.
 	self context command: addCommand.
 	addCommand
-		name: (addCommand
-			uniqueName: 'note'
-			in: self context structure);
-		type: BONote;
+		name: (addCommand uniqueName: 'note' in: self context structure);
+		type: #BONote;
 		beUnchecked;
 		execute.
 	self context

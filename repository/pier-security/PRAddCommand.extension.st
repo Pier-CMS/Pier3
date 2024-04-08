@@ -6,13 +6,14 @@ PRAddCommand >> descriptionTypeSecurity: aDescription [
 
 	<magritteDescription: #descriptionType>
 	^ aDescription
-		options: self structureClassesSecurity;
-		yourself
+		  options: (self structureClassesSecurity collect: [ :e | e name ]);
+		  yourself
 ]
 
 { #category : #'*pier-security' }
 PRAddCommand >> permission [
-	^ PUAddPermission on: self class structure: self type
+
+	^ PUAddPermission on: self class structure: self typeClass
 ]
 
 { #category : #'*pier-security' }
