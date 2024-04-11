@@ -162,7 +162,6 @@ PRAddCommand >> type [
 { #category : #accessing }
 PRAddCommand >> type: aSymbol [
 
-	aSymbol isBehavior ifTrue: [ self halt ].
 	type := aSymbol
 ]
 
