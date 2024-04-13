@@ -35,9 +35,9 @@ PRAddCommand >> child [
 	"Create a new structure of the selected species, a subclass of PRStructure. Set the title if necessary, else it will be generated automatically."
 
 	| child |
-	child := self type named: self name.
-	(self title notNil and: [ self title notEmpty ])
-		ifTrue: [ child title: self title ].
+	child := self typeClass named: self name.
+	(self title notNil and: [ self title notEmpty ]) ifTrue: [
+		child title: self title ].
 	^ child
 ]
 
@@ -56,19 +56,19 @@ PRAddCommand >> descriptionName [
 
 { #category : #'accessing-description' }
 PRAddCommand >> descriptionType [
+
 	<magritteDescription>
-	
 	^ MASingleOptionDescription new
-		options: self structureClasses;
-		reference: MAClassDescription new;
-		parameterName: 'type';
-		default: PRPage;
-		accessor: #type;
-		label: 'Type';
-		priority: 110;
-		beRequired;
-		beSorted;
-		yourself
+		  options: (self structureClasses collect: [ :c | c name ]);
+		  reference: MASymbolDescription new;
+		  parameterName: 'type';
+		  default: #PRPage;
+		  accessor: #type;
+		  label: 'Type';
+		  priority: 110;
+		  beRequired;
+		  beSorted;
+		  yourself
 ]
 
 { #category : #events }
@@ -153,10 +153,20 @@ PRAddCommand >> title: aString [
 
 { #category : #accessing }
 PRAddCommand >> type [
-	^ type ifNil: [ type := self structure defaultChildClass ]
+
+	^ type ifNil: [ type := self structure defaultChildClass name ]
+
+
 ]
 
 { #category : #accessing }
-PRAddCommand >> type: aClass [
-	type := aClass
+PRAddCommand >> type: aSymbol [
+
+	type := aSymbol
+]
+
+{ #category : #accessing }
+PRAddCommand >> typeClass [
+
+	^ Smalltalk at: self type
 ]

@@ -113,6 +113,137 @@ PRScheduledTaskExamples >> backupTo: aUrl as: aUsername authenticatedBy: aPasswo
 				cr ]
 ]
 
+{ #category : #wikibackup }
+PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aNameBlock toExternalUsing: writePictureFilesAndReturnUrls reportOn: aPathString [
+	"The report may have links to the PRFiles, so consider its location (having aStartPage as a parent prevents the file from being overwritten). User is responsible to select a aStartPageName that does not have private pictures under it"
+
+	| reportPage files |
+	self guessTodoFromPath: aPathString.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString)
+		ifNotNil: [
+			reportPage contents: (String streamContents: [ :outputStream |
+					 | batchesOfFiles batchesOfFilesToLinks linksToFile pictureUrls errorLinks |
+					 batchesOfFilesToLinks := Dictionary new.
+					 files := (PRPathLookup
+						           start: self kernel root
+						           path: aStartPageName) enumerator everything select: [
+						          :e | e isFile and: [ e isImage ] ].
+					 files isEmpty ifTrue: [
+						 outputStream nextPutAll: 'No files found' ].
+					 files do: [ :file |
+						 ((file title reject: [ :c | '-_.:' includes: c ])
+							  isAllAlphaNumerics and: [ file title includes: $. ])
+							 ifFalse: [
+								 outputStream
+									 nextPutAll: 'The file *';
+									 nextPutAll: file absolutePath;
+									 nextPutAll:
+										 '* needs a title to be used for the file name, edit it to change the title.';
+									 cr;
+									 cr ]
+							 ifTrue: [
+								 file hasChildren
+									 ifTrue: [
+										 outputStream
+											 nextPutAll: 'The file *';
+											 nextPutAll: file absolutePath;
+											 nextPutAll:
+												 '* has children, these should be removed first.';
+											 cr;
+											 cr ]
+									 ifFalse: [
+										 file isRoot
+											 ifTrue: [
+												 outputStream
+													 nextPutAll: 'The file *';
+													 nextPutAll: file absolutePath;
+													 nextPutAll:
+														 '* should not be the root, removing this would be very bad.';
+													 cr;
+													 cr ]
+											 ifFalse: [
+												 ([
+												  [
+												  (aNameBlock value: file) asUrl retrieveContents isEmpty ]
+													  on: ZnHttpUnsuccessful
+													  do: [ true ] ]
+													  on: ConnectionTimedOut
+													  do: [ true ])
+													 ifFalse: [
+														 outputStream
+															 nextPutAll: 'The file *';
+															 nextPutAll: file absolutePath;
+															 nextPutAll: '* should be replaced with: ';
+															 nextPutAll: (aNameBlock value: file) asString;
+															 cr;
+															 cr ]
+													 ifTrue: [
+														 errorLinks := (linksToFile := self kernel root
+															                               incomingReferences to:
+														                               file) reject: [ :link |
+															               link isEmbedded ].
+														 linksToFile size = 0
+															 ifTrue: [
+																 outputStream
+																	 nextPutAll: 'The file *';
+																	 nextPutAll: file absolutePath;
+																	 nextPutAll:
+																		 '* has no links to it, need to wait until there is an embedded link to this.';
+																	 cr;
+																	 cr ]
+															 ifFalse: [
+																 errorLinks isNotEmpty
+																	 ifTrue: [
+																		 outputStream
+																			 nextPutAll: 'The file *';
+																			 nextPutAll: file absolutePath;
+																			 nextPutAll: '* has a non-embedded link on *';
+																			 nextPutAll: errorLinks anyOne owner absolutePath;
+																			 nextPutAll: '* - this should be embedded.';
+																			 cr;
+																			 cr ]
+																	 ifFalse: [
+																	 batchesOfFilesToLinks at: file put: linksToFile ] ] ] ] ] ] ].
+					 writePictureFilesAndReturnUrls value:
+						 (batchesOfFiles := batchesOfFilesToLinks keys).
+					 pictureUrls := batchesOfFiles collect: aNameBlock.
+					 batchesOfFiles with: pictureUrls do: [ :prFile :urlString |
+						 urlString isEmpty
+							 ifTrue: [
+								 outputStream
+									 nextPutAll: 'URL for *';
+									 nextPutAll: prFile absolutePath;
+									 nextPutAll: '* is empty, unable to create the picture file.';
+									 cr;
+									 cr ]
+							 ifFalse: [
+								 ([ urlString asUrl retrieveContents isEmpty ]
+									  on: ZnHttpUnsuccessful
+									  do: [ true ])
+									 ifTrue: [
+										 outputStream
+											 nextPutAll: 'URL for *';
+											 nextPutAll: prFile absolutePath;
+											 nextPutAll: '* is *';
+											 nextPutAll: urlString;
+											 nextPutAll:
+												 '* - but has an error retrieving the contents.';
+											 cr;
+											 cr ]
+									 ifFalse: [
+										 (batchesOfFilesToLinks at: prFile) do: [ :link |
+											 outputStream
+												 nextPutAll: 'Updated: *';
+												 nextPutAll: link owner absolutePath;
+												 nextPutAll: '* to have *';
+												 nextPutAll: urlString asString;
+												 nextPutAll: '* for ==';
+												 nextPutAll: prFile title;
+												 nextPutAll: '==.';
+												 cr;
+												 cr ] ] ] ] ]) ]
+]
+
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> ftpFileToReport: userString pass: pwString host: hostString file: fileString reportOnPageAt: aPathString [
 	"FTP is not secure, but available everywhere."
@@ -497,39 +628,48 @@ PRScheduledTaskExamples >> updateRepeatingTasksForPath: aString [
 ]
 
 { #category : #'wiki updates' }
+PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock on: aStream [
+
+	| file fileStream convertStream |
+	self printReportHeaderOn: aStream fields: ''.
+	[
+	(file := File named: aFileString) exists
+		ifFalse: [
+			aStream
+				nextPutAll: 'ERROR: The file ';
+				nextPutAll: aFileString asString;
+				nextPutAll: ' does not exist!' ]
+		ifTrue: [
+			fileStream := ZnCharacterWriteStream
+				              on: file writeStream
+				              encoding: ZnCharacterEncoder ascii.
+			[
+			fileStream setToEnd.
+			convertStream := ZnNewLineWriterStream on: fileStream.
+			convertStream forPlatformLineEnding.
+			self class codeLockCritical: [ aStreamBlock value: convertStream ] ]
+				ensure: [ fileStream close ].
+			aStream nextPutAll: 'INFO: Successfully appended to the file' ] ]
+		on: FileException
+		do: [
+			aStream
+				nextPutAll: 'ERROR: FS exception for: ';
+				nextPutAll: aFileString asString ]
+]
+
+{ #category : #accessing }
 PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
 
-	| reportPage file fileStream convertStream |
+	| reportPage |
 	self guessTodoFromPath: aPathString.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
-		ifNotNil: [ 
-			reportPage contents: (String streamContents: [ :stream | 
-					 self printReportHeaderOn: stream fields: ''.
-					 [ 
-					 (file := File named: aFileString) exists
-						 ifFalse: [ 
-							 stream
-								 nextPutAll: 'ERROR: The file';
-								 nextPutAll: aFileString asString;
-								 nextPutAll: ' does not exist!' ]
-						 ifTrue: [ 
-							 fileStream := ZnCharacterWriteStream
-								               on: file writeStream
-								               encoding: ZnCharacterEncoder ascii.
-							 [ 
-							 fileStream setToEnd.
-							 convertStream := ZnNewLineWriterStream on: fileStream.
-							 convertStream forPlatformLineEnding.
-							 self class codeLockCritical: [ 
-								 aStreamBlock value: convertStream ] ] ensure: [ 
-								 fileStream close ].
-							 stream nextPutAll:
-								 'INFO: Successfully appended to the file' ] ]
-						 on: FileException
-						 do: [ 
-							 stream
-								 nextPutAll: 'ERROR: FS exception for: ';
-								 nextPutAll: aFileString asString ] ]) ]
+	(reportPage := PRPathLookup start: self kernel root path: aPathString)
+		ifNotNil: [
+			reportPage contents: (String streamContents: [ :stream |
+					 self
+						 writeAfterAppendTextFileNamed: aFileString
+						 using: aStreamBlock
+						 on: stream ]) ]
+
 ]
 
 { #category : #'wiki updates' }

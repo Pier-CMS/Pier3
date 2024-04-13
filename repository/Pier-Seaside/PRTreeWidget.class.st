@@ -166,11 +166,12 @@ PRTreeWidget >> level: aLevel [
 
 { #category : #events }
 PRTreeWidget >> onChangeContext: aContext [
+
 	super onChangeContext: aContext.
-	self autoCollapse
-		ifTrue: [ expanded removeAll: expanded copy ].
-	self autoExpand
-		ifTrue: [ expanded addAll: aContext structure parents ]
+	self autoCollapse ifTrue: [
+		expanded := expanded class new: expanded size ].
+	self autoExpand ifTrue: [
+		expanded addAll: aContext structure parents ]
 ]
 
 { #category : #rendering }
