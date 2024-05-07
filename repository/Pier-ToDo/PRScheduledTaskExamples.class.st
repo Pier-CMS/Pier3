@@ -39,6 +39,8 @@ PRScheduledTaskExamples class >> codeLockCritical: aBlock [
 
 { #category : #accessing }
 PRScheduledTaskExamples class >> isCodeLocked [
+
+	CodeLock ifNil: [ CodeLock := Semaphore forMutualExclusion ].
 	^ CodeLock isSignaled not
 ]
 
@@ -117,7 +119,7 @@ PRScheduledTaskExamples >> backupTo: aUrl as: aUsername authenticatedBy: aPasswo
 PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aNameBlock toExternalUsing: writePictureFilesAndReturnUrls reportOn: aPathString [
 	"The report may have links to the PRFiles, so consider its location (having aStartPage as a parent prevents the file from being overwritten). User is responsible to select a aStartPageName that does not have private pictures under it"
 
-	| reportPage files |
+	| reportPage files urlContents |
 	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [
@@ -128,120 +130,135 @@ PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aName
 						           start: self kernel root
 						           path: aStartPageName) enumerator everything select: [
 						          :e | e isFile and: [ e isImage ] ].
-					 files isEmpty ifTrue: [
-						 outputStream nextPutAll: 'No files found' ].
-					 files do: [ :file |
-						 ((file title reject: [ :c | '-_.:' includes: c ])
-							  isAllAlphaNumerics and: [ file title includes: $. ])
-							 ifFalse: [
-								 outputStream
-									 nextPutAll: 'The file *';
-									 nextPutAll: file absolutePath;
-									 nextPutAll:
-										 '* needs a title to be used for the file name, edit it to change the title.';
-									 cr;
-									 cr ]
-							 ifTrue: [
-								 file hasChildren
-									 ifTrue: [
+					 files isEmpty
+						 ifTrue: [
+						 self printReportHeaderOn: outputStream fields: 'No files found' ]
+						 ifFalse: [
+							 self
+								 printReportHeaderOn: outputStream
+								 fields: '|!File|!Comment'.
+							 files do: [ :file |
+								 ((file title reject: [ :c | '-_.:' includes: c ])
+									  isAllAlphaNumerics and: [ file title includes: $. ])
+									 ifFalse: [
 										 outputStream
-											 nextPutAll: 'The file *';
+											 nextPutAll: '|*';
 											 nextPutAll: file absolutePath;
 											 nextPutAll:
-												 '* has children, these should be removed first.';
-											 cr;
+												 '*|needs a title to be used for the file name, edit it to change the title.';
 											 cr ]
-									 ifFalse: [
-										 file isRoot
+									 ifTrue: [
+										 file hasChildren
 											 ifTrue: [
 												 outputStream
-													 nextPutAll: 'The file *';
+													 nextPutAll: '|*';
 													 nextPutAll: file absolutePath;
 													 nextPutAll:
-														 '* should not be the root, removing this would be very bad.';
-													 cr;
+														 '*|Has children, these should be removed first.';
 													 cr ]
 											 ifFalse: [
-												 ([
-												  [
-												  (aNameBlock value: file) asUrl retrieveContents isEmpty ]
-													  on: ZnHttpUnsuccessful
-													  do: [ true ] ]
-													  on: ConnectionTimedOut
-													  do: [ true ])
-													 ifFalse: [
-														 outputStream
-															 nextPutAll: 'The file *';
-															 nextPutAll: file absolutePath;
-															 nextPutAll: '* should be replaced with: ';
-															 nextPutAll: (aNameBlock value: file) asString;
-															 cr;
-															 cr ]
+												 file isRoot
 													 ifTrue: [
-														 errorLinks := (linksToFile := self kernel root
-															                               incomingReferences to:
-														                               file) reject: [ :link |
-															               link isEmbedded ].
-														 linksToFile size = 0
-															 ifTrue: [
-																 outputStream
-																	 nextPutAll: 'The file *';
-																	 nextPutAll: file absolutePath;
-																	 nextPutAll:
-																		 '* has no links to it, need to wait until there is an embedded link to this.';
-																	 cr;
-																	 cr ]
+														 outputStream
+															 nextPutAll: '|*';
+															 nextPutAll: file absolutePath;
+															 nextPutAll:
+																 '*|Should not be the root, removing this would be very bad.';
+															 cr ]
+													 ifFalse: [
+														 ([
+														  [
+														  (urlContents := (aNameBlock value: file) asUrl
+															                  retrieveContents) isEmpty ]
+															  on: ZnHttpUnsuccessful
+															  do: [ true ] ]
+															  on: ConnectionTimedOut
+															  do: [ true ])
 															 ifFalse: [
-																 errorLinks isNotEmpty
+																 urlContents = file contents asByteArray
 																	 ifTrue: [
 																		 outputStream
-																			 nextPutAll: 'The file *';
+																			 nextPutAll: '|*';
 																			 nextPutAll: file absolutePath;
-																			 nextPutAll: '* has a non-embedded link on *';
-																			 nextPutAll: errorLinks anyOne owner absolutePath;
-																			 nextPutAll: '* - this should be embedded.';
-																			 cr;
+																			 nextPutAll:
+																				 '*|Should be replaced with: <img src="';
+																			 nextPutAll: (aNameBlock value: file) asString;
+																			 nextPutAll: '" />';
 																			 cr ]
 																	 ifFalse: [
-																	 batchesOfFilesToLinks at: file put: linksToFile ] ] ] ] ] ] ].
-					 writePictureFilesAndReturnUrls value:
-						 (batchesOfFiles := batchesOfFilesToLinks keys).
-					 pictureUrls := batchesOfFiles collect: aNameBlock.
-					 batchesOfFiles with: pictureUrls do: [ :prFile :urlString |
-						 urlString isEmpty
-							 ifTrue: [
-								 outputStream
-									 nextPutAll: 'URL for *';
-									 nextPutAll: prFile absolutePath;
-									 nextPutAll: '* is empty, unable to create the picture file.';
-									 cr;
-									 cr ]
-							 ifFalse: [
-								 ([ urlString asUrl retrieveContents isEmpty ]
-									  on: ZnHttpUnsuccessful
-									  do: [ true ])
+																		 outputStream
+																			 nextPutAll: '|*';
+																			 nextPutAll: file absolutePath;
+																			 nextPutAll:
+																				 '*|File does not match the contents of *';
+																			 nextPutAll: (aNameBlock value: file) asString;
+																			 nextPutAll: '* - please investigate.';
+																			 cr ] ]
+															 ifTrue: [
+																 errorLinks := (linksToFile := self kernel root
+																	                               incomingReferences
+																                               to: file) reject: [
+																	               :link |
+																	               link isEmbedded or: [
+																		               link owner = reportPage ] ].
+																 linksToFile size = 0
+																	 ifTrue: [
+																		 outputStream
+																			 nextPutAll: '|*';
+																			 nextPutAll: file absolutePath;
+																			 nextPutAll:
+																				 '*|Has no links to it, need to wait until there is an embedded link to this.';
+																			 cr ]
+																	 ifFalse: [
+																		 errorLinks isNotEmpty
+																			 ifTrue: [
+																				 outputStream
+																					 nextPutAll: '|*';
+																					 nextPutAll: file absolutePath;
+																					 nextPutAll: '*|Has a non-embedded link on *';
+																					 nextPutAll: errorLinks anyOne owner absolutePath;
+																					 nextPutAll: '* - this should be embedded.';
+																					 cr;
+																					 cr ]
+																			 ifFalse: [
+																			 batchesOfFilesToLinks at: file put: linksToFile ] ] ] ] ] ] ].
+							 writePictureFilesAndReturnUrls value:
+								 (batchesOfFiles := batchesOfFilesToLinks keys).
+							 pictureUrls := batchesOfFiles collect: aNameBlock.
+							 batchesOfFiles with: pictureUrls do: [ :prFile :urlString |
+								 urlString isEmpty
 									 ifTrue: [
 										 outputStream
-											 nextPutAll: 'URL for *';
+											 nextPutAll: '|*';
 											 nextPutAll: prFile absolutePath;
-											 nextPutAll: '* is *';
-											 nextPutAll: urlString;
 											 nextPutAll:
-												 '* - but has an error retrieving the contents.';
-											 cr;
+												 '*|The URL is empty, unable to create the picture file.';
 											 cr ]
 									 ifFalse: [
-										 (batchesOfFilesToLinks at: prFile) do: [ :link |
-											 outputStream
-												 nextPutAll: 'Updated: *';
-												 nextPutAll: link owner absolutePath;
-												 nextPutAll: '* to have *';
-												 nextPutAll: urlString asString;
-												 nextPutAll: '* for ==';
-												 nextPutAll: prFile title;
-												 nextPutAll: '==.';
-												 cr;
-												 cr ] ] ] ] ]) ]
+										 ([ urlString asUrl retrieveContents isEmpty ]
+											  on: ZnHttpUnsuccessful
+											  do: [ true ])
+											 ifTrue: [
+												 outputStream
+													 nextPutAll: '|*';
+													 nextPutAll: prFile absolutePath;
+													 nextPutAll: '*|The URL is *';
+													 nextPutAll: urlString;
+													 nextPutAll:
+														 '* - but has an error retrieving the contents.';
+													 cr ]
+											 ifFalse: [
+												 (batchesOfFilesToLinks at: prFile) do: [ :link |
+													 outputStream
+														 nextPutAll: '|*';
+														 nextPutAll: link owner absolutePath;
+														 nextPutAll: '*|Update to have <img src="';
+														 nextPutAll: urlString asString;
+														 nextPutAll: '" /> for ==';
+														 nextPutAll: prFile title;
+														 nextPutAll: '== and remove: *';
+														 nextPutAll: prFile absolutePath;
+														 nextPutAll: '*.' cr ] ] ] ] ] ]) ]
 ]
 
 { #category : #'wiki updates' }
@@ -447,63 +464,63 @@ PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathStri
 
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
+
 	| reportPage pagesWithUnusualChildren linksWithRaw |
 	self guessTodoFromPath: aPathString.
 	pagesWithUnusualChildren := Set new.
-	self kernel root enumerator with all
-		do: [ :e | 
-			(e childrenDecoration children
-				anySatisfy: [ :child | 
-					(#(#PRPage #PRToDo #PRFile #PBBlog #PRComponent #PBPost #PRToDoTask #PBComment #PRWorkoutLog)
-						includes: child class name) not ])
-				ifTrue: [ pagesWithUnusualChildren add: e decorated absolutePath ] ].
+	self kernel root enumerator with all do: [ :e |
+		(e childrenDecoration children anySatisfy: [ :child |
+			 (#( #PRPage #PRToDo #PRFile #PBBlog #PRComponent #PBPost #PRToDoTask
+			     #PBComment #PRWorkoutLog ) includes: child class name) not ])
+			ifTrue: [ pagesWithUnusualChildren add: e decorated absolutePath ] ].
 	linksWithRaw := Set new.
-	self kernel root enumerator with all
-		do: [ :page | 
-			page outgoingReferences
-				do: [ :link | 
-					(link children anySatisfy: [ :child | child class = PRRaw ])
-						ifTrue: [ linksWithRaw add: page absolutePath ] ] ].
+	self kernel root enumerator with all do: [ :page |
+		page outgoingReferences do: [ :link |
+			(link children anySatisfy: [ :child | child class = PRRaw ])
+				ifTrue: [ linksWithRaw add: page absolutePath ] ] ].
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
-		ifNotNil: [ reportPage
-				contents:
-					(String
-						streamContents: [ :stream | 
-							self class checkFSSpace
-								ifTrue: [ self
-										printReportHeaderOn: stream
-										fields:
-											'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size|!!Disk Space' ]
-								ifFalse: [ self
-										printReportHeaderOn: stream
-										fields:
-											'|!!Count of Pages with Unusual Children|!!Links with Raw HTML|!!Image Size' ].
-							stream nextPut: $|.
-							pagesWithUnusualChildren isEmpty
-								ifTrue: [ stream nextPutAll: 'none' ]
-								ifFalse: [ pagesWithUnusualChildren
-										do: [ :string | 
-											stream
-												nextPut: $*;
-												nextPutAll: string;
-												nextPut: $*;
-												space ] ].
-							stream nextPut: $|.
-							linksWithRaw isEmpty
-								ifTrue: [ stream nextPutAll: 'none' ]
-								ifFalse: [ linksWithRaw
-										do: [ :string | 
-											stream
-												nextPut: $*;
-												nextPutAll: string;
-												nextPutAll: '* ' ] ].
-							stream
-								nextPutAll: ' | ';
-								nextPutAll: Smalltalk imageFile humanReadableSize.
-							self class checkFSSpace
-								ifTrue: [ stream
-										nextPutAll: ' | ';
-										nextPutAll: self runCheckDiskSpace ] ]) ]
+		ifNotNil: [
+			reportPage contents: (String streamContents: [ :stream |
+					 self class checkFSSpace
+						 ifTrue: [
+							 self
+								 printReportHeaderOn: stream
+								 fields:
+								 '|!Count of Pages with Unusual Children|!Links with Raw HTML|!Image Size|!Disk Space|!Is Code Locked' ]
+						 ifFalse: [
+							 self
+								 printReportHeaderOn: stream
+								 fields:
+								 '|!Count of Pages with Unusual Children|!Links with Raw HTML|!Image Size|!Is Code Locked' ].
+					 stream nextPut: $|.
+					 pagesWithUnusualChildren isEmpty
+						 ifTrue: [ stream nextPutAll: 'none' ]
+						 ifFalse: [
+							 pagesWithUnusualChildren do: [ :string |
+								 stream
+									 nextPut: $*;
+									 nextPutAll: string;
+									 nextPut: $*;
+									 space ] ].
+					 stream nextPut: $|.
+					 linksWithRaw isEmpty
+						 ifTrue: [ stream nextPutAll: 'none' ]
+						 ifFalse: [
+							 linksWithRaw do: [ :string |
+								 stream
+									 nextPut: $*;
+									 nextPutAll: string;
+									 nextPutAll: '* ' ] ].
+					 stream
+						 nextPutAll: ' | ';
+						 nextPutAll: Smalltalk imageFile humanReadableSize.
+					 self class checkFSSpace ifTrue: [
+						 stream
+							 nextPutAll: ' | ';
+							 nextPutAll: self runCheckDiskSpace ].
+					 stream
+						 nextPutAll: ' | ';
+						 nextPutAll: self class isCodeLocked asString ]) ]
 ]
 
 { #category : #'wiki updates' }
