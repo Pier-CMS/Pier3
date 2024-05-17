@@ -88,27 +88,31 @@ PRExerciseEntry >> descriptionExercise [
 
 { #category : #'accessing-description' }
 PRExerciseEntry >> descriptionReps [
+
 	<magritteDescription>
 	^ MANumberDescription new
-		accessor: #reps;
-		label: 'Repetitions';
-		beInteger;
-		default: 8;
-		min: 0;
-		priority: 150;
-		yourself
+		  accessor: #reps;
+		  label: 'Repetitions';
+		  beInteger;
+		  beRequired;
+		  bePositive;
+		  default: 5;
+		  min: 0;
+		  priority: 150;
+		  yourself
 ]
 
 { #category : #'accessing-description' }
 PRExerciseEntry >> descriptionWeight [
+
 	<magritteDescription>
 	^ MAStringDescription new
-		parameterName: 'weight';
-		accessor: #weight;
-		label: 'Weight (' , self exercise weightUnits , ')';
-		beRequired;
-		priority: 130;
-		yourself
+		  parameterName: 'weight';
+		  accessor: #weight;
+		  label: 'Weight (' , self exercise weightUnits , ')';
+		  beRequired;
+		  priority: 130;
+		  yourself
 ]
 
 { #category : #accessing }
