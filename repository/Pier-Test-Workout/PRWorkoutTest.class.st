@@ -503,6 +503,24 @@ PRWorkoutTest >> testRemoveExerciseEntry [
 ]
 
 { #category : #tests }
+PRWorkoutTest >> testTimeChangeRecomendation [
+	"This relies on time, don't work after 11pm."
+
+	Time now < (Time midnight addSeconds: 23 hours asSeconds) ifTrue: [
+		self assert: self instance isNewRecomendation.
+		self instance timeZoneDifference: 48 hours.
+		self instance addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Bench Press'
+						  weightUnits: 'kg'
+						  details: 'Flat bench with bar')
+				 weight: 100.5
+				 times: 12).
+		self instance nextExerciseEntry.
+		self deny: self instance isNewRecomendation ]
+]
+
+{ #category : #tests }
 PRWorkoutTest >> testWorkoutAssignment [
 	self instance
 		workouts:
