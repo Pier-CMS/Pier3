@@ -330,7 +330,7 @@ PRWorkoutLog >> mergeWorkouts [
 PRWorkoutLog >> nextExerciseEntry [
 	"Determine what the user should do next based on time and what has been done"
 
-	recommendedEntries date = Date today
+	recommendedEntries date = (DateAndTime now - self timeZoneDifference) asDate
 		ifFalse: [ recommendedEntries := PRWorkout new ].
 	recommendedEntries isEmpty
 		ifTrue: [ ^ self furthestReasonableExerciseEntry ]
@@ -355,6 +355,7 @@ PRWorkoutLog >> removeExerciseEntry: anExerciseEntry [
 { #category : #private }
 PRWorkoutLog >> setRecommendedWorkout: aPRWorkout [
 	recommendedEntries := PRWorkout new.
+	recommendedEntries date: (DateAndTime now - self timeZoneDifference) asDate. 
 	aPRWorkout
 		ifNotNil: [ self isWorkoutInProgress
 				ifTrue: [ (aPRWorkout exercises reject: [ :anEntry | workouts last containsExercise: anEntry exercise ])
