@@ -19,6 +19,10 @@ Metacello new
   onConflictUseLoaded;
   load: 'addons'.
 ```
+A tutorial for setting up Pier can be ran with:
+```
+ProfStef goOn: HowToSetupPier.
+```
 ## Development
 There are over 1200 tests for Pier. These can be loaded by following the above instructions, then in Iceberg, select Pillar and load the package Pillar-Tests-Core & Pillar-Tests-Model. Next run:
 ```
