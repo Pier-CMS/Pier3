@@ -31,7 +31,7 @@ HowToSetupPier >> exportHistory [
 		  title: 'Export the Wiki History from a Running Image'
 		  lesson: '"Code for exporting history:"
 
-| history fileStream recorded |
+| history fileStream recorded file |
 history := ((PRKernel instances reject: [:e | e root name = ''root'']) detect: [:e | e name = ''pier'' or: [e name = ''Pier'']]) persistency history.
 recorded := Set new: history size.
 file := (File named: ''history.txt'').
@@ -114,7 +114,7 @@ HowToSetupPier >> imageCleanup [
 #PRKernelCreatorForPier asClass removeFromSystem.
 PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
 10 timesRepeat: [ Smalltalk garbageCollect ].
-"Save the image and copy it to the server"
+"Save the image and copy it to the server. No need to got to the next unless you are exporting changes."
 
 ProfStef next.'
 ]
@@ -125,7 +125,7 @@ HowToSetupPier >> importHistory [
 	^ Lesson
 		  title: 'Import History'
 		  lesson: '"If updating an existing site import the history file:"
-| fileStream aKernel path owner timeStamp listOfTuples aPage aContext aCommand |
+| fileStream aKernel path owner timeStamp listOfTuples aPage aContext aCommand file |
 aKernel := (PRKernel instances reject: [:e | e root name = ''root'']) detect: [:e | e name = ''pier'' or: [e name = ''Pier'']].
 listOfTuples := OrderedCollection new: 1024 * 8.
 (file := File named: ''history.txt'') exists ifFalse: [ self error: ''Missing history.txt in this directory.'' ].
