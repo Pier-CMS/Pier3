@@ -182,15 +182,18 @@ PRWorkout >> numberOfSetsOf: anExercise [
 
 { #category : #printing }
 PRWorkout >> printOn: aStream [
+	"Display the exercises in reverse order so export/import has the right order"
+
 	aStream
 		nextPut: $';
 		nextPut: $|;
 		space;
 		nextPutAll: self date asString;
 		space.
-	self exercises
+	self exercises reverse
 		do: [ :e | e pipeFormattedPrintOn: aStream ]
-		separatedBy: [ aStream
+		separatedBy: [
+			aStream
 				cr;
 				nextPut: $|;
 				space ].

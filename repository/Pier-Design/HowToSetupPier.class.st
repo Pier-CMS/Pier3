@@ -8,7 +8,7 @@ I represent a workspace for Pier setup, memory management, and export. If settin
 Class {
 	#name : #HowToSetupPier,
 	#superclass : #AbstractTutorial,
-	#category : #'Pier-ToDo'
+	#category : #'Pier-Design'
 }
 
 { #category : #lessons }
