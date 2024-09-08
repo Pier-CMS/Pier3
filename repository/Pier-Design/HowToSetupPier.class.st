@@ -3,7 +3,7 @@ I represent a workspace for Pier setup, memory management, and export. If settin
 
 	ProfStef goOn: self 
 
-
+One can skip to the last two pages at the end if exporting an old running system.
 "
 Class {
 	#name : #HowToSetupPier,
@@ -105,9 +105,9 @@ HowToSetupPier >> imageCleanup [
 
 	^ Lesson
 		  title: 'Image Cleanup'
-		  lesson: '"Memory Updates and Freeup anything unnecessary:"
+		  lesson: '"Memory Updates for running a public site. Freeup anything unnecessary:"
 
-(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumRelativeAge put: 600.
+(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumRelativeAge put: 800.
 (WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumSize put: 15000.
 (WAAdmin defaultDispatcher handlerAt: ''pier'') initializeCache.
 
@@ -124,7 +124,7 @@ HowToSetupPier >> importHistory [
 
 	^ Lesson
 		  title: 'Import History'
-		  lesson: '"If updating an existing site import the history file:"
+		  lesson: '"If updating an existing site import the history file of the latest changes for each page:"
 | fileStream aKernel path owner timeStamp listOfTuples aPage aContext aCommand file |
 aKernel := (PRKernel instances reject: [:e | e root name = ''root'']) detect: [:e | e name = ''pier'' or: [e name = ''Pier'']].
 listOfTuples := OrderedCollection new: 1024 * 8.
