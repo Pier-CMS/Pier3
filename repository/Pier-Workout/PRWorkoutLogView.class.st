@@ -32,7 +32,7 @@ PRWorkoutLogView >> daysToDisplay [
 	^ daysToDisplay ifNil: [ daysToDisplay := 40 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PRWorkoutLogView >> doubleDaysToDisplay [
 	daysToDisplay := daysToDisplay * 2
 ]

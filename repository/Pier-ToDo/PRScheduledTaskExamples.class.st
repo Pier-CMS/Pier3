@@ -258,7 +258,8 @@ PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aName
 														 nextPutAll: prFile title;
 														 nextPutAll: '== and remove: *';
 														 nextPutAll: prFile absolutePath;
-														 nextPutAll: '*.' cr ] ] ] ] ] ]) ]
+														 nextPutAll: '*.';
+														 cr ] ] ] ] ] ]) ]
 ]
 
 { #category : #'wiki updates' }
