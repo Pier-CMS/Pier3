@@ -456,11 +456,12 @@ PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathStri
 							| file |
 							file := File openForReadFileNamed: anOsPathAndFilename.
 							[ 
-							reportPage contents: (String streamContents: [ :stream | 
-									 self
-										 printReportHeaderOn: stream
-										 fields: ( aStringBlock value: file contents asString ) ]) ] ensure: [ 
-								file ifNotNil: [ file close ] ] ] ] ]
+							| outputString |
+							(outputString := aStringBlock value: file contents asString)
+								isNotEmpty ifTrue: [ 
+								reportPage contents: (String streamContents: [ :stream | 
+										 self printReportHeaderOn: stream fields: outputString ]) ] ] 
+								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
 ]
 
 { #category : #'wiki updates' }
@@ -489,13 +490,15 @@ PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPa
 										 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
 						ifTrue: [ 
 							| file |
-							file := (FileLocator fromString: anOsPathAndFilename ifNone: [self halt]) readStream.
+							file := (FileLocator
+								         fromString: anOsPathAndFilename
+								         ifNone: [ self halt ]) readStream.
 							[ 
-							reportPage contents: (String streamContents: [ :stream | 
-									 self
-										 printReportHeaderOn: stream
-										 fields: (aStringBlock value: file) ]) ] ensure: [ 
-								file ifNotNil: [ file close ] ] ] ] ]
+							| outputString |
+							(outputString := aStringBlock value: file) isNotEmpty ifTrue: [ 
+								reportPage contents: (String streamContents: [ :stream | 
+										 self printReportHeaderOn: stream fields: outputString ]) ] ] 
+								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
 ]
 
 { #category : #'wiki updates' }
