@@ -16,10 +16,17 @@ HowToSetupPier >> choosePersistency [
 
 	^ Lesson
 		  title: 'Choose Persistency'
-		  lesson: '"Open your site and choose a persistency:"
-WebBrowser openOn: ''http://localhost:8080''.
+		  lesson: '"Add persistency to your site - this can be done with:
+	WebBrowser openOn: ''http://localhost:8080''.
+Goto System / Mannagement and update the persistency to image storage - or use this:"
 
-"Goto System / Mannagement and update the persistency to image storage."
+(PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) persistency:
+	(PRImagePersistency new
+         maxImages: 2;
+         namePrefix: ''pier_backup_'';
+         duration: 1 hour asDuration;
+         maxHistory: 4096;
+         yourself).
 
 ProfStef next.'
 ]
@@ -230,7 +237,7 @@ HowToSetupPier >> startAutomaticTasks [
 		  lesson: '"If there are automted ToDo tasks, start them:"
 #(''Scheduler Report'' ''Update Overdue Tasks'' ''Check Election Planning'' ''Check Image Save'') do:
 	[ :title |
-		(PRPathLookup start: (PRKernel instanceNamed: ''Pier'') root path: (''/Blog/Social Tasks/Democracy Action/'', title)) automate ].
+		(PRPathLookup start: (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root path: (''/Blog/Social Tasks/Democracy Action/'', title)) automate ].
 
 ProfStef next.'
 ]
