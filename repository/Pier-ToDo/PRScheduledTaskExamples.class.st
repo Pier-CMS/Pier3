@@ -9,6 +9,8 @@ Specifics:
 Calling #reportOfImagesOnPageAt: can cause a deadlock since it retrieves external resources.  It may be required to stop the task and have it re-run after the network issues are resolved.
 
 The class side ShouldCheckFSSpace is a flag for running the df command through LibC - it can be turned on/off with shouldCheckFSSpace/shouldNotCheckFSSpace and checked with: checkFSSpace.
+
+The #codeLockCritical: message makes a block thread-safe, #nextSequenceCount* messages should be ran inside this so the sequence isn't corrupted (examples are the #writeAfter* messages). SequenceStates stores a key related to sequence numbers, so tasks can be synchronized.
 "
 Class {
 	#name : #PRScheduledTaskExamples,
@@ -20,6 +22,7 @@ Class {
 	#classVars : [
 		'CodeLock',
 		'SequenceGenerator',
+		'SequenceStates',
 		'ShouldCheckFSSpace'
 	],
 	#category : #'Pier-ToDo'
@@ -37,7 +40,7 @@ PRScheduledTaskExamples class >> codeLockCritical: aBlock [
 	^ CodeLock critical: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 PRScheduledTaskExamples class >> isCodeLocked [
 
 	CodeLock ifNil: [ CodeLock := Semaphore forMutualExclusion ].
@@ -78,6 +81,15 @@ PRScheduledTaskExamples class >> nextSequenceCount [
 
 	"self nextSequenceCount"
 
+	^ self nextSequenceCountFor: nil
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples class >> nextSequenceCountFor: aSymbol [
+
+	"self nextSequenceCountFor: #test"
+
+	| nextSequence |
 	SequenceGenerator ifNil: [ 
 		SequenceGenerator := Generator on: [ :gen | 
 			                     | count |
@@ -85,7 +97,18 @@ PRScheduledTaskExamples class >> nextSequenceCount [
 			                     [ 
 			                     count := count + 1.
 			                     gen yield: count ] repeat ] ].
-	^ SequenceGenerator next
+	nextSequence := SequenceGenerator next.
+	aSymbol ifNotNil: [ 
+		SequenceStates ifNil: [ SequenceStates := Dictionary new ].
+		SequenceStates at: aSymbol put: nextSequence ].
+	^ nextSequence
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples class >> sequenceFor: aSymbol [
+
+	SequenceStates ifNil: [ SequenceStates := Dictionary new ].
+	^ SequenceStates at: aSymbol ifAbsent: [ 0 ]
 ]
 
 { #category : #asserting }
