@@ -490,38 +490,46 @@ PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathStri
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPathString modifyUsing: aStringBlock [
 
-	| reportPage |
-	self guessTodoFromPath: aPathString.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
-		ifNotNil: [ 
-			anOsPathAndFilename.
-			(File exists: anOsPathAndFilename)
-				ifFalse: [ 
-					reportPage contents: (String streamContents: [ :stream | 
-							 self
-								 printReportHeaderOn: stream
-								 fields:
-								 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
-				ifTrue: [ 
-					((File isReadable: anOsPathAndFilename) and: [ 
-						 File isRegular: anOsPathAndFilename ])
-						ifFalse: [ 
-							reportPage contents: (String streamContents: [ :stream | 
-									 self
-										 printReportHeaderOn: stream
-										 fields:
-										 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
-						ifTrue: [ 
-							| file |
-							file := (FileLocator
-								         fromString: anOsPathAndFilename
-								         ifNone: [ self halt ]) readStream.
-							[ 
-							| outputString |
-							(outputString := aStringBlock value: file) isNotEmpty ifTrue: [ 
-								reportPage contents: (String streamContents: [ :stream | 
-										 self printReportHeaderOn: stream fields: outputString ]) ] ] 
-								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
+	  | reportPage |
+	  self guessTodoFromPath: aPathString.
+	  (reportPage := PRPathLookup
+		                 start: self kernel root
+		                 path: aPathString) ifNotNil: [ 
+		  anOsPathAndFilename.
+		  (File exists: anOsPathAndFilename)
+			  ifFalse: [ 
+				  reportPage contents: (String streamContents: [ :stream | 
+						   self
+							   printReportHeaderOn: stream
+							   fields:
+							   'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
+			  ifTrue: [ 
+				  ((File isReadable: anOsPathAndFilename) and: [ 
+					   File isRegular: anOsPathAndFilename ])
+					  ifFalse: [ 
+						  reportPage contents: (String streamContents: [ :stream | 
+								   self
+									   printReportHeaderOn: stream
+									   fields:
+									   'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
+					  ifTrue: [ 
+						  | fileStream |
+						  fileStream := anOsPathAndFilename first = $/
+							                ifTrue: [ 
+							                (FileLocator root / anOsPathAndFilename)
+								                readStream ]
+							                ifFalse: [ 
+								                (FileLocator
+									                 fromString: anOsPathAndFilename
+									                 ifNone: [ self halt ]) readStream ].
+						  [ 
+						  | outputString |
+						  (outputString := aStringBlock value: fileStream) isNotEmpty 
+							  ifTrue: [ 
+								  reportPage contents: (String streamContents: [ :stream | 
+										   self printReportHeaderOn: stream fields: outputString ]) ] ] 
+							  ensure: [ fileStream ifNotNil: [ fileStream close ] ] ] ] ]
+
 ]
 
 { #category : #'wiki updates' }

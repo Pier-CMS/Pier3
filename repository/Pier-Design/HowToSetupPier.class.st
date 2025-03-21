@@ -64,6 +64,8 @@ HowToSetupPier >> exportPier [
 		  title: 'Export the Wiki from a Running Image'
 		  lesson: '"Code for exporting:"
 | problemChars count |
+"First stop the automated tasks:"
+PRToDo allInstancesDo: [ :todo | todo scheduler ifNotNil: [ :sched | sched stop ] ].
 count := 0.
 (problemChars := Dictionary new)
         at: (Character value: 8217) put: $'';
