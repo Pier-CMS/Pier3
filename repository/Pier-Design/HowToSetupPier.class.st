@@ -66,6 +66,8 @@ HowToSetupPier >> exportPier [
 | problemChars count |
 "First stop the automated tasks:"
 PRToDo allInstancesDo: [ :todo | todo scheduler ifNotNil: [ :sched | sched stop ] ].
+"Consider changing the password if this code is shared:
+PRKernel instances anyOne adminUser password: ''pier''."
 count := 0.
 (problemChars := Dictionary new)
         at: (Character value: 8217) put: $'';
