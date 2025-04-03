@@ -67,7 +67,7 @@ HowToSetupPier >> exportPier [
 "First stop the automated tasks:"
 PRToDo allInstancesDo: [ :todo | todo scheduler ifNotNil: [ :sched | sched stop ] ].
 "Consider changing the password if this code is shared:
-PRKernel instances anyOne adminUser password: ''pier''."
+PRKernel instances do: [ :kernel | kernel adminUser password: ''pier'' ]."
 count := 0.
 (problemChars := Dictionary new)
         at: (Character value: 8217) put: $'';
@@ -107,6 +107,9 @@ PRKernel instances size = 1 ifTrue: [
   PRKernel instances anyOne name: ''pier_old''.
   #PRKernelCreatorForPier asClassIfPresent: [ :c | c new createKernel ].
   (WAAdmin defaultDispatcher handlerAt: ''pier'') preferenceAt: #kernel put: (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) ].
+
+"Rename the new kernel if necessary"
+(PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root name: ''Test Pier''.
 
 ProfStef next.'
 ]
