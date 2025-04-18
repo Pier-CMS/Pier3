@@ -109,7 +109,7 @@ PRKernel instances size = 1 ifTrue: [
   (WAAdmin defaultDispatcher handlerAt: ''pier'') preferenceAt: #kernel put: (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) ].
 
 "Rename the new kernel if necessary"
-(PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root name: ''Test Pier''.
+(PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root name: ''Test''.
 
 ProfStef next.'
 ]
