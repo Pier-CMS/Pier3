@@ -111,6 +111,9 @@ PRKernel instances size = 1 ifTrue: [
 "Rename the new kernel if necessary"
 (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root name: ''Test''.
 
+"Replace the template if it is missing"
+PRKernel instances anyOne root localEnvironment ifNil: [ PRKernel instances anyOne root localEnvironment: (PRPathLookup start: PRKernel instances anyOne root path: ''/system/templates/environment'') ].
+
 ProfStef next.'
 ]
 
@@ -119,11 +122,7 @@ HowToSetupPier >> imageCleanup [
 
 	^ Lesson
 		  title: 'Image Cleanup'
-		  lesson: '"Memory Updates for running a public site. Freeup anything unnecessary:"
-
-(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumRelativeAge put: 800.
-(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumSize put: 15000.
-(WAAdmin defaultDispatcher handlerAt: ''pier'') initializeCache.
+		  lesson: '"Freeup anything unnecessary:"
 
 #PRKernelCreatorForPier asClass removeFromSystem.
 PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
