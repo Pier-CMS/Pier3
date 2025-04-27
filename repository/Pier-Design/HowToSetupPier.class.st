@@ -111,9 +111,6 @@ PRKernel instances size = 1 ifTrue: [
 "Rename the new kernel if necessary"
 (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root name: ''Test''.
 
-"Replace the template if it is missing"
-PRKernel instances anyOne root localEnvironment ifNil: [ PRKernel instances anyOne root localEnvironment: (PRPathLookup start: PRKernel instances anyOne root path: ''/system/templates/environment'') ].
-
 ProfStef next.'
 ]
 
@@ -126,9 +123,13 @@ HowToSetupPier >> imageCleanup [
 
 #PRKernelCreatorForPier asClass removeFromSystem.
 PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
-10 timesRepeat: [ Smalltalk garbageCollect ].
-"Save the image and copy it to the server. No need to got to the next unless you are exporting changes."
 
+"Replace the template if it is missing"
+PRKernel instances anyOne root localEnvironment parent ifNil: [ PRKernel instances anyOne root localEnvironment: (PRPathLookup start: PRKernel instances anyOne root path: ''/system/templates/environment'') ].
+
+10 timesRepeat: [ Smalltalk garbageCollect ].
+
+"Save the image and copy it to the server. No need to got to the next unless you are exporting changes."
 ProfStef next.'
 ]
 
