@@ -127,6 +127,10 @@ PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
 "Replace the template if it is missing"
 PRKernel instances anyOne root localEnvironment parent ifNil: [ PRKernel instances anyOne root localEnvironment: (PRPathLookup start: PRKernel instances anyOne root path: ''/system/templates/environment'') ].
 
+"Reduce the timeout to 15 minutes (instead of 30) for public sites:"
+(WAAdmin defaultDispatcher handlerAt: PRKernel instances anyOne name) configuration at: #maximumRelativeAge put: 900.
+(WAAdmin defaultDispatcher handlerAt: PRKernel instances anyOne name) initializeCache.
+
 10 timesRepeat: [ Smalltalk garbageCollect ].
 
 "Save the image and copy it to the server. No need to got to the next unless you are exporting changes."
