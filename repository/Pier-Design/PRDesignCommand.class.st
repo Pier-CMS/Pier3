@@ -34,36 +34,30 @@ PRDesignCommand >> descriptionsForGroup: aString selector: aSelector index: anIn
 	| accessor description |
 	accessor := MASelectorAccessor selector: aSelector.
 	accessor := anInteger isNil
-		ifTrue: [ PRDocumentAccessor on: accessor ]
-		ifFalse: [ MAChainAccessor
-				on: accessor
-				accessor: (MADictionaryAccessor key: anInteger) ].
+		            ifTrue: [ PRDocumentAccessor on: accessor ]
+		            ifFalse: [
+			            MAChainAccessor
+				            on: accessor
+				            accessor: (MADictionaryAccessor key: anInteger) ].
 	description := anInteger isNil
-		ifTrue: [ PRDocumentDescription new ]
-		ifFalse: [ MAMemoDescription new cssClass: 'file' ].
+		               ifTrue: [ PRDocumentDescription new ]
+		               ifFalse: [ MAMemoDescription new cssClass: 'file' ].
 	^ Array
-		with:
-			(PRStructureDescription new
-				accessor: accessor;
-				label: 'Location';
-				group: aString;
-				beReadonly;
-				yourself)
-		with:
-			(description
-				instVarNamed: 'accessor'
-					put:
-					(MAChainAccessor
-						on: accessor
-						accessor:
-							(MASelectorAccessor
-								selector:
-									(anInteger isNil
-										ifTrue: [ #document ]
-										ifFalse: [ #contents ])));
-				label: 'Contents';
-				group: aString;
-				yourself)
+		  with: (PRStructureDescription new
+				   accessor: accessor;
+				   label: 'Location';
+				   group: aString;
+				   beReadOnly;
+				   yourself)
+		  with: (description
+				   instVarNamed: 'accessor' put: (MAChainAccessor
+						    on: accessor
+						    accessor: (MASelectorAccessor selector: (anInteger isNil
+										      ifTrue: [ #document ]
+										      ifFalse: [ #contents ])));
+				   label: 'Contents';
+				   group: aString;
+				   yourself)
 ]
 
 { #category : #events }
