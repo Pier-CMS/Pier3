@@ -8,7 +8,7 @@ One can skip to the last two pages at the end if exporting an old running system
 Class {
 	#name : #HowToSetupPier,
 	#superclass : #AbstractTutorial,
-	#category : #'Pier-Design'
+	#category : #'Pier-Setup'
 }
 
 { #category : #lessons }
@@ -124,7 +124,7 @@ HowToSetupPier >> imageCleanup [
 #PRKernelCreatorForPier asClass removeFromSystem.
 PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
 
-"Replace the template if it is missing"
+"Replace the template if it is missing (system/templates is found on older Pier instances)"
 PRKernel instances anyOne root localEnvironment parent ifNil: [ PRKernel instances anyOne root localEnvironment: (PRPathLookup start: PRKernel instances anyOne root path: ''/system/templates/environment'') ].
 
 "Reduce the timeout to 15 minutes (instead of 30) for public sites:"
