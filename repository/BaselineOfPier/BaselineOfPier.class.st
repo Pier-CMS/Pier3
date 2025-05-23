@@ -133,12 +133,9 @@ BaselineOfPier >> baselineForCommon: spec [
 				#( 'Pier-Seaside' 'Pier-Model-Magritte' 'JQWidgetBox-Core-Libraries' ) ];
 			package: 'JQWidgetBox-Cycle-Core'
 			with: [ spec requires: #( 'JQWidgetBox-Core-Libraries' ) ];
-			package: 'pier-seaside-testing'
-			with: [
-			spec requires: #( 'Pier-Model-Command' 'Pier-Model-Structure' ) ];
-			package: 'Pier-Document' with: [
+			package: 'pier-seaside-testing' with: [
 			spec
-				requires: #( 'Pier-Model-Command' );
+				requires: #( 'Pier-Model-Command' 'Pier-Model-Structure' );
 				postLoadDoIt: #registerPierInSeaside ];
 			group: 'default'
 			with: #( 'Pier-Model-Visitor' 'pier-seaside-protected'
@@ -198,44 +195,44 @@ BaselineOfPier >> baselineForCommon: spec [
 { #category : #baselines }
 BaselineOfPier >> baselineForPharo9: spec [
 
-	spec for: #( #'pharo9.x' ) do: [
+	spec for: #( #'pharo9.x' ) do: [ 
 		spec blessing: #baseline.
 		spec
 			baseline: 'ContainersPropertyEnvironment'
-			with: [
+			with: [ 
 				spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
 			baseline: 'Bootstrap'
 			with: [ spec repository: 'github://astares/Seaside-Bootstrap' ];
-			baseline: 'Seaside3' with: [
+			baseline: 'Seaside3' with: [ 
 				spec
 					repository: 'github://SeasideSt/Seaside';
 					loads: #( 'RSS' ) ];
-			baseline: 'Magritte' with: [
+			baseline: 'Magritte' with: [ 
 			spec
 				repository: 'github://magritte-metamodel/magritte';
 				loads: #( 'Seaside' 'Tests' ) ];
 			baseline: 'Chrysal'
 			with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
-			baseline: 'PillarExporter' with: [
+			baseline: 'PillarExporter' with: [ 
 			spec
 				repository: 'github://pillar-markup/pillar:dev-8';
 				loads: #( 'pillar exporter' 'text exporter' ) ];
-			package: 'Pier-Model-Document' with: [
+			package: 'Pier-Model-Document' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
-			package: 'Pier-Model-Magritte' with: [
+			package: 'Pier-Model-Magritte' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
-			package: 'Pier-Model-Visitor' with: [
+			package: 'Pier-Model-Visitor' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
-			package: 'Pier-Model-Command' with: [
-			spec requires:
-				#( 333 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
-			package: 'Pier-Model-Structure' with: [
+			package: 'Pier-Model-Command' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
-			package: 'Pier-Model' with: [
+			package: 'Pier-Model-Structure' with: [ 
+			spec requires:
+				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
+			package: 'Pier-Model' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
 			package: 'Pier-Pharo9'
@@ -245,13 +242,13 @@ BaselineOfPier >> baselineForPharo9: spec [
 			package: 'pier-seaside-defaults'
 			with: [ spec requires: #( 'Pier-Model-Magritte' ) ];
 			package: 'pier-seaside-protected'
-			with: [
+			with: [ 
 			spec requires: #( 'Pier-Model-Structure' 'Pier-Model-Command' ) ];
-			package: 'Pier-Seaside' with: [
+			package: 'Pier-Seaside' with: [ 
 			spec requires:
 				#( 'Pier-Model' 'Pier-Model-Command' 'Pier-Model-Document'
 				   'Pier-Model-Structure' ) ];
-			package: 'Pier-Documents' with: [
+			package: 'Pier-Documents' with: [ 
 			spec requires:
 				#( 'Pier-Model-Structure' 'Pier-Seaside' 'Pier-Pharo9' ) ];
 			package: 'pier-pharo-model'
@@ -268,13 +265,13 @@ BaselineOfPier >> baselineForPharo9: spec [
 			with: [ spec requires: #( 'Pier-Model' ) ];
 			package: 'Pier-Exporter-Code'
 			with: [ spec requires: #( 'Pier-Model-Structure' ) ];
-			package: 'Pier-Exporter-Pharo' with: [
+			package: 'Pier-Exporter-Pharo' with: [ 
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
 			package: 'Pier-Pharo-Seaside'
 			with: [ spec requires: #( 'Pier-Seaside' ) ];
 			package: 'Pier-LinkChecker'
-			with: [
+			with: [ 
 			spec requires: #( 'pier-security' 'Pier-Seaside' 'Pier-Model' ) ];
 			package: 'JQWidgetBox-Core-Libraries'
 			with: [ spec requires: #( 'Bootstrap' 'Magritte' 'Seaside3' ) ];
@@ -282,15 +279,15 @@ BaselineOfPier >> baselineForPharo9: spec [
 			with: [ spec requires: #( 'JQWidgetBox-Core-Libraries' ) ];
 			package: 'jqwidgetbox-formexample-core'
 			with: [ spec requires: #( 'Bootstrap' 'Magritte' 'Seaside3' ) ];
-			package: 'Pier-JQuery-Widgets' with: [
+			package: 'Pier-JQuery-Widgets' with: [ 
 			spec requires:
 				#( 'Pier-Seaside' 'Pier-Model-Magritte' 'JQWidgetBox-Core-Libraries' ) ];
 			package: 'JQWidgetBox-Cycle-Core'
 			with: [ spec requires: #( 'JQWidgetBox-Core-Libraries' ) ];
 			package: 'pier-seaside-testing'
-			with: [
+			with: [ 
 			spec requires: #( 'Pier-Model-Command' 'Pier-Model-Structure' ) ];
-			package: 'Pier-Documents' with: [
+			package: 'Pier-Design' with: [ 
 			spec
 				requires: #( 'Pier-Model-Command' );
 				postLoadDoIt: #registerPierInSeaside ];
@@ -303,7 +300,8 @@ BaselineOfPier >> baselineForPharo9: spec [
 				   'Pier-Exporter-Code' 'Pier-Exporter-Pharo'
 				   'Pier-Pharo-Seaside' 'Pier-LinkChecker' 'jqwidgetbox-uilayout-core'
 				   'jqwidgetbox-formexample-core' 'Pier-JQuery-Widgets'
-				   'JQWidgetBox-Cycle-Core' 'pier-seaside-testing' );
+				   'JQWidgetBox-Cycle-Core' 'pier-seaside-testing'
+				   'Pier-Design' );
 			package: 'Pier-Blog-Model' with: [ spec requires: #( 'default' ) ];
 			package: 'pier-blog-seaside'
 			with: [ spec requires: #( 'Pier-Blog-Model' ) ];
@@ -316,8 +314,7 @@ BaselineOfPier >> baselineForPharo9: spec [
 			with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Book-View' with: [ spec requires: #( 'default' ) ];
 			package: 'pier-book' with: [ spec requires: #( 'default' ) ];
-			package: 'Pier-Setup'
-			with: [ spec requires: #( 'Pier-Blog-Model' ) ];
+			package: 'Pier-Setup' with: [ spec requires: #( 'Pier-Blog-Model' ) ];
 			package: 'Pier-TagCloud' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-EditorEnh' with: [ spec requires: #( 'default' ) ];
 			package: 'Pier-Wysiwyg' with: [ spec requires: #( 'default' ) ];
@@ -328,7 +325,8 @@ BaselineOfPier >> baselineForPharo9: spec [
 			package: 'Pier-Tests-Wysiwyg'
 			with: [ spec requires: #( 'Pier-Wysiwyg' ) ];
 			group: 'addons'
-			with: #( 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures'
+			with:
+				#( 'pier-blog-seaside' 'pier-blog' 'Pier-Book-Structures'
 				   'pier-book-model' 'Pier-Book-Latex' 'Pier-Book-Utilities'
 				   'Pier-Book-View' 'pier-book' 'Pier-Setup' 'Pier-TagCloud'
 				   'Pier-EditorEnh' 'Pier-Kernel-Distributions'
@@ -343,7 +341,7 @@ BaselineOfPier >> baselineForPharo9: spec [
 			group: 'todo' with: #( 'Pier-SW2-Sw1Features'
 			   'Pier-Workout' );
 			baseline: 'XMLParser'
-			with: [
+			with: [ 
 			spec repository: 'github://pharo-contributions/XML-XMLParser' ];
 			package: 'Pier-Google'
 			with: [ spec requires: #( 'XMLParser' 'default' ) ];
