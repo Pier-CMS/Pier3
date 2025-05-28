@@ -138,7 +138,7 @@ BaselineOfPier >> baselineForCommon: spec [
 				requires: #( 'Pier-Model-Command' 'Pier-Model-Structure' );
 				postLoadDoIt: #registerPierInSeaside ];
 			group: 'default'
-			with: #( 'Pier-Model-Visitor' 'pier-seaside-protected'
+			with: #( 'Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected'
 				   'pier-seaside-converting' 'pier-seaside-defaults'
 				   'pier-pharo-model' 'pier-seaside-accessing'
 				   'pier-jquery' 'Pier-Bootstrap' 'pier-pharo-persistency'
