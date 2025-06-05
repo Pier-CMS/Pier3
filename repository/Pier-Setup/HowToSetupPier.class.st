@@ -8,7 +8,7 @@ One can skip to the last two pages at the end if exporting an old running system
 Class {
 	#name : #HowToSetupPier,
 	#superclass : #AbstractTutorial,
-	#category : #'Pier-Design'
+	#category : #'Pier-Setup'
 }
 
 { #category : #lessons }
@@ -64,6 +64,10 @@ HowToSetupPier >> exportPier [
 		  title: 'Export the Wiki from a Running Image'
 		  lesson: '"Code for exporting:"
 | problemChars count |
+"First stop the automated tasks:"
+PRToDo allInstancesDo: [ :todo | todo scheduler ifNotNil: [ :sched | sched stop ] ].
+"Consider changing the password if this code is shared:
+PRKernel instances do: [ :kernel | kernel adminUser password: ''pier'' ]."
 count := 0.
 (problemChars := Dictionary new)
         at: (Character value: 8217) put: $'';
@@ -104,6 +108,9 @@ PRKernel instances size = 1 ifTrue: [
   #PRKernelCreatorForPier asClassIfPresent: [ :c | c new createKernel ].
   (WAAdmin defaultDispatcher handlerAt: ''pier'') preferenceAt: #kernel put: (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) ].
 
+"Rename the new kernel if necessary"
+(PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root name: ''Test''.
+
 ProfStef next.'
 ]
 
@@ -112,17 +119,21 @@ HowToSetupPier >> imageCleanup [
 
 	^ Lesson
 		  title: 'Image Cleanup'
-		  lesson: '"Memory Updates for running a public site. Freeup anything unnecessary:"
-
-(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumRelativeAge put: 800.
-(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumSize put: 15000.
-(WAAdmin defaultDispatcher handlerAt: ''pier'') initializeCache.
+		  lesson: '"Freeup anything unnecessary:"
 
 #PRKernelCreatorForPier asClass removeFromSystem.
 PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
-10 timesRepeat: [ Smalltalk garbageCollect ].
-"Save the image and copy it to the server. No need to got to the next unless you are exporting changes."
 
+"Replace the template if it is missing (system/templates is found on older Pier instances)"
+PRKernel instances anyOne root localEnvironment parent ifNil: [ PRKernel instances anyOne root localEnvironment: (PRPathLookup start: PRKernel instances anyOne root path: ''/system/templates/environment'') ].
+
+"Reduce the timeout to 15 minutes (instead of 30) for public sites:"
+(WAAdmin defaultDispatcher handlerAt: PRKernel instances anyOne name) configuration at: #maximumRelativeAge put: 900.
+(WAAdmin defaultDispatcher handlerAt: PRKernel instances anyOne name) initializeCache.
+
+10 timesRepeat: [ Smalltalk garbageCollect ].
+
+"Save the image and copy it to the server. No need to got to the next unless you are exporting changes."
 ProfStef next.'
 ]
 

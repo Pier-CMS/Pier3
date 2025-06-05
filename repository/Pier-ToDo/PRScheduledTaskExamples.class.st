@@ -328,7 +328,7 @@ PRScheduledTaskExamples >> ftpFileToReport: userString pass: pwString host: host
 										ensure: [ client close ] ] ]) ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 PRScheduledTaskExamples >> guessTodoFromPath: aPathString [
 	| aPage |
 	todo
@@ -492,36 +492,49 @@ PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPa
 
 	| reportPage |
 	self guessTodoFromPath: aPathString.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
-		ifNotNil: [ 
+	(reportPage := PRPathLookup start: self kernel root path: aPathString)
+		ifNotNil: [
 			anOsPathAndFilename.
 			(File exists: anOsPathAndFilename)
-				ifFalse: [ 
-					reportPage contents: (String streamContents: [ :stream | 
+				ifFalse: [
+					reportPage contents: (String streamContents: [ :stream |
 							 self
 								 printReportHeaderOn: stream
 								 fields:
 								 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
-				ifTrue: [ 
-					((File isReadable: anOsPathAndFilename) and: [ 
+				ifTrue: [
+					((File isReadable: anOsPathAndFilename) and: [
 						 File isRegular: anOsPathAndFilename ])
-						ifFalse: [ 
-							reportPage contents: (String streamContents: [ :stream | 
+						ifFalse: [
+							reportPage contents: (String streamContents: [ :stream |
 									 self
 										 printReportHeaderOn: stream
 										 fields:
 										 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
-						ifTrue: [ 
-							| file |
-							file := (FileLocator
-								         fromString: anOsPathAndFilename
-								         ifNone: [ self halt ]) readStream.
-							[ 
+						ifTrue: [
+							| fileStream |
+							fileStream := anOsPathAndFilename first = $/
+								              ifTrue: [
+								              (FileLocator root / anOsPathAndFilename)
+									              readStream ]
+								              ifFalse: [
+									              (FileLocator
+										               fromString: anOsPathAndFilename
+										               ifNone: [
+											               ^ reportPage contents:
+												                 (String streamContents: [ :stream |
+													                  self
+														                  printReportHeaderOn: stream
+														                  fields:
+														                  'Error opening the file '
+														                  , anOsPathAndFilename ]) ]) readStream ].
+							[
 							| outputString |
-							(outputString := aStringBlock value: file) isNotEmpty ifTrue: [ 
-								reportPage contents: (String streamContents: [ :stream | 
-										 self printReportHeaderOn: stream fields: outputString ]) ] ] 
-								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
+							(outputString := aStringBlock value: fileStream) isNotEmpty
+								ifTrue: [
+									reportPage contents: (String streamContents: [ :stream |
+											 self printReportHeaderOn: stream fields: outputString ]) ] ]
+								ensure: [ fileStream ifNotNil: [ fileStream close ] ] ] ] ]
 ]
 
 { #category : #'wiki updates' }
@@ -706,7 +719,7 @@ PRScheduledTaskExamples >> updateRepeatingTasksForPath: aString [
 		do: [ :task | task updateDueDateToCurrent ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : #actions }
 PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock on: aStream [
 
 	| file fileStream convertStream |
@@ -736,7 +749,7 @@ PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aSt
 				nextPutAll: aFileString asString ]
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
 
 	| reportPage |
@@ -751,7 +764,7 @@ PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aSt
 
 ]
 
-{ #category : #'wiki updates' }
+{ #category : #actions }
 PRScheduledTaskExamples >> writeAfterTruncateTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
 
 	"An example that creates a 2 line file:

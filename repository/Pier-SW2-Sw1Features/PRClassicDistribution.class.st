@@ -35,20 +35,20 @@ PRClassicDistribution >> blogEnvironmentPage [
 		blogEnvironmentPage := (PRPage named: 'blogenvironment')
 		title: '_Blog Environment';
 		contents: 
-'{{{<div class="container">
-	}}}*/system/components/header|embedded=true*{{{
+'{{{html: <div class="container">
+	}}}*/system/components/header|embedded=true*{{{html: 
 	<div class="column span-16 last mainbody">
-		<h1 class="heading">}}}*>value:structure|level=2*{{{</h1>
-		<h1>}}}*>value:structure|level=0|lower=3*{{{</h1>
+		<h1 class="heading">}}}*>value:structure|level=2*{{{html: </h1>
+		<h1>}}}*>value:structure|level=0|lower=3*{{{html: </h1>
 		<div class="column span-10 contents">
-			}}}*/system/components/contents|embedded=true*{{{
+			}}}*/system/components/contents|embedded=true*{{{html: 
 		</div>
 		<div class="column span-6 prepend-6 last sidebar">
 			<h2>Archive</h2>
-			}}}*/system/components/blogarchive|embedded=true*{{{
+			}}}*/system/components/blogarchive|embedded=true*{{{html: 
 		</div>
 	</div>
-	}}}*/system/components/footer|embedded=true*{{{
+	}}}*/system/components/footer|embedded=true*{{{html: 
 </div>}}}
 ';
 		yourself
@@ -61,15 +61,15 @@ PRClassicDistribution >> environmentPage [
 		environmentPage := (PRPage named: 'environment')
 		title: '_Environment';
 		contents: 
-'{{{<div class="container">
-	}}}*/system/components/header|embedded=true*{{{
+'{{{html: <div class="container">
+	}}}*/system/components/header|embedded=true*{{{html: 
 	<div class="column span-16 last mainbody">
-		<h1 class="heading">}}}*value:structure*{{{</h1>
+		<h1 class="heading">}}}*value:structure*{{{html: </h1>
 		<div class="column contents">
-			}}}*/system/components/contents|embedded=true*{{{
+			}}}*/system/components/contents|embedded=true*{{{html: 
 		</div>
 	</div>
-	}}}*/system/components/footer|embedded=true*{{{
+	}}}*/system/components/footer|embedded=true*{{{html: 
 </div>}}}
 ';
 		yourself
@@ -90,13 +90,13 @@ PRClassicDistribution >> mainEnvironmentPage [
 		mainEnvironmentPage := (PRPage named: 'mainenvironment')
 		title: '_Main Environment';
 		contents: 
-'{{{<div class="container">
-	}}}*/system/components/header|embedded=true*{{{
+'{{{html: <div class="container">
+	}}}*/system/components/header|embedded=true*{{{html: 
 	<div class="column span-16 last mainbody">
-		<h1 class="heading">}}}*value:structure*{{{</h1>
-		<div class="contents column">}}}*/system/components/contents|embedded=true*{{{</div>
+		<h1 class="heading">}}}*value:structure*{{{html: </h1>
+		<div class="contents column">}}}*/system/components/contents|embedded=true*{{{html: </div>
 	</div>
-	}}}*/system/components/footer|embedded=true*{{{
+	}}}*/system/components/footer|embedded=true*{{{html: 
 </div>}}}
 ';
 		yourself
@@ -130,28 +130,28 @@ PRClassicDistribution >> searchHelpPage [
 				title: 'Search Help';
 				contents: 'Quick Guide - Type in text into the Search field and hit enter.  Results are displayed on the next page.
 
-The search feature of Pier 2 is done by the text box in the top-right corner.  It treats each word as a token, with the ability to negate some words (any page containing those words will not be listed in the results).  If a string is enclosed in single quotes, then it is treated as a single token.  Adding a ==^== as the first character will make the search case-sensitive.
+The search feature of Pier 2 is done by the text box in the top-left corner.  It treats each word as a token, with the ability to negate some words (any page containing those words will not be listed in the results).  If a string is enclosed in single quotes, then it is treated as a single token.  Adding a ==^== as the first character will make the search case-sensitive.
 
 The results are case-insensitive, and do not depend on the order of the search terms.  The searching is done from the current page, and any page under the current page.  To search everything from the root, one must navigate there first.
 
 !Examples
-{{{<ul><li>}}}Starting from */information* and entering the text:
-=current page
+{{{html: <ul><li>}}}Starting from */information* and entering the text:
+= current page
 will find pages that contains both ==current== and ==page==.  Entering:
-=+current +page
+= +current +page
 will find the same results (The plus sign in the beginning is ignored).
-{{{</li><li>}}}Using dash to negate terms - reduce the number of results - if one searches with the text:
-=-current page
+{{{html: </li><li>}}}Using dash to negate terms - reduce the number of results - if one searches with the text:
+= -current page
 or 
-=page -current
+= page -current
 then the results will be pages containing ==page== but not ==current==
-{{{</li><li>}}}Using Quotes:
+{{{html: </li><li>}}}Using Quotes:
 =''Current page''
 Will search for any page that contains the words ==current page== in that order.
-{{{</li><li>}}}Case-sensitive:
-=^current
+{{{html: </li><li>}}}Case-sensitive:
+= ^current
 will only find pages that have current in lowercase
-{{{</li></ul>}}}
+{{{html: </li></ul>}}}
 _';
 				yourself ]
 ]
