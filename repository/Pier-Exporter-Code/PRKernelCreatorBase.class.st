@@ -59,16 +59,28 @@ PRKernelCreatorBase >> kernelName [
 
 { #category : #helpers }
 PRKernelCreatorBase >> postExportKernel: aKernel [
-	"This is the reverse of: PRKernelCodeExporter>>#preExportKernel: "
-	aKernel root enumerator
-		all;
-		do: [ :page | 
-			page outgoingReferences
-				do: [ :link | 
-					(link isInternal
-						and: [ link reference first = $/
-								and: [ page parents includes: link target ] ])
-						ifTrue: [ link reference: (page relativePathTo: link target) ] ] ]
+	"This is the reverse of: PRKernelCodeExporter>>#preExportKernel:, with code                             to fix style"
+
+	aKernel root enumerator with all do: [ :page |
+		page outgoingReferences do: [ :link |
+			(link isInternal and: [
+				 link reference first = $/ and: [
+					 page parents includes: link target ] ]) ifTrue: [
+				link reference: (page relativePathTo: link target) ] ].
+		(page localEnvironment isNotNil and: [ page localEnvironment isRoot ])
+			ifTrue: [
+				page localEnvironment: (page root enumerator all
+						 detect: [ :envPage |
+							 envPage title = page localEnvironment title and: [
+								 envPage contents = page localEnvironment contents ] ]
+						 ifNone: [ page localEnvironment ]) ].
+		(page localStyleSheet isNotNil and: [ page localStyleSheet isRoot ])
+			ifTrue: [
+				page localStyleSheet: (page root enumerator all
+						 detect: [ :cssPage |
+							 cssPage title = page localStyleSheet title and: [
+								 cssPage contents = page localStyleSheet contents ] ]
+						 ifNone: [ page localStyleSheet ]) ] ]
 ]
 
 { #category : #creation }
