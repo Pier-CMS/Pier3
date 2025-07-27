@@ -1,5 +1,5 @@
 "
-I am the most important class of the structure hierarchy.
+I am an important class for Wikis - A page has a title and contents.
 "
 Class {
 	#name : #PRPage,
@@ -9,9 +9,10 @@ Class {
 
 { #category : #comparing }
 PRPage class >> = aPrPageClass [
+	"This is needed so PRPage is an option when creating an object from a link."
 
-	^ super = aPrPageClass or: [ 
-		  self species = aPrPageClass species and: [ 
+	^ super = aPrPageClass or: [
+		  self species = aPrPageClass species and: [
 			  self name = aPrPageClass name ] ]
 ]
 
