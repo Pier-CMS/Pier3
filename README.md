@@ -3,7 +3,7 @@ Pier3 is a content management system (CMS) written in Smalltalk, official site i
 
 This is a port of the code to Github, instructions on loading are: http://www.myborden.com/pier/john-c-borden/smalltalk/pier/loading-with-gofer
 
-This can be loaded from Pharo 8, 9, 10 by running this in a workspace:
+This can be loaded from Pharo 8, 9, 10, or 11 by running this in a workspace:
 ```
 Metacello new
 	baseline: 'Pier';
@@ -32,3 +32,4 @@ Metacello new
 	onConflictUseLoaded;
 	load: #('default').
 ```
+One example of future development would be loading in Pharo version 12 or newer.
