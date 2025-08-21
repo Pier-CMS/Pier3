@@ -65,8 +65,8 @@ PRKernelCreatorBase >> postExportKernel: aKernel [
 		page outgoingReferences do: [ :link |
 			(link isInternal and: [
 				 link reference first = $/ and: [
-					 page parents includes: link target ] ]) ifTrue: [
-				link reference: (page relativePathTo: link target) ] ].
+					 link owner parents includes: link target ] ]) ifTrue: [
+				link reference: (link owner relativePathTo: link target) ] ].
 		(page localEnvironment isNotNil and: [ page localEnvironment isRoot ])
 			ifTrue: [
 				page localEnvironment: (page root enumerator all
