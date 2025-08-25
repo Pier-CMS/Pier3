@@ -39,59 +39,56 @@ PRWorkoutTest >> doChinupsOnFirstDayAndSquatsAndBenchOnSecondAndChinupsOnThirdRe
 	workout := PRWorkout new.
 	workout date: (Date today subtractDays: 7).
 	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf:
-					(PRExercise
-						name: 'Chinups'
-						details: 'Also known as pullups, 0 weight starts with body weight')
-				weight: 15
-				times: 15);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Chinups' weightUnits: 'kg' details: 'Also known as chinups')
-				weight: 20
-				times: 13).
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Chinups')
+				 weight: 15
+				 times: 15);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Chinups'
+						  weightUnits: 'kg')
+				 weight: 20
+				 times: 13).
 	self instance addWorkout: workout.
 	workout := PRWorkout new.
 	workout date: (Date today subtractDays: 6).
 	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (exercise := PRExercise name: 'Back Squats' details: 'Bend at the knees')
-				weight: 200
-				times: 10);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Back Squats' weightUnits: 'kg' details: 'Bend at the knees')
-				weight: 201
-				times: 9);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf:
-					(PRExercise name: 'Bench Press' details: 'Back flat on the bench w/ a barbell')
-				weight: 110
-				times: 12);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf:
-					(PRExercise
-						name: 'Bench Press'
-						weightUnits: 'kg'
-						details: 'Back flat on the bench w/ a barbell')
-				weight: 111
-				times: 11).
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (exercise := PRExercise
+						              name: 'Back Squats')
+				 weight: 200
+				 times: 10);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Back Squats'
+						  weightUnits: 'kg')
+				 weight: 201
+				 times: 9);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Bench Press')
+				 weight: 110
+				 times: 12);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Bench Press'
+						  weightUnits: 'kg')
+				 weight: 111
+				 times: 11).
 	self instance addWorkout: workout.
 	workout := PRWorkout new.
 	workout date: Date yesterday.
 	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Chinups' details: 'Also known as pullups')
-				weight: 10
-				times: 14);
-		addExerciseEntry:
-			(PRExerciseEntry newOf: (PRExercise name: 'Chinups' details: '') weight: 12 times: 13).
+		addExerciseEntry: (PRExerciseEntry
+				 newOf:
+					 (PRExercise name: 'Chinups')
+				 weight: 10
+				 times: 14);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise name: 'Chinups')
+				 weight: 12
+				 times: 13).
 	self instance addWorkout: workout.
 	^ exercise
 ]
@@ -109,87 +106,84 @@ PRWorkoutTest >> doChinupsOnFirstDayAndSquatsOnSecondAndReturnChinupExercise [
 	workout := PRWorkout new.
 	workout date: (Date today subtractDays: 9).
 	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf:
-					(exercise := PRExercise
-						name: 'Chinups'
-						weightUnits: 'lb'
-						details: 'Also known as pullups, 0 weight starts with body weight')
-				weight: 25
-				times: 15);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf:
-					(PRExercise
-						name: 'Chinups'
-						weightUnits: 'lb'
-						details: 'Also known as pullups, weight starts with body weight')
-				weight: 30
-				times: 13).
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (exercise := PRExercise
+						              name: 'Chinups'
+						              weightUnits: 'lb')
+				 weight: 25
+				 times: 15);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Chinups'
+						  weightUnits: 'lb')
+				 weight: 30
+				 times: 13).
 	self instance addWorkout: workout.
 	workout := PRWorkout new.
 	workout date: (Date today subtractDays: 8).
 	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Back Squats' weightUnits: 'lb' details: 'Bend at the knees')
-				weight: 300
-				times: 10);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Back Squats' weightUnits: 'lb' details: 'Bend at the knees')
-				weight: 310
-				times: 9).
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Back Squats'
+						  weightUnits: 'lb')
+				 weight: 300
+				 times: 10);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Back Squats'
+						  weightUnits: 'lb')
+				 weight: 310
+				 times: 9).
 	self instance addWorkout: workout.
 	^ exercise
 ]
 
 { #category : #tests }
 PRWorkoutTest >> testAddExerciseEntry [
+
 	self assert: self instance allExercises isEmpty.
-	self instance
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Bench Press' details: 'Flat bench with bar')
-				weight: 100
-				times: 12).
+	self instance addExerciseEntry: (PRExerciseEntry
+			 newOf:
+			 (PRExercise name: 'Bench Press')
+			 weight: 100
+			 times: 12).
 	self deny: self instance allExercises isEmpty.
-	self instance
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Chinups' details: 'Body weight + additional weight')
-				weight: 10
-				times: 22).
+	self instance addExerciseEntry: (PRExerciseEntry
+			 newOf:
+			 (PRExercise
+				  name: 'Chinups')
+			 weight: 10
+			 times: 22).
 	self
-		assert: self instance workouts size = 1 description: 'Should insert to the same workout.';
+		assert: self instance workouts size = 1
+		description: 'Should insert to the same workout.';
 		assert: self instance workouts anyOne exercises size = 2
 ]
 
 { #category : #tests }
 PRWorkoutTest >> testAllExercises [
+
 	self assert: self instance allExercises isEmpty.
-	self instance
-		addWorkout:
-			(PRWorkout new
-				addExerciseEntry:
-					(PRExerciseEntry
-						newOf: (PRExercise name: 'Bench Press' details: 'Flat bench with bar')
-						weight: 100
-						times: 12)).
+	self instance addWorkout:
+		(PRWorkout new addExerciseEntry: (PRExerciseEntry
+				  newOf:
+				  (PRExercise name: 'Bench Press')
+				  weight: 100
+				  times: 12)).
 	self deny: self instance allExercises isEmpty
 ]
 
 { #category : #tests }
 PRWorkoutTest >> testColumnNames [
+
 	| workout |
 	workout := PRWorkout new.
-	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Bench Press' weightUnits: 'kg' details: 'Flat bench with bar')
-				weight: 200.5
-				times: 12).
+	workout addExerciseEntry: (PRExerciseEntry
+			 newOf: (PRExercise
+					  name: 'Bench Press'
+					  weightUnits: 'kg')
+			 weight: 200.5
+			 times: 12).
 	self assert: workout columnNames size > 1
 ]
 
@@ -208,17 +202,18 @@ PRWorkoutTest >> testExercisesBasedOnRecommendationsWithDateDo [
 
 { #category : #tests }
 PRWorkoutTest >> testExercisesWithDateDo [
+
 	| workout count |
 	workout := PRWorkout new.
 	count := 0.
 	workout exercisesWithDateDo: [ :e :d | count := count + 1 ].
 	self assert: count = 0.
-	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Bench Press' weightUnits: 'kg' details: 'Flat bench with bar')
-				weight: 200.5
-				times: 12).
+	workout addExerciseEntry: (PRExerciseEntry
+			 newOf: (PRExercise
+					  name: 'Bench Press'
+					  weightUnits: 'kg')
+			 weight: 200.5
+			 times: 12).
 	count := 0.
 	workout exercisesWithDateDo: [ :e :d | count := count + 1 ].
 	self assert: count = 1
@@ -226,30 +221,28 @@ PRWorkoutTest >> testExercisesWithDateDo [
 
 { #category : #tests }
 PRWorkoutTest >> testIsNewRecomendation [
-	self assert: self instance isNewRecomendation.
-	self instance addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Bench Press' weightUnits: 'kg' details: 'Flat bench with bar')
-				weight: 200.5
-				times: 12).
-	self deny: self instance isNewRecomendation.
 
+	self assert: self instance isNewRecomendation.
+	self instance addExerciseEntry: (PRExerciseEntry
+			 newOf: (PRExercise
+					  name: 'Bench Press'
+					  weightUnits: 'kg')
+			 weight: 200.5
+			 times: 12).
+	self deny: self instance isNewRecomendation
 ]
 
 { #category : #tests }
 PRWorkoutTest >> testMergeWorkoutsOneDay [
-	1 to: 5 do: [ :index | 
+
+	1 to: 5 do: [ :index |
 		| workout |
 		workout := PRWorkout new.
-		workout
-			addExerciseEntry:
-				(PRExerciseEntry
-					newOf:
-						(PRExercise
-							name: 'Chinups'
-							details: 'Also known as pullups, 0 weight starts with body weight')
-					weight: (1 to: index + 3) atRandom
-					times: (2 * index to: 3 * index) atRandom).
+		workout addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise
+						  name: 'Chinups')
+				 weight: (1 to: index + 3) atRandom
+				 times: (2 * index to: 3 * index) atRandom).
 		self instance addWorkout: workout ].
 	self instance mergeWorkouts.
 	self assert: self instance workouts size = 1
@@ -267,10 +260,9 @@ PRWorkoutTest >> testMergeWorkoutsTwoDays [
 
 { #category : #tests }
 PRWorkoutTest >> testMidworkoutSwitchToDifferentDaysExercises [
+
 	| exercise |
-	self
-		addWorkoutsBasedOnString:
-			'
+	self addWorkoutsBasedOnString: '
 |16 October 2016|Single-Leg Standing Calf Raises|45|10
 | |Single-Leg Standing Calf Raises|45|7
 | |Trap Deadlift|150|11
@@ -293,9 +285,16 @@ PRWorkoutTest >> testMidworkoutSwitchToDifferentDaysExercises [
 | |Dumbbell Incline Bench|60|10
 '.
 	self instance
-		addExerciseEntry: (PRExerciseEntry newOf: (exercise := PRExercise name: 'Dumbbell Flye' details: '') weight: 40 times: 13);
-		addExerciseEntry: (PRExerciseEntry newOf: exercise weight: 45 times: 11);
-		addExerciseEntry: (PRExerciseEntry newOf: (exercise := PRExercise name: 'Trap Deadlift' details: '') weight: 120 times: 11).
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (exercise := PRExercise name: 'Dumbbell Flye')
+				 weight: 40
+				 times: 13);
+		addExerciseEntry:
+			(PRExerciseEntry newOf: exercise weight: 45 times: 11);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (exercise := PRExercise name: 'Trap Deadlift')
+				 weight: 120
+				 times: 11).
 	self
 		assert: self instance nextExerciseEntry exercise = exercise
 		description: 'Recommendation should match the last exercise'
@@ -303,10 +302,9 @@ PRWorkoutTest >> testMidworkoutSwitchToDifferentDaysExercises [
 
 { #category : #tests }
 PRWorkoutTest >> testMidworkoutSwitchToNext [
+
 	| exercise |
-	self
-		addWorkoutsBasedOnString:
-			'
+	self addWorkoutsBasedOnString: '
 |14-April-2016 |Deadlift   |145|5
 |              |           |120 |9
 |19-April-2016 |Back Squats|301|10
@@ -321,17 +319,17 @@ PRWorkoutTest >> testMidworkoutSwitchToNext [
 |              |           |25 |15
 '.
 	self instance
-		addExerciseEntry: (PRExerciseEntry newOf: (PRExercise name: 'Chinups' details: '') weight: 25 times: 12);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf: (PRExercise name: 'Chinups')
+				 weight: 25
+				 times: 12);
+		addExerciseEntry: (PRExerciseEntry
+				 newOf:
+					 (exercise := PRExercise name: 'Seated Calf Raises')
+				 weight: 190
+				 times: 11);
 		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (exercise := PRExercise name: 'Seated Calf Raises' details: '')
-				weight: 190
-				times: 11);
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: exercise
-				weight: 200
-				times: 10).
+			(PRExerciseEntry newOf: exercise weight: 200 times: 10).
 	self
 		assert: self instance nextExerciseEntry exercise = exercise
 		description: 'Recommendation should match the last exercise'
@@ -456,15 +454,16 @@ PRWorkoutTest >> testNextWorkoutProgressAfterOldExercise [
 
 { #category : #tests }
 PRWorkoutTest >> testNumberOfSets [
+
 	| workout |
 	workout := PRWorkout new.
 	self assert: workout numberOfSets = 0.
-	workout
-		addExerciseEntry:
-			(PRExerciseEntry
-				newOf: (PRExercise name: 'Bench Press' weightUnits: 'kg' details: 'Flat bench with bar')
-				weight: 200.5
-				times: 12).
+	workout addExerciseEntry: (PRExerciseEntry
+			 newOf: (PRExercise
+					  name: 'Bench Press'
+					  weightUnits: 'kg')
+			 weight: 200.5
+			 times: 12).
 	self assert: workout numberOfSets = 1
 ]
 
@@ -512,8 +511,7 @@ PRWorkoutTest >> testTimeChangeRecomendation [
 		self instance addExerciseEntry: (PRExerciseEntry
 				 newOf: (PRExercise
 						  name: 'Bench Press'
-						  weightUnits: 'kg'
-						  details: 'Flat bench with bar')
+						  weightUnits: 'kg')
 				 weight: 100.5
 				 times: 12).
 		self instance nextExerciseEntry.
