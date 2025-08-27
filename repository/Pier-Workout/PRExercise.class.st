@@ -1,6 +1,6 @@
 "
-I represent the name of an exercise, and have a description, and a measurement unit for that exercise.  Each exercise should have a unique name.  A list of exercises can be found with: 
-	PRExercise  instances
+I represent the name of an exercise, and have a name and a measurement unit for that exercise.  Each exercise should have a unique name.  A list of exercises can be found with: 
+	PRExercise instances
 	
 One item is  choosen from this list when creating a workout, not necessarily created during the workout.
 
@@ -21,9 +21,8 @@ Public API and Key Messages
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	details:		<Object>
-	name:		<Object>
-	weightUnits:		<Object>
+	name:		<String>
+	weightUnits:		<String> - Either 'lb' or 'kg'
 
 
     Implementation Points
@@ -33,8 +32,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'weightUnits',
-		'details'
+		'weightUnits'
 	],
 	#classVars : [
 		'instances'
@@ -88,26 +86,24 @@ PRExercise class >> name: aNameString weightUnits: kgLb [
 			  self instances add: (new := self new
 					          name: aNameString;
 					          weightUnits: kgLb;
-					          details: '';
 					          yourself).
 			  new ]
 ]
 
 { #category : #deprecated }
 PRExercise class >> name: aNameString weightUnits: kgLb details: aDescriptionString [
+
 	| new |
-	aNameString trim isEmpty
-		ifTrue: [ self error: 'Can not create an exercise from an empty string' ].
+	aNameString trim isEmpty ifTrue: [
+		self error: 'Can not create an exercise from an empty string' ].
 	^ self instances
-		detect: [ :exercise | exercise name = aNameString trim asSymbol ]
-		ifNone: [ self instances
-				add:
-					(new := self new
-						name: aNameString;
-						weightUnits: kgLb;
-						details: aDescriptionString;
-						yourself).
-			new ]
+		  detect: [ :exercise | exercise name = aNameString trim asSymbol ]
+		  ifNone: [
+			  self instances add: (new := self new
+					          name: aNameString;
+					          weightUnits: kgLb;
+					          yourself).
+			  new ]
 ]
 
 { #category : #comparing }
@@ -158,12 +154,12 @@ PRExercise >> hash [
 
 { #category : #initialization }
 PRExercise >> initialize [
+
 	super initialize.
 	^ self
-		name: '';
-		weightUnits: 'kg';
-		details: '';
-		yourself
+		  name: '';
+		  weightUnits: 'kg';
+		  yourself
 ]
 
 { #category : #accessing }
@@ -176,9 +172,10 @@ PRExercise >> name: aShortString [
 	name := aShortString trim asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 PRExercise >> notes [
-	^ details
+
+	^ ''
 ]
 
 { #category : #printing }

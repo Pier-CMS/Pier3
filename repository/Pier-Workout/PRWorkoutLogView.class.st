@@ -150,15 +150,12 @@ PRWorkoutLogView >> sortColumns: aCollectionOfSymbols andDo: aBlock [
 	| arrayOfSymboxes firstIndex |
 	arrayOfSymboxes := Array withAll: aCollectionOfSymbols.
 	firstIndex := 1.
-	(aCollectionOfSymbols includes: #exercise)
-		ifTrue: [ arrayOfSymboxes at: 1 put: #exercise.
-			firstIndex := 2 ].
-	(aCollectionOfSymbols includes: #notes)
-		ifTrue: [ arrayOfSymboxes at: 1 put: #notes ].
-	(aCollectionOfSymbols reject: [ :e | #(#exercise #notes) includes: e ])
-		do:
-			[ :sym | 
-			arrayOfSymboxes at: firstIndex put: sym.
-			firstIndex := firstIndex + 1 ].
+	(aCollectionOfSymbols includes: #exercise) ifTrue: [
+		arrayOfSymboxes at: 1 put: #exercise.
+		firstIndex := 2 ].
+	(aCollectionOfSymbols reject: [ :e |
+		 #( #exercise ) includes: e ]) do: [ :sym |
+		arrayOfSymboxes at: firstIndex put: sym.
+		firstIndex := firstIndex + 1 ].
 	arrayOfSymboxes do: aBlock
 ]

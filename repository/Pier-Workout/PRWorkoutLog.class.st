@@ -106,8 +106,6 @@ PRWorkoutLog class >> workoutsBasedOnString: aString [
 				aWorkout := PRWorkout new.
 				aWorkout date: substrings first asDate ].
 			exercise := PRExercise name: n weightUnits: 'lb'.
-			(substrings size > 4 and: [ exercise details isEmpty ]) ifTrue: [
-				exercise details: substrings fifth ].
 			aWorkout addFirstExerciseEntry: (PRExerciseEntry
 					 newOf: exercise
 					 weight: substrings third trim

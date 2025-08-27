@@ -127,25 +127,32 @@ PRDecoratedTest >> testDecorationsDo [
 
 { #category : #'tests-enumerating' }
 PRDecoratedTest >> testDecorationsDoOwnerDo [
-	| instance first second |
-	instance := self instance
-		addDecoration: (first := self decorationWithPriority: SmallInteger minVal);
-		addDecoration: (second := self decorationWithPriority: SmallInteger maxVal);
-		yourself.
+
+	| anInstance first second |
+	anInstance := self instance
+		            addDecoration:
+			            (first := self decorationWithPriority:
+					                      SmallInteger minVal);
+		            addDecoration:
+			            (second := self decorationWithPriority:
+					                       SmallInteger maxVal);
+		            yourself.
 	self instance
 		decorationsDo: [ :each |
-			(first notNil and: [ instance notNil and: [ second notNil and: [ each = first ] ] ])
+			(first notNil and: [
+				 anInstance notNil and: [ second notNil and: [ each = first ] ] ])
 				ifTrue: [ first := nil ].
-			(first isNil and: [ instance isNil and: [ second notNil and: [ each = second ] ] ])
+			(first isNil and: [
+				 anInstance isNil and: [ second notNil and: [ each = second ] ] ])
 				ifTrue: [ second := nil ] ]
 		ownerDo: [ :each |
 			self assert: first isNil.
 			self assert: second notNil.
-			self assert: instance notNil.
-			instance := nil ].
+			self assert: anInstance notNil.
+			anInstance := nil ].
 	self assert: first isNil.
 	self assert: second isNil.
-	self assert: instance isNil
+	self assert: anInstance isNil
 ]
 
 { #category : #tests }
