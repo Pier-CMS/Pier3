@@ -23,7 +23,8 @@ Class {
 		'CodeLock',
 		'SequenceGenerator',
 		'SequenceStates',
-		'ShouldCheckFSSpace'
+		'ShouldCheckFSSpace',
+		'StringProperties'
 	],
 	#category : #'Pier-ToDo'
 }
@@ -119,6 +120,22 @@ PRScheduledTaskExamples class >> shouldCheckFSSpace [
 { #category : #asserting }
 PRScheduledTaskExamples class >> shouldNotCheckFSSpace [
 	ShouldCheckFSSpace := false
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples class >> stringProperty: aString ifAbsent: anAbsentBlock [
+
+	StringProperties ifNil: [
+		StringProperties := Dictionary new ].
+	^ StringProperties at: aString ifAbsent: anAbsentBlock
+]
+
+{ #category : #accessing }
+PRScheduledTaskExamples class >> stringProperty: aString put: aValue [
+
+	StringProperties ifNil: [
+		StringProperties := Dictionary new ].
+	^ StringProperties at: aString put: aValue
 ]
 
 { #category : #wikibackup }
