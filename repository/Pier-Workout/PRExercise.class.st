@@ -68,30 +68,8 @@ PRExercise class >> name: aNameString [
 	^ self name: aNameString weightUnits: 'kg'
 ]
 
-{ #category : #deprecated }
-PRExercise class >> name: aNameString details: aDescriptionString [
-	^ self name: aNameString weightUnits: 'kg' details: aDescriptionString
-
-]
-
 { #category : #'instance-creation' }
 PRExercise class >> name: aNameString weightUnits: kgLb [
-
-	| new |
-	aNameString trim isEmpty ifTrue: [
-		self error: 'Can not create an exercise from an empty string' ].
-	^ self instances
-		  detect: [ :exercise | exercise name = aNameString trim asSymbol ]
-		  ifNone: [
-			  self instances add: (new := self new
-					          name: aNameString;
-					          weightUnits: kgLb;
-					          yourself).
-			  new ]
-]
-
-{ #category : #deprecated }
-PRExercise class >> name: aNameString weightUnits: kgLb details: aDescriptionString [
 
 	| new |
 	aNameString trim isEmpty ifTrue: [
