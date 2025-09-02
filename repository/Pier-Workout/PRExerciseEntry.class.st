@@ -60,19 +60,6 @@ PRExerciseEntry >> columnNames [
 ]
 
 { #category : #'accessing-description' }
-PRExerciseEntry >> descriptionDetails [
-	<magritteDescription>
-	^ MAMemoDescription new
-		propertyAt: #public put: true;
-		accessor: #details;
-		label: 'Exercise Details';
-		lineCount: 2;
-		beReadOnly;
-		priority: 170;
-		yourself
-]
-
-{ #category : #'accessing-description' }
 PRExerciseEntry >> descriptionExercise [
 	<magritteDescription>
 	^ MASingleOptionDescription new
