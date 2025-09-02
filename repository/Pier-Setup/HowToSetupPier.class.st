@@ -240,7 +240,7 @@ HowToSetupPier >> startAutomaticTasks [
 	^ Lesson
 		  title: 'Start Running Automatic Tasks'
 		  lesson: '"If there are automted ToDo tasks, start them:"
-#(''Scheduler Report'' ''Update Overdue Tasks'' ''Check Election Planning'' ''Check Image Save'') do:
+#(''Scheduler Report'' ''Update Overdue Tasks'' ''Check Image Save'') do:
 	[ :title |
 		(PRPathLookup start: (PRKernel instances detect: [ :e | e name ~= ''pier_old'' ]) root path: (''/Blog/Social Tasks/Democracy Action/'', title)) automate ].
 
