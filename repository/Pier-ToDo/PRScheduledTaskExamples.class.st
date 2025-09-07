@@ -106,6 +106,12 @@ PRScheduledTaskExamples class >> nextSequenceCountFor: aSymbol [
 ]
 
 { #category : #accessing }
+PRScheduledTaskExamples class >> resetStringProperty [
+
+	StringProperties := nil
+]
+
+{ #category : #accessing }
 PRScheduledTaskExamples class >> sequenceFor: aSymbol [
 
 	SequenceStates ifNil: [ SequenceStates := Dictionary new ].
