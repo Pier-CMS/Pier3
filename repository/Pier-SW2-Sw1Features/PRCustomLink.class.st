@@ -37,10 +37,10 @@ PRCustomLink class >> example [
 							 copyReplaceAll: ' '
 							 with: '+') ] ];
 		addConversion: [ :aString |
-			('search *' match: aString) ifTrue: [
+			('search: *' match: aString) ifTrue: [
 					'https://duckduckgo.com/?t=h_&q='
 					,
-						((aString copyFrom: 8 to: aString size)
+						((aString copyFrom: 9 to: aString size)
 							 copyReplaceAll: ' '
 							 with: '+') , '&ia=web' ] ]
 ]
