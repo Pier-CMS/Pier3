@@ -24,15 +24,25 @@ PRCustomLink class >> conversions: aCollection [
 	StringToUrlBlocks := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #documenting }
 PRCustomLink class >> example [
-	"Change *google pharo smalltalk* => https://www.google.com/search?q=pharo+smalltalk"
+	"Change *google pharo smalltalk* => https://www.google.com/search?q=pharo+smalltalk. The duck-duck-go search of *search may need some tuning for wiki's that have page names starting with that prefix."
 
 	self
-		addConversion: [ :aString | 
-			('google *' match: aString)
-				ifTrue: [ 'https://www.google.com/search?q='
-						, (aString copyReplaceAll: ' ' with: '+') ] ]
+		addConversion: [ :aString |
+			('google *' match: aString) ifTrue: [
+					'https://www.google.com/search?q='
+					,
+						((aString copyFrom: 8 to: aString size)
+							 copyReplaceAll: ' '
+							 with: '+') ] ];
+		addConversion: [ :aString |
+			('search *' match: aString) ifTrue: [
+					'https://duckduckgo.com/?t=h_&q='
+					,
+						((aString copyFrom: 8 to: aString size)
+							 copyReplaceAll: ' '
+							 with: '+') , '&ia=web' ] ]
 ]
 
 { #category : #testing }
