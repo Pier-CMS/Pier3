@@ -122,8 +122,8 @@ HowToSetupPier >> imageCleanup [
 PRKernel instances size = 2 ifTrue: [ PRKernel remove: ''pier_old'' ].
 
 "Reduce the timeout to 15 minutes (instead of 30) for public sites:"
-(WAAdmin defaultDispatcher handlerAt: PRKernel instances anyOne name) configuration at: #maximumRelativeAge put: 900.
-(WAAdmin defaultDispatcher handlerAt: PRKernel instances anyOne name) initializeCache.
+(WAAdmin defaultDispatcher handlerAt: ''pier'') configuration at: #maximumRelativeAge put: 900.
+(WAAdmin defaultDispatcher handlerAt: ''pier'') initializeCache.
 
 10 timesRepeat: [ Smalltalk garbageCollect ].
 
