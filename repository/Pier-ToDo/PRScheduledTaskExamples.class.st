@@ -623,19 +623,22 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfHistoryOnPageAt: aPathString [
+
 	| reportPage |
 	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
-		ifNotNil: [ reportPage
-				contents:
-					(String
-						streamContents: [ :stream | 
-							self printReportHeaderOn: stream fields: '|!History Size|!Limit'.
-							stream
-								nextPut: $|;
-								nextPutAll: self kernel persistency history size asString;
-								nextPut: $|.
-							stream nextPutAll: self kernel persistency maxHistory asString ]) ]
+		ifNotNil: [
+			reportPage contents: (String streamContents: [ :stream |
+					 self
+						 printReportHeaderOn: stream
+						 fields: '|!History Size|!Limit|!Number of Pages'.
+					 stream
+						 nextPut: $|;
+						 nextPutAll: self kernel persistency history size asString;
+						 nextPut: $|;
+						 nextPutAll: self kernel persistency maxHistory asString;
+						 nextPut: $|;
+						 nextPutAll: self kernel root enumerator with all size asString ]) ]
 ]
 
 { #category : #'wiki updates' }
