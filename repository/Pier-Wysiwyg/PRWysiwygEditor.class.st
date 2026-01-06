@@ -19,6 +19,137 @@ Class {
 	#category : #'Pier-Wysiwyg'
 }
 
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> encodeLessThanIn: aString at: anInteger on: aStream [
+	"Encode <, answer the number of characters coded"
+
+	#( '<!--' '<script' '</script' ) do: [ :each |
+		(self hasString: aString subString: each at: anInteger) ifTrue: [
+			aStream nextPutAll: '\x3C'.
+			aStream greaseNext: each size - 1 putAll: each startingAt: 2.
+			^ each size ] ].
+	aStream nextPut: $<.
+	^ 1
+]
+
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> encodeNonAsciiCharacter: aCharacter withCodePoint: anInteger on: aStream [
+	"U+2028 and U+2029 have to be treated as new lines"
+
+	anInteger = 16r2028
+		ifTrue: [ aStream nextPutAll: '\u2028' ]
+		ifFalse: [
+			anInteger = 16r2029
+				ifTrue: [ aStream nextPutAll: '\u2029' ]
+				ifFalse: [ aStream nextPut: aCharacter ] "Paragraph separator" ] "Line separator"
+]
+
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> encodeString: aString fastOn: aStream [
+	"Encode a String without <, much simpler implementation that can use #to:do"
+
+	1 to: aString size do: [ :index |
+		| char value encoded |
+		char := aString at: index.
+		value := char greaseInteger.
+		value < self javascriptCharacters size
+			ifFalse: [
+			self encodeNonAsciiCharacter: char withCodePoint: value on: aStream ]
+			ifTrue: [
+				encoded := self javascriptCharacters at: value + 1.
+				"we use nil markers becausee #isNil is faster than #isString because it's not
+				actually sent"
+				encoded isNil
+					ifTrue: [ aStream nextPut: char ]
+					ifFalse: [ aStream nextPutAll: encoded ] ] ]
+
+]
+
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> encodeString: aString on: aStream [
+	"Strings have a complicated encoding in Javascript, try to optimize their serialization."
+
+	aStream nextPut: $".
+	(aString indexOf: $<) = 0
+		ifTrue: [ self encodeString: aString fastOn: aStream ]
+		ifFalse: [ self encodeString: aString slowOn: aStream ].
+	aStream nextPut: $"
+
+]
+
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> encodeString: aString slowOn: aStream [
+	"Strings with < a complicated encoding in Javascript"
+
+	| index size |
+	index := 1.
+	size := aString size.
+	[ index <= size ] whileTrue: [
+		| char value encoded |
+		char := aString at: index.
+		value := char greaseInteger.
+		value < self javascriptCharacters size
+			ifFalse: [
+				self
+					encodeNonAsciiCharacter: char
+					withCodePoint: value
+					on: aStream.
+				index := index + 1 ]
+			ifTrue: [
+				encoded := self javascriptCharacters at: value + 1.
+				"we use nil markers becausee #isNil is faster than #isString because it's not
+				actually sent"
+				encoded isNil
+					ifTrue: [ "avoid that browsers mistakenly take the output as a closing tag"
+						char = $<
+							ifTrue: [
+								index := index
+								         +
+								         (self encodeLessThanIn: aString at: index on: aStream) ]
+							ifFalse: [
+								aStream nextPut: char.
+								index := index + 1 ] ]
+					ifFalse: [
+						aStream nextPutAll: encoded.
+						index := index + 1 ] ] ]
+]
+
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> hasString: aString subString: aSubstring at: anIntegerIndex [
+	"Strings with < a complicated encoding in Javascript"
+
+	anIntegerIndex + aSubstring size > (aString size + 1) ifTrue: [
+		^ false ].
+	1 to: aSubstring size do: [ :index |
+		(aString at: anIntegerIndex + index - 1) = (aSubstring at: index)
+			ifFalse: [ ^ false ] ].
+	^ true
+
+]
+
+{ #category : #'as yet unclassified' }
+PRWysiwygEditor class >> javascriptCharacters [
+
+	| printer escapes javascriptCharacters |
+	printer := GRNumberPrinter new.
+	printer
+		base: 16;
+		padding: $0;
+		digits: 2.
+	javascriptCharacters := Array new: 128.
+	0 to: 1 do: [ :index |
+		javascriptCharacters
+			at: index + 1
+			put: '\x' , (printer print: index) ].
+	escapes := #( 0 '\0' 7 '\a' 8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r'
+	              34 '\"' 92 '\\' ).
+	1 to: escapes size - 1 by: 2 do: [ :index |
+		javascriptCharacters
+			at: (escapes at: index) + 1
+			put: (escapes at: index + 1) ].
+	^ javascriptCharacters
+]
+
 { #category : #accessing }
 PRWysiwygEditor >> configuration [
 	^ configuration ifNil: [ configuration := PRWysiwygEditorConfiguration new ]
@@ -311,19 +442,17 @@ PRWysiwygEditor >> renderPreviewOn: html [
 
 { #category : #rendering }
 PRWysiwygEditor >> renderSetEditorHtmlContentJS [
-	| renderer wysiwygHtml jsStream |
+	| renderer wysiwygHtml jsStream javascriptStringEncoder |
 		
 	renderer := PRWysiwygEditorRenderer new.
 	wysiwygHtml := WAHtmlCanvas builder	
 		render: [ :r | 
 			renderer withinContentDo: [ 
 				renderer start: self document in: self on: r ] ].
-
 	jsStream := JSStream new.
 	jsStream nextPutAll: 'pierWysiwygEditor.setEditorHTML('.
-	JSStream encodeString: wysiwygHtml on: jsStream stream.
+	self class encodeString: wysiwygHtml on: jsStream.
 	jsStream nextPutAll: ')'.
-		
 	^ jsStream
 ]
 
