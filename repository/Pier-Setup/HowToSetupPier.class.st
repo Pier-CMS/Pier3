@@ -96,11 +96,11 @@ HowToSetupPier >> fileInPier [
 		  lesson: '"Skip to the end if this is exporting:"
 ProfStef next; next; next; next; next; next; next; next.
 
+"Apply customized link code:"
+(PRCustomLink isValidReference: ''search web Pharo'') ifFalse: [PRCustomLink example].
+
 "If you have an export from a previous Pier installation, then copy the file to this directory and run:"
 ''PRKernelCreatorForPier.st'' asFileReference ifExists: [ :file | file fileIn ].
-
-"Apply customized link code:"
-(PRCustomLink isValidReference: ''google Pharo'') ifFalse: [PRCustomLink example].
 
 "Rename the old kernel and create the new one (assumption at the end is that there is only 2):"
 PRKernel instances size = 1 ifTrue: [
