@@ -68,7 +68,7 @@ PRTagCloudWidget >> computeParameters [
 	mean := mean / count.
 	self tagsByCount do: [ :each | deviation := deviation + (mean - each value size) abs ].
 	deviation := deviation / count.
-	deviation = 0.0 ifTrue: [ deviation := 1.0 ]
+	deviation isZero ifTrue: [ deviation := 1.0 ]
 ]
 
 { #category : #accessing }

@@ -25,7 +25,8 @@ PRStructure class >> canBeParentOf: aStructureClass [
 
 { #category : #testing }
 PRStructure class >> isAbstract [
-	^false
+
+	^ self == PRStructure
 ]
 
 { #category : #'instance creation' }
