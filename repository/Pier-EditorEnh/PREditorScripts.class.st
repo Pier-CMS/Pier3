@@ -107,6 +107,7 @@ td.wiki .pr-toolbar a.pr-help span { background-position: -336px 0px; }'
 
 { #category : #'accessing-files' }
 PREditorScripts >> toolbarJs [
+
 	^ 'function EditorEnh(textarea, options) {
 	var self = this;
 	self.textarea = textarea;
@@ -282,7 +283,7 @@ PREditorScripts >> toolbarJs [
 		self.addButton("pr-superscript", "Superscript Text", "insertText", "^^", "^^", "Superscript Text");
 		self.addSeparator();
 		self.addButton("pr-link", "Link", "insertText", "*", "*", "Alias>Path@Anchor", EditorEnh.linkOptionUrl);
-		self.addButton("pr-embed", "Embed", "insertText", "+", "+", "Alias>Path@Anchor", EditorEnh.linkOptionUrl);
+		self.addButton("pr-embed", "Embed", "insertText", "*", "|embedded=true*", "Alias>Path@Anchor", EditorEnh.linkOptionUrl);
 		self.addSeparator();
 		self.addButton("pr-anchor", "Anchor", "insertLine", "@", "Anchor");
 		self.addButton("pr-header", "Header", "insertLine", "!", "Header");
