@@ -687,36 +687,34 @@ PRScheduledTaskExamples >> reportOfImagesOnPageAt: aPathString [
 { #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString [
 
-	| reportPage scheduler |
-	self guessTodoFromPath: pathToTodo.
-	scheduler := self todo scheduler.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString)
-		ifNotNil: [
-			reportPage contents: (String streamContents: [ :stream |
-					 self
-						 printReportHeaderOn: stream
-						 fields: '|!Task Name|!Next Run|!Run Count'.
-					 scheduler tasks do: [ :task |
-						 stream nextPut: $|.
-						 (PRPathLookup start: self todo path: task description)
-							 ifNil: [ stream nextPutAll: task description asString ]
-							 ifNotNil: [
-								 stream
-									 nextPut: $*;
-									 nextPutAll: pathToTodo asString;
-									 nextPut: $/;
-									 nextPutAll: task description asString;
-									 nextPut: $* ].
-						 stream
-							 nextPut: $|;
-							 space;
-							 nextPutAll: (String streamContents: [ :aStream |
-										  task nextRunTime
-											  printOn: aStream
-											  format: #( 3 2 1 $- 2 1 2 ) ]);
-							 nextPut: $|;
-							 nextPutAll: task runHistory size asString;
-							 cr ] ]) ]
+	         | reportPage scheduler |
+	         self guessTodoFromPath: pathToTodo.
+	         scheduler := self todo scheduler.
+	         (reportPage := PRPathLookup
+		                        start: self kernel root
+		                        path: aPathString) ifNotNil: [
+		         reportPage contents: (String streamContents: [ :stream |
+				          self
+					          printReportHeaderOn: stream
+					          fields: '|!Task Name|!Next Run|!Run Count'.
+				          scheduler tasks do: [ :task |
+					          stream nextPut: $|.
+					          (PRPathLookup start: self todo path: task description)
+						          ifNil: [ stream nextPutAll: task description asString ]
+						          ifNotNil: [
+							          stream
+								          nextPut: $*;
+								          nextPutAll: pathToTodo asString;
+								          nextPut: $/;
+								          nextPutAll: task description asString;
+								          nextPut: $* ].
+					          stream
+						          nextPut: $|;
+						          space;
+						          nextPutAll: task nextRunTime asString;
+						          nextPut: $|;
+						          nextPutAll: task runHistory size asString;
+						          cr ] ]) ]
 ]
 
 { #category : #private }
