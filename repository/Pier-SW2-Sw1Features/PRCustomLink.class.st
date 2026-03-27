@@ -40,7 +40,7 @@ PRCustomLink class >> example [
 			('search web *' match: aString) ifTrue: [
 					'https://duckduckgo.com/?t=h_&q='
 					,
-						((aString copyFrom: 16 to: aString size)
+						((aString copyFrom: 12 to: aString size)
 							 copyReplaceAll: ' '
 							 with: '+') , '&ia=web' ] ]
 ]
