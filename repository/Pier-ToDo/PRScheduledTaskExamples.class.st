@@ -162,6 +162,63 @@ PRScheduledTaskExamples >> backupTo: aUrl as: aUsername authenticatedBy: aPasswo
 ]
 
 { #category : #wikibackup }
+PRScheduledTaskExamples >> cleanFileDatabaseReportingOn: aReportPathString [
+
+	| prFiles filesToClean reportPage reportGenteratedOnDateSize filesToCleanTomorrow |
+	reportGenteratedOnDateSize := 25.
+	self guessTodoFromPath: aReportPathString.
+	(reportPage := PRPathLookup
+		               start: self kernel root
+		               path: aReportPathString) ifNotNil: [
+		reportPage contents: (String streamContents: [ :reportStream |
+				 self
+					 printReportHeaderOn: reportStream
+					 fields: '|!File|!Action Taken'.
+				 prFiles := self kernel root enumerator everything select: [ :e |
+					            e isFile ].
+				 filesToClean := MAFileDatabase baseDirectory allFiles reject: [
+					                 :file |
+					                 file creationTime > (DateAndTime now - 2 days)
+						                 or: [
+							                 prFiles anySatisfy: [ :prFile |
+								                 prFile file filename = file basename and: [
+									                 prFile file directory parent basename
+									                 = file parent parent basename ] ] ] ].
+				 reportPage contents size > reportGenteratedOnDateSize ifTrue: [
+					 filesToClean do: [ :file |
+						 reportStream
+							 nextPut: $|;
+							 nextPutAll: file parent parent basename;
+							 nextPut: $/;
+							 nextPutAll: file parent basename;
+							 nextPut: $/;
+							 nextPutAll: file basename;
+							 nextPutAll: '|removed';
+							 cr.
+						 file delete ] ].
+				 filesToCleanTomorrow := MAFileDatabase baseDirectory allFiles
+					                         reject: [ :file |
+						                         file creationTime
+						                         > (DateAndTime now - 1 day) or: [
+							                         prFiles anySatisfy: [ :prFile |
+								                         prFile file filename = file basename
+									                         and: [
+									                         prFile file directory parent
+										                         basename
+									                         = file parent parent basename ] ] ] ].
+				 filesToCleanTomorrow do: [ :file |
+					 reportStream
+						 nextPut: $|;
+						 nextPutAll: file parent parent basename;
+						 nextPut: $/;
+						 nextPutAll: file parent basename;
+						 nextPut: $/;
+						 nextPutAll: file basename;
+						 nextPutAll: '|Will be removed tomorrow';
+						 cr ] ]) ]
+]
+
+{ #category : #wikibackup }
 PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aNameBlock toExternalUsing: writePictureFilesAndReturnUrls reportOn: aPathString [
 	"The report may have links to the PRFiles, so consider its location (having aStartPage as a parent prevents the file from being overwritten). User is responsible to select a aStartPageName that does not have private pictures under it"
 
