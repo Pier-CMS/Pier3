@@ -170,7 +170,7 @@ ul.toc li.toc-level-6 { margin-left: 5em; }
 			yourself);
 		addChild: ((PRPage named: 'footer')
 			contents: 'Powered by *Seaside>http://www.seaside.st/*, *Magritte>http://www.lukas-renggli.ch/smalltalk/magritte*
-		and *Pier>http://www.piercms.com/*.';
+		and *Pier>https://github.com/Pier-CMS/Pier3/*.';
 			yourself);
 		contents: '{{{<div class="container">
 	<div class="header column span-24">
