@@ -586,7 +586,6 @@ PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPa
 	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [
-			anOsPathAndFilename.
 			(File exists: anOsPathAndFilename)
 				ifFalse: [
 					reportPage contents: (String streamContents: [ :stream |
