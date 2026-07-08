@@ -41,6 +41,23 @@ PRScheduledTaskExamples class >> codeLockCritical: aBlock [
 	^ CodeLock critical: aBlock
 ]
 
+{ #category : #accessing }
+PRScheduledTaskExamples class >> displayStringProperties [
+	"self displayStringProperties"
+
+	StringProperties ifNil: [ ^ 'empty' ].
+	^ String streamContents: [ :outputStream |
+		  StringProperties keysAndValuesDo: [ :key :value |
+			  outputStream
+				  nextPut: $|;
+				  space;
+				  nextPutAll: key asString;
+				  space;
+				  nextPut: $|;
+				  space;
+				  nextPutAll: value asString ] ]
+]
+
 { #category : #testing }
 PRScheduledTaskExamples class >> isCodeLocked [
 
@@ -783,6 +800,16 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 						          nextPut: $|;
 						          nextPutAll: task runHistory size asString;
 						          cr ] ]) ]
+]
+
+{ #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOfStringPropertiesOnPageAt: aPathString [
+
+	self
+		reportOf: [
+			'|!Key|!value
+' , self class displayStringProperties ]
+		onPageAt: aPathString
 ]
 
 { #category : #private }
