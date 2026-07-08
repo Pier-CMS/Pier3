@@ -41,6 +41,23 @@ PRScheduledTaskExamples class >> codeLockCritical: aBlock [
 	^ CodeLock critical: aBlock
 ]
 
+{ #category : #accessing }
+PRScheduledTaskExamples class >> displayStringProperties [
+	"self displayStringProperties"
+
+	StringProperties ifNil: [ ^ 'empty' ].
+	^ String streamContents: [ :outputStream |
+		  StringProperties keysAndValuesDo: [ :key :value |
+			  outputStream
+				  nextPut: $|;
+				  space;
+				  nextPutAll: key asString;
+				  space;
+				  nextPut: $|;
+				  space;
+				  nextPutAll: value asString ] ]
+]
+
 { #category : #testing }
 PRScheduledTaskExamples class >> isCodeLocked [
 
@@ -491,6 +508,19 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 ]
 
 { #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOf: aBlock onPageAt: aPathString [
+
+	| reportPage |
+	self guessTodoFromPath: aPathString.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString)
+		ifNotNil: [
+			| outputString |
+			outputString := aBlock value.
+			reportPage contents: (String streamContents: [ :stream |
+					 self printReportHeaderOn: stream fields: outputString ]) ]
+]
+
+{ #category : #'wiki updates' }
 PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString [
 	self reportOfBrokenLinksOnPageAt: aPathString startingFrom: '/'
 ]
@@ -536,34 +566,33 @@ PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathStri
 
 	| reportPage |
 	self guessTodoFromPath: aPathString.
-	(reportPage := PRPathLookup start: self kernel root path: aPathString) 
-		ifNotNil: [ 
-			anOsPathAndFilename.
+	(reportPage := PRPathLookup start: self kernel root path: aPathString)
+		ifNotNil: [
 			(File exists: anOsPathAndFilename)
-				ifFalse: [ 
-					reportPage contents: (String streamContents: [ :stream | 
+				ifFalse: [
+					reportPage contents: (String streamContents: [ :stream |
 							 self
 								 printReportHeaderOn: stream
 								 fields:
 								 'The file: ' , anOsPathAndFilename , ' does not exist.' ]) ]
-				ifTrue: [ 
-					((File isReadable: anOsPathAndFilename) and: [ 
+				ifTrue: [
+					((File isReadable: anOsPathAndFilename) and: [
 						 File isRegular: anOsPathAndFilename ])
-						ifFalse: [ 
-							reportPage contents: (String streamContents: [ :stream | 
+						ifFalse: [
+							reportPage contents: (String streamContents: [ :stream |
 									 self
 										 printReportHeaderOn: stream
 										 fields:
 										 'The file: ' , anOsPathAndFilename , ' is not read-able.' ]) ]
-						ifTrue: [ 
+						ifTrue: [
 							| file |
 							file := File openForReadFileNamed: anOsPathAndFilename.
-							[ 
+							[
 							| outputString |
 							(outputString := aStringBlock value: file contents asString)
-								isNotEmpty ifTrue: [ 
-								reportPage contents: (String streamContents: [ :stream | 
-										 self printReportHeaderOn: stream fields: outputString ]) ] ] 
+								isNotEmpty ifTrue: [
+								reportPage contents: (String streamContents: [ :stream |
+										 self printReportHeaderOn: stream fields: outputString ]) ] ]
 								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
 ]
 
@@ -574,7 +603,6 @@ PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPa
 	self guessTodoFromPath: aPathString.
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [
-			anOsPathAndFilename.
 			(File exists: anOsPathAndFilename)
 				ifFalse: [
 					reportPage contents: (String streamContents: [ :stream |
@@ -772,6 +800,16 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 						          nextPut: $|;
 						          nextPutAll: task runHistory size asString;
 						          cr ] ]) ]
+]
+
+{ #category : #'wiki updates' }
+PRScheduledTaskExamples >> reportOfStringPropertiesOnPageAt: aPathString [
+
+	self
+		reportOf: [
+			'|!Key|!value
+' , self class displayStringProperties ]
+		onPageAt: aPathString
 ]
 
 { #category : #private }
