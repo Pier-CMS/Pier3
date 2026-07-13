@@ -64,10 +64,10 @@ BaselineOfPier >> baselineForCommon: spec [
 				loads: #( 'Seaside' 'Tests' ) ];
 			baseline: 'Chrysal'
 			with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
-			baseline: 'PillarExporter' with: [
+			baseline: 'Pillar' with: [
 			spec
 				repository: 'github://pillar-markup/pillar:dev';
-				loads: #( 'pillar exporter' 'text exporter' ) ];
+				loads: #( 'All' ) ];
 			package: 'Pier-Model-Document' with: [
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
@@ -213,10 +213,10 @@ BaselineOfPier >> baselineForPharo9: spec [
 				loads: #( 'Seaside' 'Tests' ) ];
 			baseline: 'Chrysal'
 			with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
-			baseline: 'PillarExporter' with: [
+			baseline: 'Pillar' with: [
 			spec
 				repository: 'github://pillar-markup/pillar:dev';
-				loads: #( 'pillar exporter' 'text exporter' ) ];
+				loads: #( 'All' ) ];
 			package: 'Pier-Model-Document' with: [
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
