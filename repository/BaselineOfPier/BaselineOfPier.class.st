@@ -66,7 +66,7 @@ BaselineOfPier >> baselineForCommon: spec [
 			with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
 			baseline: 'Pillar' with: [
 			spec
-				repository: 'github://pillar-markup/pillar:dev';
+				repository: 'github://pillar-markup/pillar:fixFor9.0.1';
 				loads: #( 'All' ) ];
 			package: 'Pier-Model-Document' with: [
 			spec requires:
@@ -215,7 +215,7 @@ BaselineOfPier >> baselineForPharo9: spec [
 			with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
 			baseline: 'Pillar' with: [
 			spec
-				repository: 'github://pillar-markup/pillar:dev';
+				repository: 'github://pillar-markup/pillar:fixFor9.0.1';
 				loads: #( 'All' ) ];
 			package: 'Pier-Model-Document' with: [
 			spec requires:
