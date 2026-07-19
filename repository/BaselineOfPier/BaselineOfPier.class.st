@@ -66,7 +66,7 @@ BaselineOfPier >> baselineForCommon: spec [
 			with: [ spec repository: 'github://Ducasse/Chrysal/src' ];
 			baseline: 'PillarExporter' with: [
 			spec
-				repository: 'github://pillar-markup/pillar:dev-8';
+				repository: 'github://jborden23/pillar:dev-8';
 				loads: #( 'pillar exporter' 'text exporter' ) ];
 			package: 'Pier-Model-Document' with: [
 			spec requires:
