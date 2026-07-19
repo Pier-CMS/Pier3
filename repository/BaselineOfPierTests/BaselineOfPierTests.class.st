@@ -35,7 +35,7 @@ BaselineOfPierTests >> baseline: spec [
 					spec
 					repository: 'github://jborden23/pillar:dev-8';
 					loads: #( 'tests' ) ];					
-				package: 'pier-tests-model';
+				package: 'pier-tests-model'
 					with: [ spec requires: #('PillarCore') ];
 				package: 'Pier-Tests-Model-Utilities'
 					with: [ spec requires: #('pier-tests-model') ];
