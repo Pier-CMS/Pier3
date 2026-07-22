@@ -68,6 +68,10 @@ BaselineOfPier >> baselineForCommon: spec [
 			spec
 				repository: 'github://jborden23/pillar:dev-8';
 				loads: #( 'pillar exporter' 'text exporter' ) ];
+			baseline: 'PillarCore' with: [
+			spec
+				repository: 'github://jborden23/pillar:dev-8';
+				loads: #( 'tests' ) ];
 			package: 'Pier-Model-Document' with: [
 			spec requires:
 				#( 'Bootstrap' 'Magritte' 'Seaside3' 'Chrysal' 'PillarExporter' ) ];
@@ -138,7 +142,8 @@ BaselineOfPier >> baselineForCommon: spec [
 				requires: #( 'Pier-Model-Command' 'Pier-Model-Structure' );
 				postLoadDoIt: #registerPierInSeaside ];
 			group: 'default'
-			with: #( 'Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected'
+			with:
+				#( 'Pier-Documents' 'Pier-Model-Visitor' 'pier-seaside-protected'
 				   'pier-seaside-converting' 'pier-seaside-defaults'
 				   'pier-pharo-model' 'pier-seaside-accessing'
 				   'pier-jquery' 'Pier-Bootstrap' 'pier-pharo-persistency'
@@ -189,7 +194,40 @@ BaselineOfPier >> baselineForCommon: spec [
 			spec repository: 'github://pharo-contributions/XML-XMLParser' ];
 			package: 'Pier-Google'
 			with: [ spec requires: #( 'XMLParser' 'default' ) ];
-			group: 'google' with: #( 'Pier-Google' ) ]
+			group: 'google' with: #( 'Pier-Google' );
+			package: 'pier-tests-model'
+			with: [ spec requires: #( 'PillarCore' 'default' ) ];
+			package: 'Pier-Tests-Model-Utilities'
+			with: [ spec requires: #( 'pier-tests-model' ) ];
+			package: 'Pier-Tests-Model-Mocks'
+			with: [ spec requires: #( 'Pier-Tests-Model-Utilities' ) ];
+			package: 'Pier-Tests-Model-Structure'
+			with: [ spec requires: #( 'Pier-Tests-Model-Mocks' ) ];
+			package: 'Pier-Tests-Model-Kernel'
+			with: [ spec requires: #( 'Pier-Tests-Model-Structure' ) ];
+			package: 'Pier-Tests-Model-Document'
+			with: [ spec requires: #( 'Pier-Tests-Model-Kernel' ) ];
+			package: 'Pier-Tests-Model-Command'
+			with: [ spec requires: #( 'Pier-Tests-Model-Document' ) ];
+			package: 'Pier-Tests-Model-Persistence'
+			with: [ spec requires: #( 'Pier-Tests-Model-Command' ) ];
+			package: 'Pier-Tests-Pharo-Persistency'
+			with: [ spec requires: #( 'Pier-Tests-Model-Persistence' ) ];
+			package: 'pier-tests-security'
+			with: [ spec requires: #( 'Pier-Tests-Pharo-Persistency' ) ];
+			package: 'pier-tests-seaside-model'
+			with: [ spec requires: #( 'pier-tests-security' ) ];
+			package: 'Pier-Tests-Model-Magritte'
+			with: [ spec requires: #( 'pier-tests-seaside-model' ) ];
+			group: 'tests' with: #( 'Pier-Tests-Model-Magritte' );
+			package: 'Pier-Tests-Todo'
+			with: [ spec requires: #( 'tests' 'todo' ) ];
+			package: 'Pier-Tests-SW2-Sw1Features'
+			with: [ spec requires: #( 'tests' ) ];
+			package: 'Pier-Test-Workout' with: [ spec requires: #( 'tests' ) ];
+			group: 'todoTests'
+			with:
+			#( 'Pier-Tests-Todo' 'Pier-Test-Workout' 'Pier-Tests-SW2-Sw1Features' ) ]
 ]
 
 { #category : #baselines }
