@@ -24,12 +24,12 @@ A tutorial for setting up Pier can be ran with:
 ProfStef goOn: HowToSetupPier.
 ```
 ## Development
-There are over 1200 tests for Pier. These can be loaded by following the above instructions, then in Iceberg, select Pillar and load the package Pillar-Tests-Core & Pillar-Tests-Model. Next run:
+There are over 1200 tests for Pier. These can be loaded with:
 ```
 Metacello new
-	baseline: 'PierTests';
+	baseline: 'Pier';
 	repository: 'github://Pier-CMS/Pier3:main/repository';
 	onConflictUseLoaded;
-	load: #('default').
+	load: #('todoTests').
 ```
 One example of future development would be loading in Pharo version 12 or newer.
