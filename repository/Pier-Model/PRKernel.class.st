@@ -35,11 +35,11 @@ PRKernel class >> defaultInfoIntroduction [
 -''''Open Source:'''' Pier is released under the MIT license which grants unrestricted rights to copy, modify, and redistribute as long as the original copyright and license terms are retained.
 -''''Test Suites:'''' Pier is heavily tested. There are more than 1200 unit tests included with the core of Pier. This makes it easy to change and verify the code and comes in extremely useful when porting Pier to other Smalltalk dialects or when writing extensions.
 
-Up to date information about *Pier>http://www.piercms.com* and *Magritte>http://www.lukas-renggli.ch/smalltalk/magritte* can be obtained through their respective web sites.
+Up to date information about Pier and *Magritte>http://www.lukas-renggli.ch/smalltalk/magritte* can be obtained through their web sites.
 
 !Development
-- *Code Repository>http://source.lukas-renggli.ch/pier.html*
-- *Issue Tracker>http://code.google.com/p/pier/*
+- *Code Repository>https://github.com/Pier-CMS/Pier3*
+- *Issue Tracker>https://github.com/Pier-CMS/Pier3/issues*
 
 !Mailing-Lists
 - *Magritte, Pier and Related Tools>https://www.iam.unibe.ch/mailman/listinfo/smallwiki*
@@ -136,7 +136,7 @@ All value expressions that work on structures can be combined like ==\*value:str
 PRKernel class >> defaultRoot [
 	^ (PRPage named: 'pier')
 		addChild: self defaultInfo;
-		contents: 'Welcome to Pier, the next generation of a fully extensible content management system implemented in Smalltalk. To read additional information, please consult the *information page>information* or go to the official Pier *web site>http://www.piercms.com*.';
+		contents: 'Welcome to Pier, the next generation of a fully extensible content management system implemented in Smalltalk. To read additional information, please consult the *information page>information*.';
 		yourself
 ]
 

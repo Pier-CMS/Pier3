@@ -31,7 +31,12 @@ BaselineOfPierTests >> baseline: spec [
 			spec
 				baseline: 'ContainersPropertyEnvironment'
 					with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment' ];
-				package: 'pier-tests-model';
+				baseline: 'PillarCore' with: [ 
+					spec
+					repository: 'github://jborden23/pillar:dev-8';
+					loads: #( 'tests' ) ];					
+				package: 'pier-tests-model'
+					with: [ spec requires: #('PillarCore') ];
 				package: 'Pier-Tests-Model-Utilities'
 					with: [ spec requires: #('pier-tests-model') ];
 				package: 'Pier-Tests-Model-Mocks'
