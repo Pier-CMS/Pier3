@@ -43,19 +43,21 @@ PRScheduledTaskExamples class >> codeLockCritical: aBlock [
 
 { #category : #accessing }
 PRScheduledTaskExamples class >> displayStringProperties [
-	"self displayStringProperties"
 
-	StringProperties ifNil: [ ^ 'empty' ].
-	^ String streamContents: [ :outputStream |
-		  StringProperties keysAndValuesDo: [ :key :value |
-			  outputStream
-				  nextPut: $|;
-				  space;
-				  nextPutAll: key asString;
-				  space;
-				  nextPut: $|;
-				  space;
-				  nextPutAll: value asString ] ]
+	         "self displayStringProperties"
+
+	         StringProperties ifNil: [ ^ '''''empty''''' ].
+	         ^ String streamContents: [ :outputStream | 
+		           StringProperties keysAndValuesDo: [ :key :value | 
+			           outputStream
+				           nextPut: $|;
+				           space;
+				           nextPutAll: key asString;
+				           space;
+				           nextPut: $|;
+				           space;
+				           nextPutAll: value asString;
+				           cr ] ]
 ]
 
 { #category : #testing }
