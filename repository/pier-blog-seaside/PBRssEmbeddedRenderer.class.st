@@ -1,10 +1,11 @@
 Class {
-	#name : #PBRssEmbeddedRenderer,
-	#superclass : #PREmbeddedRenderer,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBRssEmbeddedRenderer',
+	#superclass : 'PREmbeddedRenderer',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #'visiting-structure' }
+{ #category : 'visiting-structure' }
 PBRssEmbeddedRenderer >> visitComponent: aStructure [
 	"render links to components, rather than embedding them"
 	html anchor

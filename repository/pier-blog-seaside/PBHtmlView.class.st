@@ -13,33 +13,34 @@ socialSharingWidget
 
 "
 Class {
-	#name : #PBHtmlView,
-	#superclass : #PRDefaultView,
+	#name : 'PBHtmlView',
+	#superclass : 'PRDefaultView',
 	#instVars : [
 		'blog',
 		'socialSharingWidget'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBHtmlView class >> isAbstract [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHtmlView >> blog [
 	^ blog ifNil: [ blog := self find: PBBlog ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBHtmlView >> children [
 	^ self socialSharingWidget isNil 
 		ifTrue: [ #() ]
 		ifFalse: [ Array with: self socialSharingWidget ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PBHtmlView >> filter: aString [
 	| newContext component |
 	newContext := self context structure: self blog.
@@ -49,14 +50,14 @@ PBHtmlView >> filter: aString [
 	self context: newContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHtmlView >> posts [
 	"Answer the currently displayed blog posts."
 	
 	^ self blog allPostsIn: self context
 ]
 
-{ #category : #'rendering-meta' }
+{ #category : 'rendering-meta' }
 PBHtmlView >> renderAuthor: anEntry on: html [
 	anEntry author ifNil: [ ^ self ].
 	html span
@@ -65,7 +66,7 @@ PBHtmlView >> renderAuthor: anEntry on: html [
 	html text: ' '
 ]
 
-{ #category : #'rendering-meta' }
+{ #category : 'rendering-meta' }
 PBHtmlView >> renderComment: anEntry on: html [
 	| comments |
 	self context structure isBlog ifFalse: [ ^ self ].
@@ -81,7 +82,7 @@ PBHtmlView >> renderComment: anEntry on: html [
 	html text: ' '
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHtmlView >> renderHeading: aPost on: html [ 
 	html heading level: 1; with: [
 		html anchor
@@ -91,7 +92,7 @@ PBHtmlView >> renderHeading: aPost on: html [
 			with: [ html html: aPost title ] ]
 ]
 
-{ #category : #'rendering-meta' }
+{ #category : 'rendering-meta' }
 PBHtmlView >> renderLink: anEntry on: html [
 	html anchor
 		class: 'link';
@@ -106,7 +107,7 @@ PBHtmlView >> renderLink: anEntry on: html [
 	html text: ' '
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHtmlView >> renderMeta: anEntry on: html [
 	html div class: 'meta'; with: [
 		html text: 'Posted '.
@@ -118,7 +119,7 @@ PBHtmlView >> renderMeta: anEntry on: html [
 		self renderSocialSharing: anEntry on: html ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHtmlView >> renderPost: aPost on: html [ 
 	html div class: 'post'; with: [ 
 		self renderHeading: aPost on: html.
@@ -126,14 +127,14 @@ PBHtmlView >> renderPost: aPost on: html [
 		self renderMeta: aPost on: html ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHtmlView >> renderPosts: aCollection on: html [
 	html div class: 'posts'; with: [
 		aCollection do: [ :each |
 			self renderPost: each on: html ] ]
 ]
 
-{ #category : #'rendering-meta' }
+{ #category : 'rendering-meta' }
 PBHtmlView >> renderPublication: anEntry on: html [
 	anEntry publication ifNil: [ ^ self ].
 	html span
@@ -143,7 +144,7 @@ PBHtmlView >> renderPublication: anEntry on: html [
 	html text: ' '
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHtmlView >> renderRssOn: html [
 	"If you modify this method, please also modify PBPostTicker>>#renderRssOn:"
 	html div class: 'subscribe'; with: [
@@ -163,7 +164,7 @@ PBHtmlView >> renderRssOn: html [
 					with: 'Comments (RSS)' ]]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHtmlView >> renderSocialSharing: anEntry on: html [
 	self socialSharingWidget notNil ifTrue: [
 		html div
@@ -172,7 +173,7 @@ PBHtmlView >> renderSocialSharing: anEntry on: html [
 				self socialSharingWidget renderWidgetForEntry: anEntry on: html ] ]
 ]
 
-{ #category : #'rendering-meta' }
+{ #category : 'rendering-meta' }
 PBHtmlView >> renderTags: anEntry on: html [
 	anEntry isPost ifFalse: [ ^ self ].
 	anEntry tags isEmpty ifTrue: [ ^ self ].
@@ -187,7 +188,7 @@ PBHtmlView >> renderTags: anEntry on: html [
 	html text: ' '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHtmlView >> socialSharingWidget [
 	^ socialSharingWidget ifNil: [
 		self blog socialSharingWidgetClassName notNil 
@@ -195,7 +196,7 @@ PBHtmlView >> socialSharingWidget [
 			ifFalse: [ nil ] ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PBHtmlView >> updateRoot: aHtmlRoot [
 	super updateRoot: aHtmlRoot.
 	aHtmlRoot rss

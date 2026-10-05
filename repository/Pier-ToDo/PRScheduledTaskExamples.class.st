@@ -13,8 +13,8 @@ The class side ShouldCheckFSSpace is a flag for running the df command through L
 The #codeLockCritical: message makes a block thread-safe, #nextSequenceCount* messages should be ran inside this so the sequence isn't corrupted (examples are the #writeAfter* messages). SequenceStates stores a key related to sequence numbers, so tasks can be synchronized.
 "
 Class {
-	#name : #PRScheduledTaskExamples,
-	#superclass : #Object,
+	#name : 'PRScheduledTaskExamples',
+	#superclass : 'Object',
 	#instVars : [
 		'kernel',
 		'todo'
@@ -26,22 +26,23 @@ Class {
 		'ShouldCheckFSSpace',
 		'StringProperties'
 	],
-	#category : #'Pier-ToDo'
+	#category : 'Pier-ToDo',
+	#package : 'Pier-ToDo'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 PRScheduledTaskExamples class >> checkFSSpace [
 	ShouldCheckFSSpace ifNil: [ ShouldCheckFSSpace := true ].
 	^ ShouldCheckFSSpace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> codeLockCritical: aBlock [
 	CodeLock ifNil: [ CodeLock := Semaphore forMutualExclusion  ].
 	^ CodeLock critical: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> displayStringProperties [
 
 	         "self displayStringProperties"
@@ -60,14 +61,14 @@ PRScheduledTaskExamples class >> displayStringProperties [
 				           cr ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRScheduledTaskExamples class >> isCodeLocked [
 
 	CodeLock ifNil: [ CodeLock := Semaphore forMutualExclusion ].
 	^ CodeLock isSignaled not
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PRScheduledTaskExamples class >> newForKernelNamed: aString [
 
 	| closestKernel |
@@ -83,7 +84,7 @@ PRScheduledTaskExamples class >> newForKernelNamed: aString [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PRScheduledTaskExamples class >> newForKernelNamed: aString andTodoPath: aPathString [
 	| aKernel aToDo |
 	aKernel := PRKernel instanceNamed: aString.
@@ -96,7 +97,7 @@ PRScheduledTaskExamples class >> newForKernelNamed: aString andTodoPath: aPathSt
 				yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> nextSequenceCount [
 
 	"self nextSequenceCount"
@@ -104,7 +105,7 @@ PRScheduledTaskExamples class >> nextSequenceCount [
 	^ self nextSequenceCountFor: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> nextSequenceCountFor: aSymbol [
 
 	"self nextSequenceCountFor: #test"
@@ -124,30 +125,30 @@ PRScheduledTaskExamples class >> nextSequenceCountFor: aSymbol [
 	^ nextSequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> resetStringProperty [
 
 	StringProperties := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> sequenceFor: aSymbol [
 
 	SequenceStates ifNil: [ SequenceStates := Dictionary new ].
 	^ SequenceStates at: aSymbol ifAbsent: [ 0 ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 PRScheduledTaskExamples class >> shouldCheckFSSpace [
 	ShouldCheckFSSpace := true
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 PRScheduledTaskExamples class >> shouldNotCheckFSSpace [
 	ShouldCheckFSSpace := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> stringProperty: aString ifAbsent: anAbsentBlock [
 
 	StringProperties ifNil: [
@@ -155,7 +156,7 @@ PRScheduledTaskExamples class >> stringProperty: aString ifAbsent: anAbsentBlock
 	^ StringProperties at: aString ifAbsent: anAbsentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples class >> stringProperty: aString put: aValue [
 
 	StringProperties ifNil: [
@@ -163,7 +164,7 @@ PRScheduledTaskExamples class >> stringProperty: aString put: aValue [
 	^ StringProperties at: aString put: aValue
 ]
 
-{ #category : #wikibackup }
+{ #category : 'wikibackup' }
 PRScheduledTaskExamples >> backupTo: aUrl as: aUsername authenticatedBy: aPassword [
 	"Not sure why it must be in lowercase, but that is what works."
 
@@ -180,7 +181,7 @@ PRScheduledTaskExamples >> backupTo: aUrl as: aUsername authenticatedBy: aPasswo
 				cr ]
 ]
 
-{ #category : #wikibackup }
+{ #category : 'wikibackup' }
 PRScheduledTaskExamples >> cleanFileDatabaseReportingOn: aReportPathString [
 
 	| prFiles filesToClean reportPage reportGenteratedOnDateSize filesToCleanTomorrow |
@@ -237,7 +238,7 @@ PRScheduledTaskExamples >> cleanFileDatabaseReportingOn: aReportPathString [
 						 cr ] ]) ]
 ]
 
-{ #category : #wikibackup }
+{ #category : 'wikibackup' }
 PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aNameBlock toExternalUsing: writePictureFilesAndReturnUrls reportOn: aPathString [
 	"The report may have links to the PRFiles, so consider its location (having aStartPage as a parent prevents the file from being overwritten). User is responsible to select a aStartPageName that does not have private pictures under it"
 
@@ -384,7 +385,7 @@ PRScheduledTaskExamples >> copyImageFilesFrom: aStartPageName usingNaming: aName
 														 cr ] ] ] ] ] ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> ftpFileToReport: userString pass: pwString host: hostString file: fileString reportOnPageAt: aPathString [
 	"FTP is not secure, but available everywhere."
 
@@ -427,7 +428,7 @@ PRScheduledTaskExamples >> ftpFileToReport: userString pass: pwString host: host
 										ensure: [ client close ] ] ]) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRScheduledTaskExamples >> guessTodoFromPath: aPathString [
 	| aPage |
 	todo
@@ -438,18 +439,18 @@ PRScheduledTaskExamples >> guessTodoFromPath: aPathString [
 						ifFalse: [ aPage := aPage parent ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples >> kernel [
 	kernel ifNil: [ self kernel: PRKernel instances anyOne ].
 	^ kernel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples >> kernel: aKernel [
 	kernel := aKernel
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> printReportHeaderOn: stream fields: aString [
 	"This displays when the report was generated on the remote server, not in my local time."
 	stream
@@ -464,7 +465,7 @@ PRScheduledTaskExamples >> printReportHeaderOn: stream fields: aString [
 				cr ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString using: contentCheckBlock onPageAt: aReportPathString [
 
 	| urlContents |
@@ -509,7 +510,7 @@ PRScheduledTaskExamples >> reportCheck: checkBlock thenRetrieveLink: aUrlString 
 										  do: [ :error | 'Content block failed.' ]) ] ] ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOf: aBlock onPageAt: aPathString [
 
 	| reportPage |
@@ -517,17 +518,19 @@ PRScheduledTaskExamples >> reportOf: aBlock onPageAt: aPathString [
 	(reportPage := PRPathLookup start: self kernel root path: aPathString)
 		ifNotNil: [
 			| outputString |
-			outputString := aBlock value.
+			outputString := aBlock
+				                on: UndeclaredVariableError
+				                do: [ 'There is a typo in the block' ].
 			reportPage contents: (String streamContents: [ :stream |
 					 self printReportHeaderOn: stream fields: outputString ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString [
 	self reportOfBrokenLinksOnPageAt: aPathString startingFrom: '/'
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom: aStartPageName [
 	| reportPage |
 	self guessTodoFromPath: aPathString.
@@ -554,7 +557,7 @@ PRScheduledTaskExamples >> reportOfBrokenLinksOnPageAt: aPathString startingFrom
 														cr ] ] ] ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString [
 
 	self
@@ -563,7 +566,7 @@ PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathStri
 		modifyUsing: [ :str | str ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathString modifyUsing: aStringBlock [
 
 	| reportPage |
@@ -598,7 +601,7 @@ PRScheduledTaskExamples >> reportOfFile: anOsPathAndFilename onPageAt: aPathStri
 								ensure: [ file ifNotNil: [ file close ] ] ] ] ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPathString modifyUsing: aStringBlock [
 
 	| reportPage |
@@ -647,7 +650,7 @@ PRScheduledTaskExamples >> reportOfFileStream: anOsPathAndFilename onPageAt: aPa
 								ensure: [ fileStream ifNotNil: [ fileStream close ] ] ] ] ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 
 	| reportPage pagesWithUnusualChildren linksWithRaw |
@@ -708,7 +711,7 @@ PRScheduledTaskExamples >> reportOfHealthCheckOnPageAt: aPathString [
 						 nextPutAll: self class isCodeLocked asString ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfHistoryOnPageAt: aPathString [
 
 	| reportPage |
@@ -728,7 +731,7 @@ PRScheduledTaskExamples >> reportOfHistoryOnPageAt: aPathString [
 						 nextPutAll: self kernel root enumerator with all size asString ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfImagesOnPageAt: aPathString [
 	| reportPage search |
 	self guessTodoFromPath: aPathString.
@@ -771,7 +774,7 @@ PRScheduledTaskExamples >> reportOfImagesOnPageAt: aPathString [
 																cr ] ] ] ] ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString [
 
 	         | reportPage scheduler |
@@ -804,7 +807,7 @@ PRScheduledTaskExamples >> reportOfSchedulerAt: pathToTodo onPageAt: aPathString
 						          cr ] ]) ]
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> reportOfStringPropertiesOnPageAt: aPathString [
 
 	self
@@ -814,7 +817,7 @@ PRScheduledTaskExamples >> reportOfStringPropertiesOnPageAt: aPathString [
 		onPageAt: aPathString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRScheduledTaskExamples >> runCheckDiskSpace [
 	| dfOutput |
 	dfOutput := (LibC resultOfCommand: 'df -h .') lines last substrings.
@@ -825,24 +828,24 @@ PRScheduledTaskExamples >> runCheckDiskSpace [
 				ifFalse: [ (dfOutput last: 2) first , ' of ' , dfOutput second ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples >> todo [
 	todo ifNil: [ self todo: PRToDo allInstances anyOne ].
 	^ todo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRScheduledTaskExamples >> todo: aPRToDo [
 	todo := aPRToDo
 ]
 
-{ #category : #'wiki updates' }
+{ #category : 'wiki updates' }
 PRScheduledTaskExamples >> updateRepeatingTasksForPath: aString [
 	(PRPathLookup start: self kernel root path: aString) tasks
 		do: [ :task | task updateDueDateToCurrent ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock on: aStream [
 
 	| file fileStream convertStream |
@@ -872,7 +875,7 @@ PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aSt
 				nextPutAll: aFileString asString ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
 
 	| reportPage |
@@ -887,7 +890,7 @@ PRScheduledTaskExamples >> writeAfterAppendTextFileNamed: aFileString using: aSt
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRScheduledTaskExamples >> writeAfterTruncateTextFileNamed: aFileString using: aStreamBlock reportOnPageAt: aPathString [
 
 	"An example that creates a 2 line file:

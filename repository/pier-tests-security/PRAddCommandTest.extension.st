@@ -1,6 +1,6 @@
-Extension { #name : #PRAddCommandTest }
+Extension { #name : 'PRAddCommandTest' }
 
-{ #category : #'*pier-tests-security' }
+{ #category : '*pier-tests-security' }
 PRAddCommandTest >> testGroup [
 	| parentDecoration childDecoration |
 	parentDecoration := self context structure
@@ -26,7 +26,7 @@ PRAddCommandTest >> testGroup [
 	self assert: childDecoration otherPermissions equalElements: #()
 ]
 
-{ #category : #'*pier-tests-security' }
+{ #category : '*pier-tests-security' }
 PRAddCommandTest >> testOwner [
 	| parentDecoration childDecoration |
 	parentDecoration := self context structure
@@ -52,7 +52,7 @@ PRAddCommandTest >> testOwner [
 	self assert: childDecoration otherPermissions equalElements: #()
 ]
 
-{ #category : #'*pier-tests-security' }
+{ #category : '*pier-tests-security' }
 PRAddCommandTest >> testWorld [
 	| parentDecoration childDecoration |
 	parentDecoration := self context structure

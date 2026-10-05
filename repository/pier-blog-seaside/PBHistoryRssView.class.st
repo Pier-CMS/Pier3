@@ -1,23 +1,24 @@
 Class {
-	#name : #PBHistoryRssView,
-	#superclass : #PBRssView,
+	#name : 'PBHistoryRssView',
+	#superclass : 'PBRssView',
 	#instVars : [
 		'items'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBHistoryRssView class >> isAbstract [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView class >> label [
 	^ 'Log (RSS)'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBHistoryRssView >> buildItems [
 	| result |
 	result := OrderedCollection new.
@@ -33,27 +34,27 @@ PBHistoryRssView >> buildItems [
 	^ result
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBHistoryRssView >> isFiltered [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBHistoryRssView >> isVisible: aContext [
 	^ (aContext structure parents includes: self context structure) and: [ aContext isValidCommand: aContext structure viewCommandClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView >> items [
 	^ items ifNil: [ items := self buildItems ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView >> maxSize [
 	^ 25
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBHistoryRssView >> renderBasic: aContext on: rss [
 	rss title: (self titleFor: aContext).
 	rss link: (self urlFor: aContext).
@@ -67,7 +68,7 @@ PBHistoryRssView >> renderBasic: aContext on: rss [
 			yourself)
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBHistoryRssView >> renderBody: aContext on: rss [
 	rss description: [
 		rss html: '<![CDATA['.
@@ -77,7 +78,7 @@ PBHistoryRssView >> renderBody: aContext on: rss [
 		rss html: ']]>' ]
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBHistoryRssView >> renderData: aContext on: html [
 	| data | 
 	html definitionList: [
@@ -93,7 +94,7 @@ PBHistoryRssView >> renderData: aContext on: html [
 							on: html ] ] ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHistoryRssView >> renderItem: aContext on: rss [
 	rss item: [
 		self renderBasic: aContext on: rss.
@@ -102,13 +103,13 @@ PBHistoryRssView >> renderItem: aContext on: rss [
 		self renderBody: aContext on: rss ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBHistoryRssView >> renderRssOn: rss [
 	rss title: self title; description: self label; link: self url.
 	self items do: [ :each | self renderItem: each on: rss ]
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBHistoryRssView >> renderTags: aContext on: rss [
 	aContext structure tags
 		do: [ :each | rss category: each ].
@@ -116,29 +117,29 @@ PBHistoryRssView >> renderTags: aContext on: rss [
 	rss category: aContext command cssClass
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBHistoryRssView >> renderUser: aContext on: rss [
 	| user |
 	user := aContext propertyAt: #user ifAbsent: [ ^ self ].
 	user isNil ifFalse: [ ^ rss creator: user name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView >> title [
 	^ self titleFor: self context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView >> titleFor: aContext [
 	^ (aContext command label copyUpTo: $() trimBoth , ': ' , aContext structure title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView >> url [
 	^ self urlFor: self context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBHistoryRssView >> urlFor: aContext [
 	^ (aContext view: aContext structure viewComponentClass) url
 ]

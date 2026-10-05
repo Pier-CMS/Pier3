@@ -1,19 +1,20 @@
 Class {
-	#name : #PRExporterImporter,
-	#superclass : #PRObject,
+	#name : 'PRExporterImporter',
+	#superclass : 'PRObject',
 	#instVars : [
 		'owner',
 		'writeStream'
 	],
-	#category : #'Pier-Pharo-Persistency'
+	#category : 'pier-pharo-persistency',
+	#package : 'pier-pharo-persistency'
 }
 
-{ #category : #'accessing-configuration' }
+{ #category : 'accessing-configuration' }
 PRExporterImporter >> emptyWriteStream [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRExporterImporter >> export: aKernel on: aRequestContext [
 	aKernel exportOn: self.
 	aRequestContext response
@@ -23,12 +24,12 @@ PRExporterImporter >> export: aKernel on: aRequestContext [
 		respond
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRExporterImporter >> extension [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRExporterImporter >> import: aCollection into: aKernel [
 	| kernel stream |
 	aCollection isNil
@@ -53,32 +54,32 @@ PRExporterImporter >> import: aCollection into: aKernel [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRExporterImporter >> mimeType [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRExporterImporter >> owner [
 	^ owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRExporterImporter >> owner: anObject [
 	owner := anObject
 ]
 
-{ #category : #'accessing-configuration' }
+{ #category : 'accessing-configuration' }
 PRExporterImporter >> readStreamOn: aCollection [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRExporterImporter >> replace [
 	^ owner replace 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRExporterImporter >> sanitizeExport: aStructure [
 	"Some older versions of Pier have block contexts in their conditions, get rid of these."
 	
@@ -90,7 +91,7 @@ PRExporterImporter >> sanitizeExport: aStructure [
 						reject: [ :cond | cond key isBlock ]) ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRExporterImporter >> sanitizeImport: aStructure [
 	"After importing drop all the security settings as these users might not exist in the new kernel. Also refresh all the links so that they are properly printed when editing these pages."
 	
@@ -105,7 +106,7 @@ PRExporterImporter >> sanitizeImport: aStructure [
 				ifTrue: [ link update ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRExporterImporter >> writeStream [
 	^ writeStream ifNil: [ writeStream := self emptyWriteStream ]
 ]

@@ -1,31 +1,32 @@
 Class {
-	#name : #PBPostHtmlView,
-	#superclass : #PBHtmlView,
+	#name : 'PBPostHtmlView',
+	#superclass : 'PBHtmlView',
 	#instVars : [
 		'post',
 		'comment',
 		'command',
 		'component'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostHtmlView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostHtmlView class >> isValidIn: aContext [
 	^ (super isValidIn: aContext) and: [ aContext structure isPost ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView class >> label [
 	^ super label , ' (Post)'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostHtmlView >> buildCommand [
 	^ (self context
 		structure: self comment
@@ -33,14 +34,14 @@ PBPostHtmlView >> buildCommand [
 			command
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostHtmlView >> buildComment [
 	^ PBComment new
 		title: self context structure title;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostHtmlView >> buildComponent [
 	^ (self buildDescription asComponentOn: self command)
 		onAnswer: [ :result | self execute: result ];
@@ -48,38 +49,38 @@ PBPostHtmlView >> buildComponent [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostHtmlView >> buildDescription [
 	^ self command magritteDescription select: [ :each |
 		each propertyAt: #public ifAbsent: [ false ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView >> children [
 	^ super children, (Array with: self component)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView >> command [
 	^ command ifNil: [ command := self buildCommand ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView >> comment [
 	^ comment ifNil: [ comment := self buildComment ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView >> comments [
 	^ self context structure allCommentsIn: self context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView >> component [
 	^ component ifNil: [ component := self buildComponent ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostHtmlView >> execute: anEditCommand [
 
 	| addCommand |
@@ -100,17 +101,17 @@ PBPostHtmlView >> execute: anEditCommand [
 		execute
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostHtmlView >> isCommentEnabled [
 	^ self post publication notNil and: [ self post publication + self blog commentTimeout >= GRPlatform current magritteTimeStampClass now ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostHtmlView >> post [
 	^ post ifNil: [ post := self find: PBPost ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostHtmlView >> renderAuthor: anEntry on: html [
 	(anEntry isPost or: [ anEntry website isEmptyOrNil ])
 		ifTrue: [ ^ super renderAuthor: anEntry on: html ].
@@ -123,7 +124,7 @@ PBPostHtmlView >> renderAuthor: anEntry on: html [
 	html text: ' '
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostHtmlView >> renderComments: aCollection on: html [
 	html anchor name: #comments.
 	aCollection isEmpty
@@ -136,7 +137,7 @@ PBPostHtmlView >> renderComments: aCollection on: html [
 			self renderMeta: each on: html ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostHtmlView >> renderContentOn: html [
 	self render: self post on: html.
 	self renderMeta: self post on: html.
@@ -147,7 +148,7 @@ PBPostHtmlView >> renderContentOn: html [
 	self renderRssOn: html
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostHtmlView >> renderLeaveCommentOn: html [
 	html div class: 'leavecomment'; with: [
 		html heading level: 2; with: 'Leave your comment'.

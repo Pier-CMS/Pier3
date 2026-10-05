@@ -1,19 +1,20 @@
 Class {
-	#name : #PBBlogRssView,
-	#superclass : #PBRssView,
+	#name : 'PBBlogRssView',
+	#superclass : 'PBRssView',
 	#instVars : [
 		'blog',
 		'tags'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBBlogRssView class >> isValidIn: aContext [
 	^ (super isValidIn: aContext) and: [ aContext structure isBlog ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBlogRssView class >> new [
 	"This is an ugly hack to make already bookmarked blogs work properly."
 
@@ -22,24 +23,24 @@ PBBlogRssView class >> new [
 		ifFalse: [ super new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBlogRssView >> blog [
 	^ blog ifNil: [ blog := self find: PBBlog ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBBlogRssView >> initialRequest: aRequest [
 	super initialRequest: aRequest.
 	tags := (aRequest queryFields at: 'tags' ifAbsent: [ '' ])
 		findTokens: $,
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : 'accessing-dynamic' }
 PBBlogRssView >> link [
 	^ (self context structure: self blog) url
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBBlogRssView >> renderDescription: aDocument on: rss [
 	rss description: [
 		rss html: '<![CDATA['.
@@ -49,7 +50,7 @@ PBBlogRssView >> renderDescription: aDocument on: rss [
 		rss html: ']]>' ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBBlogRssView >> renderRssOn: rss [
 	"Generate some standard information that should be present in all the feeds."
 
@@ -66,7 +67,7 @@ PBBlogRssView >> renderRssOn: rss [
 		ifFalse: [ rss webMaster: self blog webMaster ]
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : 'accessing-dynamic' }
 PBBlogRssView >> title [
 	^ self blog feedTitle ifNil: [ self blog title ]
 ]

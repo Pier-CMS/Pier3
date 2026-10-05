@@ -1,25 +1,26 @@
 Class {
-	#name : #PBChangesRssView,
-	#superclass : #PBHistoryRssView,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBChangesRssView',
+	#superclass : 'PBHistoryRssView',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBChangesRssView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBChangesRssView class >> label [
 	^ 'Changes (RSS)'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBChangesRssView >> isVisible: aContext [
 	^ aContext command isEdit and: [ super isVisible: aContext ]
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBChangesRssView >> renderData: aContext on: html [
 	aContext command magritteDescription do: [ :each |
 		each isDocumentDescription ifTrue: [
@@ -28,7 +29,7 @@ PBChangesRssView >> renderData: aContext on: html [
 				in: self on: html ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBChangesRssView >> titleFor: aContext [
 	^ aContext structure title
 ]

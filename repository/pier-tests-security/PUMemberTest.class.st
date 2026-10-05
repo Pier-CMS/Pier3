@@ -1,6 +1,6 @@
 Class {
-	#name : #PUMemberTest,
-	#superclass : #TestCase,
+	#name : 'PUMemberTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'group1',
 		'group2',
@@ -8,10 +8,11 @@ Class {
 		'user2',
 		'user3'
 	],
-	#category : #'Pier-Tests-Security'
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 PUMemberTest >> setUp [
 	group1 := PUGroup named: 'group 1'.
 	group2 := PUGroup named: 'group 2'.
@@ -21,7 +22,7 @@ PUMemberTest >> setUp [
 	user3 := PUUser named: 'user 3'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUMemberTest >> testEqualitiy [
 	self assert: group1 = group1.
 	self assert: group2 = group2.
@@ -44,7 +45,7 @@ PUMemberTest >> testEqualitiy [
 	self deny: user3 = group1
 ]
 
-{ #category : #'tests-groups' }
+{ #category : 'tests-groups' }
 PUMemberTest >> testGroupUsers [
 	group1 users: (Array with: user1 with: user2).
 	self assert: group1 users equalElements: (Set with: user1 with: user2).
@@ -59,7 +60,7 @@ PUMemberTest >> testGroupUsers [
 	self assert: user3 groups = (OrderedCollection with: group1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUMemberTest >> testName [
 	self assert: group1 name = 'group 1'.
 	self assert: group2 name = 'group 2'.
@@ -69,7 +70,7 @@ PUMemberTest >> testName [
 	self assert: user3 name = 'user 3'
 ]
 
-{ #category : #'tests-user' }
+{ #category : 'tests-user' }
 PUMemberTest >> testUserAddGroups [
 	user1 addGroup: group1; addGroup: group2.
 	self assert: user1 group = group1.
@@ -78,7 +79,7 @@ PUMemberTest >> testUserAddGroups [
 	self assert: group2 users equalElements: (Set with: user1)
 ]
 
-{ #category : #'tests-user' }
+{ #category : 'tests-user' }
 PUMemberTest >> testUserGroups [
 	user1 groups: (Array with: group1 with: group2).
 	self assert: user1 groups = (OrderedCollection with: group1 with: group2).
@@ -91,7 +92,7 @@ PUMemberTest >> testUserGroups [
 	self assert: group2 users equalElements: (Set new)
 ]
 
-{ #category : #'tests-user' }
+{ #category : 'tests-user' }
 PUMemberTest >> testUserPassword [
 	user1 password: 'foo'.
 	self deny: user1 password = 'foo'.
@@ -101,7 +102,7 @@ PUMemberTest >> testUserPassword [
 	self assert: (user1 validatePassword: 'foo')
 ]
 
-{ #category : #'tests-user' }
+{ #category : 'tests-user' }
 PUMemberTest >> testUserRemoveGroups [
 	user1 addGroup: group1; addGroup: group2; removeGroup: group2.
 	self assert: user1 groups = (OrderedCollection with: group1).
@@ -109,7 +110,7 @@ PUMemberTest >> testUserRemoveGroups [
 	self assert: group2 users equalElements: (Set new)
 ]
 
-{ #category : #'tests-user' }
+{ #category : 'tests-user' }
 PUMemberTest >> testUserSuperuser [
 	self deny: user1 superuser.
 	self deny: user1 isSuperuser.

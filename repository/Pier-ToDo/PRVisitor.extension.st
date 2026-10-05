@@ -1,11 +1,11 @@
-Extension { #name : #PRVisitor }
+Extension { #name : 'PRVisitor' }
 
-{ #category : #'*Pier-ToDo' }
+{ #category : '*Pier-ToDo' }
 PRVisitor >> visitToDo: anObject [
 	self visitCase: anObject
 ]
 
-{ #category : #'*Pier-ToDo' }
+{ #category : '*Pier-ToDo' }
 PRVisitor >> visitToDoItem: anObject [
 	self visitPage: anObject
 ]

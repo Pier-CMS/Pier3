@@ -1,6 +1,6 @@
-Extension { #name : #JQWidgetBoxDeploymentLibrary }
+Extension { #name : 'JQWidgetBoxDeploymentLibrary' }
 
-{ #category : #'*jqwidgetbox-uilayout-core' }
+{ #category : '*jqwidgetbox-uilayout-core' }
 JQWidgetBoxDeploymentLibrary >> jquerylayoutminJs [
 	^ '/*
  * jquery.layout 1.2.0

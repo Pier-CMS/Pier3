@@ -1,20 +1,21 @@
 Class {
-	#name : #PUEditUserTest,
-	#superclass : #PRCommandTest,
-	#category : #'Pier-Tests-Security'
+	#name : 'PUEditUserTest',
+	#superclass : 'PRCommandTest',
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PUEditUserTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PUEditUserTest >> actualClass [
 	^ PUEditUser
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUEditUserTest >> testInformation [
 	self context setUser: self adminUser.
 	self command write: 'Lukas' using: PUUser new descriptionFirstName.
@@ -26,7 +27,7 @@ PUEditUserTest >> testInformation [
 	self assert: self adminUser email = 'admin@piercms.com'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUEditUserTest >> testPassword [
 	self context setUser: self adminUser.
 	self command write: 'foo' using: PUUser new descriptionPassword.
@@ -34,7 +35,7 @@ PUEditUserTest >> testPassword [
 	self assert: (self adminUser validatePassword: 'foo')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUEditUserTest >> testValid [
 	self deny: self context isValid.
 	context := self context user: self adminUser.

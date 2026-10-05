@@ -1,10 +1,11 @@
 Class {
-	#name : #PBRssView,
-	#superclass : #PRRawView,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBRssView',
+	#superclass : 'PRRawView',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PBRssView >> previousContextOf: aContext matching: aBlock [
 	| current previous |
 	current := self items
@@ -17,12 +18,12 @@ PBRssView >> previousContextOf: aContext matching: aBlock [
 	^ nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBRssView >> renderRssOn: rss [
 	self subclassResponsibility
 ]
 
-{ #category : #responding }
+{ #category : 'responding' }
 PBRssView >> respondUsing: aResponse [
 	super respondUsing: aResponse.
 	aResponse

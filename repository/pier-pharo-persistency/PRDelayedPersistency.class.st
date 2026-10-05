@@ -9,22 +9,23 @@ I am an abstract parent of persistencies that save every now and again.
 
 "
 Class {
-	#name : #PRDelayedPersistency,
-	#superclass : #PRHistoryPersistency,
+	#name : 'PRDelayedPersistency',
+	#superclass : 'PRHistoryPersistency',
 	#instVars : [
 		'duration',
 		'process',
 		'message'
 	],
-	#category : #'Pier-Pharo-Persistency'
+	#category : 'pier-pharo-persistency',
+	#package : 'pier-pharo-persistency'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRDelayedPersistency class >> isAbstract [
 	^ self name = #PRDelayedPersistency
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 PRDelayedPersistency >> descriptionDuration [
 	<magritteDescription>
 	^ MADurationDescription new
@@ -37,7 +38,7 @@ PRDelayedPersistency >> descriptionDuration [
 		yourself
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 PRDelayedPersistency >> descriptionMessage [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -49,19 +50,19 @@ PRDelayedPersistency >> descriptionMessage [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRDelayedPersistency >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRDelayedPersistency >> duration: aDuration [
 	"The minimum interval between two snapshots."
 
 	duration := aDuration
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRDelayedPersistency >> execute: aCommand [
 	self mutex critical: [
 		self apply: aCommand.
@@ -71,12 +72,12 @@ PRDelayedPersistency >> execute: aCommand [
 			self start ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRDelayedPersistency >> isScheduled [
 	^ process notNil and: [ process isTerminated not ] 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRDelayedPersistency >> log: aContext [
 	| stream |
 	stream := (FileSystem disk workingDirectory / 'transactions.txt') writeStream.
@@ -84,7 +85,7 @@ PRDelayedPersistency >> log: aContext [
 		ensure: [ stream close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRDelayedPersistency >> log: aContext on: aStream [
 	aStream nextPutAll: ' == '; nextPutAll: aContext command class label; nextPutAll: ' == '; cr.
 	aStream nextPutAll: ' -- context -- '; cr.
@@ -102,17 +103,17 @@ PRDelayedPersistency >> log: aContext on: aStream [
 	aStream cr; cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRDelayedPersistency >> message [
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRDelayedPersistency >> message: aString [
 	message := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRDelayedPersistency >> process [
 	(Delay forDuration: self duration)
 		wait.
@@ -122,26 +123,26 @@ PRDelayedPersistency >> process [
 	self snapshot
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRDelayedPersistency >> sanitize [
 	super sanitize.
 	self stop
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PRDelayedPersistency >> setKernel: aKernel [
 	super setKernel: aKernel.
 	self stop
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRDelayedPersistency >> snapshot [
 	"Take a snapshot and perform cleanup tasks."
 
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRDelayedPersistency >> start [
 	"Schedule the receiver to take a snapshot after the configured duration."
 
@@ -155,7 +156,7 @@ PRDelayedPersistency >> start [
 	process resume
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRDelayedPersistency >> stop [
 	"Stop the configured snapshot."
 

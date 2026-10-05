@@ -1,10 +1,11 @@
 Class {
-	#name : #PBRssRenderer,
-	#superclass : #PRViewRenderer,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBRssRenderer',
+	#superclass : 'PRViewRenderer',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PBRssRenderer >> linkRendererFor: aLink [
 	"Answer an instance of the most appropriate renderer for this link. If the link is internal and embedded, avoid the embedding and simply create a reference."
 
@@ -22,21 +23,21 @@ PBRssRenderer >> linkRendererFor: aLink [
 	^ class parent: self
 ]
 
-{ #category : #'visiting-document' }
+{ #category : 'visiting-document' }
 PBRssRenderer >> visitAnchor: anObject [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 PBRssRenderer >> visitLightBoxLink: aLink [
 
 ]
 
-{ #category : #'visiting-document' }
+{ #category : 'visiting-document' }
 PBRssRenderer >> visitParagraph: anObject [
 	html paragraph: [ self visitAll: anObject children ]
 ]
 
-{ #category : #'visiting-document' }
+{ #category : 'visiting-document' }
 PBRssRenderer >> visitValueLink: anObject [
 	"Ignore value links to avoid strange side-effects."
 ]

@@ -2,22 +2,23 @@
 A PRAddTaskCommand is used for adding tasks.  This makes it easier to enter the title (since that is what is displayed).  A task name is relatively irrelevant.
 "
 Class {
-	#name : #PRAddTaskCommand,
-	#superclass : #PRAddCommand,
-	#category : #'Pier-ToDo'
+	#name : 'PRAddTaskCommand',
+	#superclass : 'PRAddCommand',
+	#category : 'Pier-ToDo',
+	#package : 'Pier-ToDo'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRAddTaskCommand class >> isValidIn: aContext [
 	^ (super isValidIn: aContext) and: [ aContext structure isToDo ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRAddTaskCommand class >> label [
 	^ 'Add Task'
 ]
 
-{ #category : #'acessing-magritte' }
+{ #category : 'acessing-magritte' }
 PRAddTaskCommand >> descriptionName [
 	"Removed #beRequired and added beHidden so this would not be displayed."
 
@@ -32,7 +33,7 @@ PRAddTaskCommand >> descriptionName [
 		yourself
 ]
 
-{ #category : #'acessing-magritte' }
+{ #category : 'acessing-magritte' }
 PRAddTaskCommand >> descriptionNameAsTitle: aDescription [
 	"List the title, not the name"
 
@@ -42,7 +43,7 @@ PRAddTaskCommand >> descriptionNameAsTitle: aDescription [
 		yourself
 ]
 
-{ #category : #'acessing-magritte' }
+{ #category : 'acessing-magritte' }
 PRAddTaskCommand >> descriptionTitle [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -54,7 +55,7 @@ PRAddTaskCommand >> descriptionTitle [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRAddTaskCommand >> name [
 	"Based the name on the title if possible - this seems like the best option:"
 
@@ -63,7 +64,7 @@ PRAddTaskCommand >> name [
 		ifFalse: [ self uniqueName: self nameFromTitle in: self structure ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRAddTaskCommand >> nameFromTitle [
 	^ String
 		streamContents: [ :stream | 

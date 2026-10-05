@@ -17,8 +17,8 @@ Currently, re-occurring items do not have any indication that they are repeated 
 The scheduler is used for making automated tasks.
 "
 Class {
-	#name : #PRToDo,
-	#superclass : #PRStructure,
+	#name : 'PRToDo',
+	#superclass : 'PRStructure',
 	#instVars : [
 		'totalPoints',
 		'pointsName',
@@ -26,35 +26,36 @@ Class {
 		'timeZoneDifference',
 		'smallGroupSize'
 	],
-	#category : #'Pier-ToDo'
+	#category : 'Pier-ToDo',
+	#package : 'Pier-ToDo'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDo class >> canBeParentOf: aClass [
 	^ aClass includesBehavior: PRToDoTask
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDo class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo class >> label [
 	^ 'ToDo'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 PRToDo >> accept: aVisitor [
 	aVisitor visitToDo: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> addToTotalPoints: anInteger [
 	self totalPoints: self totalPoints + anInteger
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PRToDo >> descriptionPointsName [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -65,7 +66,7 @@ PRToDo >> descriptionPointsName [
 		yourself
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PRToDo >> descriptionSmallGroupSize [
 	<magritteDescription>
 	^ MANumberDescription new
@@ -79,7 +80,7 @@ PRToDo >> descriptionSmallGroupSize [
 		yourself
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PRToDo >> descriptionTimeZoneDifference [
 	<magritteDescription>
 	^ MADurationDescription new
@@ -94,7 +95,7 @@ PRToDo >> descriptionTimeZoneDifference [
 		yourself
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PRToDo >> descriptionTotalPoints [
 	<magritteDescription>
 	^ MANumberDescription new
@@ -107,7 +108,7 @@ PRToDo >> descriptionTotalPoints [
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PRToDo >> displayDateWithTimeZoneDifference: aDateAndTime [
 	| updatedDate dateString |
 	aDateAndTime ifNil: [ ^ '' ].
@@ -122,72 +123,72 @@ PRToDo >> displayDateWithTimeZoneDifference: aDateAndTime [
 		ifFalse: [ dateString , ' ' , updatedDate asTime printMinutes ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDo >> hasDocument [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDo >> isToDo [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDo >> isValidView: aComponentClass in: aContext [
 	^ super viewComponentClass ~= aComponentClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> pointsName [
 	pointsName ifNil: [ self pointsName: 'Total Points:' ].
 	^ pointsName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> pointsName: aString [
 	pointsName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> scheduler [
 	scheduler ifNil: [ self scheduler: TaskScheduler new start ].
 	^ scheduler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> scheduler: aTaskScheduler [
 	scheduler := aTaskScheduler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> smallGroupSize [
 	smallGroupSize isNil
 		ifTrue: [ self smallGroupSize: 10 ].
 	^ smallGroupSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> smallGroupSize: aNumber [
 	smallGroupSize := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> tasks [
 	^ self childrenDecoration children
 		reject: [ :task | task hideFromMenus ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> tasksDone [
 	^ self tasks select: [ :item | item completed ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> tasksDue [
 	^ (self tasks reject: [ :item | item completed ]) sorted: [ :a :b | a due < b due ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> tasksUnDoneAsGroups [
 	"Return a collection of the tasks that are not yet complete, grouped for optimal display (not too many in a group, not too many groups)."
 
@@ -219,29 +220,29 @@ PRToDo >> tasksUnDoneAsGroups [
 	^ results
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> timeZoneDifference [
 	timeZoneDifference ifNil: [self timeZoneDifference: 0 seconds].
 	^ timeZoneDifference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> timeZoneDifference: aDuration [
 	timeZoneDifference := aDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> totalPoints [
 	totalPoints ifNil: [ self totalPoints: 0 ].
 	^ totalPoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDo >> totalPoints: anInteger [
 	totalPoints := anInteger
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 PRToDo >> viewComponentClass [
 	^ PRToDoView
 ]

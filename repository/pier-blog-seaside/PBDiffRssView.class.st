@@ -1,30 +1,31 @@
 Class {
-	#name : #PBDiffRssView,
-	#superclass : #PBHistoryRssView,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBDiffRssView',
+	#superclass : 'PBHistoryRssView',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBDiffRssView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBDiffRssView class >> label [
 	^ 'Diff (RSS)'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBDiffRssView >> isFiltered [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBDiffRssView >> isVisible: aContext [
 	^ aContext command isEdit and: [ super isVisible: aContext ]
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBDiffRssView >> renderData: aContext on: html [
 	| previous |
 	previous := self 
@@ -39,7 +40,7 @@ PBDiffRssView >> renderData: aContext on: html [
 			html render: (PRWordDiffAlgorithm from: source to: target) ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBDiffRssView >> titleFor: aContext [
 	^ aContext structure title
 ]

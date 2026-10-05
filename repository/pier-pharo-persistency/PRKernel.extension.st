@@ -1,6 +1,6 @@
-Extension { #name : #PRKernel }
+Extension { #name : 'PRKernel' }
 
-{ #category : #'*pier-pharo-persistency' }
+{ #category : '*pier-pharo-persistency' }
 PRKernel >> exportOn: anExporter [
 	| persistencyBackup |
 	anExporter sanitizeExport: self root.

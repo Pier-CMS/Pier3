@@ -6,31 +6,32 @@ Instance Variables
 
 "
 Class {
-	#name : #PRPreformattedTextSelector,
-	#superclass : #PREnumerableVisitor,
+	#name : 'PRPreformattedTextSelector',
+	#superclass : 'PREnumerableVisitor',
 	#instVars : [
 		'textStream'
 	],
-	#category : #'Pier-ToDo'
+	#category : 'Pier-ToDo',
+	#package : 'Pier-ToDo'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRPreformattedTextSelector class >> isAbstract [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PRPreformattedTextSelector >> initialize [
 	super initialize.
 	textStream := WriteStream on: String new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRPreformattedTextSelector >> text [
 	^ textStream contents
 ]
 
-{ #category : #'visiting-document' }
+{ #category : 'visiting-document' }
 PRPreformattedTextSelector >> visitPreformatted: aPreformatted [
 	textStream nextPutAll: aPreformatted text asString
 ]

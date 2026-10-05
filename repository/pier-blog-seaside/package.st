@@ -1,1 +1,1 @@
-Package { #name : #'pier-blog-seaside' }
+Package { #name : 'pier-blog-seaside' }

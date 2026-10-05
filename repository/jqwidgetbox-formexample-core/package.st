@@ -1,1 +1,1 @@
-Package { #name : #'jqwidgetbox-formexample-core' }
+Package { #name : 'jqwidgetbox-formexample-core' }

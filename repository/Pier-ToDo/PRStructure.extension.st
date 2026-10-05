@@ -1,6 +1,6 @@
-Extension { #name : #PRStructure }
+Extension { #name : 'PRStructure' }
 
-{ #category : #'*Pier-ToDo' }
+{ #category : '*Pier-ToDo' }
 PRStructure >> isToDo [
 	^ false
 ]

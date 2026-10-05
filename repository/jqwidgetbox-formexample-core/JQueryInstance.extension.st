@@ -1,6 +1,6 @@
-Extension { #name : #JQueryInstance }
+Extension { #name : 'JQueryInstance' }
 
-{ #category : #'*jqwidgetbox-formexample-core' }
+{ #category : '*jqwidgetbox-formexample-core' }
 JQueryInstance >> example: aStringOrFunction [
 	"Populate form input fields with example text that disappears on focus."
 	
@@ -10,7 +10,7 @@ JQueryInstance >> example: aStringOrFunction [
 
 ]
 
-{ #category : #'*jqwidgetbox-formexample-core' }
+{ #category : '*jqwidgetbox-formexample-core' }
 JQueryInstance >> example: aStringOrFunction class: aCssClass [
 	"Populate form input fields with example text that disappears on focus."
 	

@@ -1,45 +1,46 @@
 Class {
-	#name : #PRSixxExporterImporter,
-	#superclass : #PRExporterImporter,
-	#category : #'Pier-Pharo-Persistency'
+	#name : 'PRSixxExporterImporter',
+	#superclass : 'PRExporterImporter',
+	#category : 'pier-pharo-persistency',
+	#package : 'pier-pharo-persistency'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRSixxExporterImporter class >> isAbstract [
 	^ self sixxReadStreamClass isNil or: [ self sixxWriteStreamClass isNil ] 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRSixxExporterImporter class >> label [
 	^ 'SIXX Serializer' 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRSixxExporterImporter class >> sixxReadStreamClass [
 	^ Smalltalk classNamed: #SixxReadStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRSixxExporterImporter class >> sixxWriteStreamClass [
 	^ Smalltalk classNamed: #SixxWriteStream
 ]
 
-{ #category : #'accessing-configuration' }
+{ #category : 'accessing-configuration' }
 PRSixxExporterImporter >> emptyWriteStream [
 	^ self class sixxWriteStreamClass on: (RWBinaryOrTextStream on: ByteString new)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRSixxExporterImporter >> extension [
 	^ '.sxx'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRSixxExporterImporter >> mimeType [
 	^ 'text/xml'
 ]
 
-{ #category : #'accessing-configuration' }
+{ #category : 'accessing-configuration' }
 PRSixxExporterImporter >> readStreamOn: aCollection [
 	^ self class sixxReadStreamClass on: aCollection greaseString 
 ]

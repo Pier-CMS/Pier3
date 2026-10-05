@@ -1,1 +1,1 @@
-Package { #name : #'pier-tests-security' }
+Package { #name : 'pier-tests-security' }

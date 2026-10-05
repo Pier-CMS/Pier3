@@ -1,20 +1,21 @@
 Class {
-	#name : #PUChangeOwnerTest,
-	#superclass : #PUChangeSecurityTest,
-	#category : #'Pier-Tests-Security'
+	#name : 'PUChangeOwnerTest',
+	#superclass : 'PUChangeSecurityTest',
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PUChangeOwnerTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PUChangeOwnerTest >> actualClass [
 	^ PUChangeOwner
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUChangeOwnerTest >> testOwner [
 	self command
 		with: true; all: true;

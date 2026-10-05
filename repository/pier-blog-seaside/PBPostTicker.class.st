@@ -1,40 +1,41 @@
 Class {
-	#name : #PBPostTicker,
-	#superclass : #PRWidget,
+	#name : 'PBPostTicker',
+	#superclass : 'PRWidget',
 	#instVars : [
 		'numberOfCharacters',
 		'numberOfPosts',
 		'blog'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker class >> groupLabel [
 	^ 'Pier Blog'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostTicker class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker class >> label [
 	^ 'Ticker'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker >> blog [
 	^ blog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker >> blog: anObject [
 	blog := anObject
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PBPostTicker >> descriptionBlog [
 	<magritteDescription>
 	^ PRStructureDescription new
@@ -45,7 +46,7 @@ PBPostTicker >> descriptionBlog [
 		yourself
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PBPostTicker >> descriptionNumberOfCharacters [
 	<magritteDescription>
 	^ MANumberDescription new
@@ -60,7 +61,7 @@ PBPostTicker >> descriptionNumberOfCharacters [
 		yourself
 ]
 
-{ #category : #'accessing-description' }
+{ #category : 'accessing-description' }
 PBPostTicker >> descriptionNumberOfPosts [
 	<magritteDescription>
 	^ MANumberDescription new
@@ -75,27 +76,27 @@ PBPostTicker >> descriptionNumberOfPosts [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker >> numberOfCharacters [
 	^ numberOfCharacters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker >> numberOfCharacters: anObject [
 	numberOfCharacters := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker >> numberOfPosts [
 	^ numberOfPosts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTicker >> numberOfPosts: anObject [
 	numberOfPosts := anObject
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : 'accessing-dynamic' }
 PBPostTicker >> posts [
 	| items |
 	items := self blog allPostsIn: self context.
@@ -104,7 +105,7 @@ PBPostTicker >> posts [
 	^ items reversed
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBPostTicker >> renderAuthorForPost: aPost on: html [
 	aPost author ifNil: [^ self].
 	html space.
@@ -114,7 +115,7 @@ PBPostTicker >> renderAuthorForPost: aPost on: html [
 
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostTicker >> renderContentOn: html [
 	self blog isNil
 		ifTrue: [ ^ html div: '(no blog specified)' ].
@@ -127,12 +128,12 @@ PBPostTicker >> renderContentOn: html [
 	self renderRssOn: html.
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBPostTicker >> renderDateForPost: aPost on: html [
 	html span class: 'date'; with: aPost publication asDate
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostTicker >> renderPost: aPost on: html [
 	html anchor
 		goto: (self context structure: aPost);
@@ -146,7 +147,7 @@ PBPostTicker >> renderPost: aPost on: html [
 		with: [ html html: (self summaryOf: aPost) ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostTicker >> renderRssOn: html [
 	"Copy-pasted from PBHtmlView. I tried to refactor but it was not that easy."
 	html div class: 'subscribe'; with: [
@@ -166,12 +167,12 @@ PBPostTicker >> renderRssOn: html [
 					with: 'Comments (RSS)' ]]
 ]
 
-{ #category : #'rendering-parts' }
+{ #category : 'rendering-parts' }
 PBPostTicker >> renderTimeForPost: aPost on: html [
 	html span class: 'time'; with: aPost publication asTime
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostTicker >> summaryOf: aPost [
 	| input output emptyPosition |
 	input := aPost plainText readStream.
@@ -191,7 +192,7 @@ PBPostTicker >> summaryOf: aPost [
 	^ output contents
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PBPostTicker >> updateRoot: aHtmlRoot [
 	super updateRoot: aHtmlRoot.
 	self blog isNil ifTrue: [ ^ self ].

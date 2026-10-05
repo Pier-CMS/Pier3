@@ -1,38 +1,39 @@
 Class {
-	#name : #PBRssLinkWidget,
-	#superclass : #PRWidget,
+	#name : 'PBRssLinkWidget',
+	#superclass : 'PRWidget',
 	#instVars : [
 		'blog'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBRssLinkWidget class >> groupLabel [
 	^ 'Pier Blog'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBRssLinkWidget class >> isAbstract [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBRssLinkWidget class >> label [
 	^ 'Links'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBRssLinkWidget >> blog [
 	^ blog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBRssLinkWidget >> blog: anObject [
 	blog := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBRssLinkWidget >> descriptionBlog [
 	<magritteDescription>
 	^ PRStructureDescription new
@@ -43,7 +44,7 @@ PBRssLinkWidget >> descriptionBlog [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBRssLinkWidget >> renderContentOn: html [
 	self blog isNil 
 		ifTrue: [ ^ html div: '(no blog specified)' ].

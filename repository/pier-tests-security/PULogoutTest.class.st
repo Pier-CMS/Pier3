@@ -1,35 +1,36 @@
 Class {
-	#name : #PULogoutTest,
-	#superclass : #PRCommandTest,
-	#category : #'Pier-Tests-Security'
+	#name : 'PULogoutTest',
+	#superclass : 'PRCommandTest',
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PULogoutTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PULogoutTest >> actualClass [
 	^ PULogout
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PULogoutTest >> contextInstance [
 	^ super contextInstance user: self bloggerUser
 ]
 
-{ #category : #'tests-testing' }
+{ #category : 'tests-testing' }
 PULogoutTest >> testIsLogged [
 	self deny: self command isLogged
 ]
 
-{ #category : #'tests-testing' }
+{ #category : 'tests-testing' }
 PULogoutTest >> testIsQuick [
 	self assert: self command isQuick
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PULogoutTest >> testingLogout [
 	self assert: self context user = self bloggerUser.
 	self command execute.

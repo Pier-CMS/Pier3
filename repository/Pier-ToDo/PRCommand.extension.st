@@ -1,6 +1,6 @@
-Extension { #name : #PRCommand }
+Extension { #name : 'PRCommand' }
 
-{ #category : #'*Pier-ToDo' }
+{ #category : '*Pier-ToDo' }
 PRCommand >> shouldBeIncludedInCompleteHistory [
 	^ false
 ]

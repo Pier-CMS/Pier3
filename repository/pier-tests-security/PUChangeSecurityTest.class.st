@@ -1,28 +1,29 @@
 Class {
-	#name : #PUChangeSecurityTest,
-	#superclass : #PRCommandTest,
+	#name : 'PUChangeSecurityTest',
+	#superclass : 'PRCommandTest',
 	#instVars : [
 		'child'
 	],
-	#category : #'Pier-Tests-Security'
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PUChangeSecurityTest >> actualClass [
 	^ PUChangeSecurity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PUChangeSecurityTest >> child [
 	^ child ifNil: [ child := self childInstance ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PUChangeSecurityTest >> childInstance [
 	^ PRPage named: 'child'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PUChangeSecurityTest >> permissions [
 	^ Set new
 		addAll: PRAddCommand permissions;
@@ -30,14 +31,14 @@ PUChangeSecurityTest >> permissions [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PUChangeSecurityTest >> structureInstance [
 	^ super structureInstance
 		addChild: self child;
 		yourself
 ]
 
-{ #category : #'tests-operations' }
+{ #category : 'tests-operations' }
 PUChangeSecurityTest >> testOperationAdd [
 	self command
 		with: true;
@@ -55,7 +56,7 @@ PUChangeSecurityTest >> testOperationAdd [
 				includesAll: self permissions)
 ]
 
-{ #category : #'tests-operations' }
+{ #category : 'tests-operations' }
 PUChangeSecurityTest >> testOperationRemove [
 	| permissions |
 	self command
@@ -70,7 +71,7 @@ PUChangeSecurityTest >> testOperationRemove [
 		[ :each | self deny: (permissions includes: each) ]
 ]
 
-{ #category : #'tests-operations' }
+{ #category : 'tests-operations' }
 PUChangeSecurityTest >> testOperationSet [
 	self command
 		with: true; all: true;
@@ -81,7 +82,7 @@ PUChangeSecurityTest >> testOperationSet [
 	self assert: (self command accessor read: self child) equalElements: self permissions
 ]
 
-{ #category : #'tests-operations' }
+{ #category : 'tests-operations' }
 PUChangeSecurityTest >> testOperationUnchanged [
 	| structurePermission childPermissions |
 	structurePermission := (self command accessor read: self structure)

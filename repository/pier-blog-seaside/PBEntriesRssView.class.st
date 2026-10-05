@@ -1,23 +1,24 @@
 Class {
-	#name : #PBEntriesRssView,
-	#superclass : #PBBlogRssView,
+	#name : 'PBEntriesRssView',
+	#superclass : 'PBBlogRssView',
 	#instVars : [
 		'posts'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBEntriesRssView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBEntriesRssView class >> label [
 	^ 'Entries (RSS)'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBEntriesRssView >> findPosts [
 	| items |
 	items := self blog allPostsIn: self context.
@@ -27,7 +28,7 @@ PBEntriesRssView >> findPosts [
 	^ items reversed
 ]
 
-{ #category : #responding }
+{ #category : 'responding' }
 PBEntriesRssView >> handle: aRequestContext [
 	(self shouldForward: aRequestContext)
 		ifFalse: [ super handle: aRequestContext ]
@@ -37,12 +38,12 @@ PBEntriesRssView >> handle: aRequestContext [
 				respond ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBEntriesRssView >> posts [
 	^ posts ifNil: [ posts := self findPosts ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBEntriesRssView >> renderPost: aPost on: rss [
 	| enclosure |
 	rss title: aPost title.
@@ -72,7 +73,7 @@ PBEntriesRssView >> renderPost: aPost on: rss [
 			with: aPost sourceTitle ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBEntriesRssView >> renderRssOn: rss [
 	super renderRssOn: rss.
 	self posts isEmpty ifTrue: [ ^ self ].
@@ -82,7 +83,7 @@ PBEntriesRssView >> renderRssOn: rss [
 		rss item: [ self renderPost: each on: rss ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBEntriesRssView >> shouldForward: aContext [
 	(self blog feedForward isNil or: [ self blog feedForward isEmpty ])
 		ifTrue: [ ^ false ].

@@ -7,16 +7,17 @@ I  allow storage of the wiki using the image file.  I keep maxImages backups bas
 
 "
 Class {
-	#name : #PRImagePersistency,
-	#superclass : #PRDelayedPersistency,
+	#name : 'PRImagePersistency',
+	#superclass : 'PRDelayedPersistency',
 	#instVars : [
 		'namePrefix',
 		'maxImages'
 	],
-	#category : #'Pier-Pharo-Persistency'
+	#category : 'pier-pharo-persistency',
+	#package : 'pier-pharo-persistency'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PRImagePersistency >> cleanupBackupImages [
 	| images |
 	maxImages isNil
@@ -36,7 +37,7 @@ PRImagePersistency >> cleanupBackupImages [
 				deleteIfAbsent: [  ] ]
 ]
 
-{ #category : #'accessing-descriptions' }
+{ #category : 'accessing-descriptions' }
 PRImagePersistency >> descriptionMaxImages [
 	<magritteDescription>
 	^ MANumberDescription new
@@ -50,7 +51,7 @@ PRImagePersistency >> descriptionMaxImages [
 		yourself
 ]
 
-{ #category : #'accessing-descriptions' }
+{ #category : 'accessing-descriptions' }
 PRImagePersistency >> descriptionNamePrefix [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -63,31 +64,31 @@ PRImagePersistency >> descriptionNamePrefix [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRImagePersistency >> maxImages [
 	^ maxImages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRImagePersistency >> maxImages: anInteger [
 	"The maximum number of backup copies to keep."
 
 	maxImages := anInteger 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRImagePersistency >> namePrefix [
 	^ namePrefix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRImagePersistency >> namePrefix: aString [
 	"Defines the prefix for backup copies."
 
 	namePrefix := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRImagePersistency >> saveImageAndBackupAs: aString [
 	| directory image imageName changeName |
 	directory := FileSystem disk workingDirectory.
@@ -105,7 +106,7 @@ PRImagePersistency >> saveImageAndBackupAs: aString [
 				snapshot: true andQuit: false ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRImagePersistency >> snapshot [
 	| filename |
 	filename := namePrefix , DateAndTime now asSortableString.

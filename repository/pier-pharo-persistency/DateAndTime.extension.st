@@ -1,6 +1,6 @@
-Extension { #name : #DateAndTime }
+Extension { #name : 'DateAndTime' }
 
-{ #category : #'*pier-pharo-persistency' }
+{ #category : '*pier-pharo-persistency' }
 DateAndTime >> asSortableString [
 	"A small interpreter to get a date exactly the way required."
 

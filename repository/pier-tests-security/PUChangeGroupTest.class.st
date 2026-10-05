@@ -1,20 +1,21 @@
 Class {
-	#name : #PUChangeGroupTest,
-	#superclass : #PUChangeSecurityTest,
-	#category : #'Pier-Tests-Security'
+	#name : 'PUChangeGroupTest',
+	#superclass : 'PUChangeSecurityTest',
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PUChangeGroupTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PUChangeGroupTest >> actualClass [
 	^ PUChangeGroup
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PUChangeGroupTest >> testGroup [
 	self command
 		with: true; all: true;

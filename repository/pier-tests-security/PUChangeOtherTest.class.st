@@ -1,15 +1,16 @@
 Class {
-	#name : #PUChangeOtherTest,
-	#superclass : #PUChangeSecurityTest,
-	#category : #'Pier-Tests-Security'
+	#name : 'PUChangeOtherTest',
+	#superclass : 'PUChangeSecurityTest',
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PUChangeOtherTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PUChangeOtherTest >> actualClass [
 	^ PUChangeOther
 ]

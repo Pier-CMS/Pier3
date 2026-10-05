@@ -1,1 +1,1 @@
-Package { #name : #'jqwidgetbox-uilayout-core' }
+Package { #name : 'jqwidgetbox-uilayout-core' }

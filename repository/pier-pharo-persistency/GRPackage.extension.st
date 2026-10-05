@@ -1,6 +1,6 @@
-Extension { #name : #GRPackage }
+Extension { #name : 'GRPackage' }
 
-{ #category : #'*pier-pharo-persistency' }
+{ #category : '*pier-pharo-persistency' }
 GRPackage class >> pierPharoPersistency [
 	^ self new
 		name: 'Pier-Pharo-Persistency';

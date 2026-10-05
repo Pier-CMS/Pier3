@@ -1,6 +1,6 @@
-Extension { #name : #GRPackage }
+Extension { #name : 'GRPackage' }
 
-{ #category : #'*pier-tests-security' }
+{ #category : '*pier-tests-security' }
 GRPackage class >> pierTestsSecurity [
 	^ self new
 		name: 'Pier-Tests-Security';

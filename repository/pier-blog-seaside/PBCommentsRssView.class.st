@@ -1,28 +1,29 @@
 Class {
-	#name : #PBCommentsRssView,
-	#superclass : #PBBlogRssView,
+	#name : 'PBCommentsRssView',
+	#superclass : 'PBBlogRssView',
 	#instVars : [
 		'comments'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBCommentsRssView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBCommentsRssView class >> label [
 	^ 'Comments (RSS)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBCommentsRssView >> comments [
 	^ comments ifNil: [ comments := self findComments ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBCommentsRssView >> findComments [
 	| items |
 	items := self blog allCommentsIn: self context.
@@ -35,7 +36,7 @@ PBCommentsRssView >> findComments [
 	^ items reversed
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBCommentsRssView >> renderComment: aComment on: rss [
 	| post |
 	post := aComment parents reverse
@@ -53,7 +54,7 @@ PBCommentsRssView >> renderComment: aComment on: rss [
 	self renderDescription: aComment document on: rss
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBCommentsRssView >> renderRssOn: rss [
 	super renderRssOn: rss.
 	self comments isEmpty ifTrue: [ ^ self ].
@@ -63,7 +64,7 @@ PBCommentsRssView >> renderRssOn: rss [
 		rss item: [ self renderComment: each on: rss ] ]
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : 'accessing-dynamic' }
 PBCommentsRssView >> title [
 	^ 'Comments for ' , super title
 ]

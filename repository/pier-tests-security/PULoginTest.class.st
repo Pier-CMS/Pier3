@@ -1,25 +1,26 @@
 Class {
-	#name : #PULoginTest,
-	#superclass : #PRCommandTest,
-	#category : #'Pier-Tests-Security'
+	#name : 'PULoginTest',
+	#superclass : 'PRCommandTest',
+	#category : 'pier-tests-security',
+	#package : 'pier-tests-security'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PULoginTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PULoginTest >> actualClass [
 	^ PULogin
 ]
 
-{ #category : #'tests-testing' }
+{ #category : 'tests-testing' }
 PULoginTest >> testIsLogged [
 	self deny: self command isLogged
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PULoginTest >> testLoginAdmin [
 	self assert: self context user isNil.
 	self command
@@ -36,7 +37,7 @@ PULoginTest >> testLoginAdmin [
 	self assert: self context user isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PULoginTest >> testLoginBlogger [
 	self assert: self context user isNil.
 	self command
@@ -53,7 +54,7 @@ PULoginTest >> testLoginBlogger [
 	self assert: self context user isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PULoginTest >> testLoginInvalidPassword [
 	self assert: self context user isNil.
 	self command username: self bloggerUser name.
@@ -61,7 +62,7 @@ PULoginTest >> testLoginInvalidPassword [
 	self assert: self context user isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PULoginTest >> testLoginInvalidUsername [
 	self assert: self context user isNil.
 	self should: [ self command execute ] raise: PUInvalidLogin.

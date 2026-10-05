@@ -1,24 +1,25 @@
 Class {
-	#name : #PBPostRelated,
-	#superclass : #PBPostFilter,
+	#name : 'PBPostRelated',
+	#superclass : 'PBPostFilter',
 	#instVars : [
 		'post',
 		'related'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostRelated class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostRelated class >> label [
 	^ 'Related'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostRelated >> findRelated [
 	| other |
 	self post isNil
@@ -32,30 +33,30 @@ PBPostRelated >> findRelated [
 	^ other collect: [ :e | e key ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 PBPostRelated >> onChangeContext: aContext [
 	super onChangeContext: aContext.
 	self post = self findPost
 		ifFalse: [ self refresh ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostRelated >> post [
 	^ post ifNil: [ post := self findPost ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PBPostRelated >> refresh [
 	super refresh.
 	post := related := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostRelated >> related [
 	^ related ifNil: [ related := self findRelated ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostRelated >> renderBlogOn: html [
 	self related isEmpty
 		ifTrue: [ ^ self ].

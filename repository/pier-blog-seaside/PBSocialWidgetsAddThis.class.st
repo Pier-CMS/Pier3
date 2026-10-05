@@ -8,12 +8,13 @@ To use:
 
 "
 Class {
-	#name : #PBSocialWidgetsAddThis,
-	#superclass : #WAPresenter,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBSocialWidgetsAddThis',
+	#superclass : 'WAPresenter',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBSocialWidgetsAddThis >> renderWidgetForEntry: anEntry on: html [
 	| entryContext url |
 	entryContext := self context structure: anEntry.
@@ -29,7 +30,7 @@ PBSocialWidgetsAddThis >> renderWidgetForEntry: anEntry on: html [
 		html anchor class: 'addthis_button_compact' ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PBSocialWidgetsAddThis >> updateRoot: anHtmlRoot [ 
 	super updateRoot: anHtmlRoot.
 

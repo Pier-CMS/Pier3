@@ -1,6 +1,6 @@
-Extension { #name : #PRKernelTest }
+Extension { #name : 'PRKernelTest' }
 
-{ #category : #'*pier-tests-security' }
+{ #category : '*pier-tests-security' }
 PRKernelTest >> testGroupNamed [
 	| adminGroup found |
 	self
@@ -15,7 +15,7 @@ PRKernelTest >> testGroupNamed [
 	self deny: found description: 'Should not find a group that is not there'
 ]
 
-{ #category : #'*pier-tests-security' }
+{ #category : '*pier-tests-security' }
 PRKernelTest >> testUserNamed [
 	| adminUser found |
 	self

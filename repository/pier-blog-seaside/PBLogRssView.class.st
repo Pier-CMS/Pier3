@@ -1,15 +1,16 @@
 Class {
-	#name : #PBLogRssView,
-	#superclass : #PBHistoryRssView,
-	#category : #'Pier-Blog-Seaside'
+	#name : 'PBLogRssView',
+	#superclass : 'PBHistoryRssView',
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBLogRssView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBLogRssView class >> label [
 	^ 'Log (RSS)'
 ]

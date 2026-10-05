@@ -1,27 +1,28 @@
 Class {
-	#name : #PBPostFilter,
-	#superclass : #PRWidget,
+	#name : 'PBPostFilter',
+	#superclass : 'PRWidget',
 	#instVars : [
 		'blog',
 		'showCount',
 		'maxItems'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter class >> groupLabel [
 	^ 'Pier Blog'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter >> blog [
 	"Answer the currently browsed blog or nil."
 	
 	^ blog ifNil: [ blog := self findBlog ]
 ]
 
-{ #category : #'accessing-descriptions' }
+{ #category : 'accessing-descriptions' }
 PBPostFilter >> descriptionMaxItems [
 	<magritteDescription>
 	^ MANumberDescription new
@@ -36,7 +37,7 @@ PBPostFilter >> descriptionMaxItems [
 		yourself
 ]
 
-{ #category : #'accessing-descriptions' }
+{ #category : 'accessing-descriptions' }
 PBPostFilter >> descriptionShowCount [
 	<magritteDescription>
 	^ MABooleanDescription new
@@ -48,7 +49,7 @@ PBPostFilter >> descriptionShowCount [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PBPostFilter >> filter: aCollection [
 	| newContext |
 	newContext := self context structure: self blog.
@@ -56,58 +57,58 @@ PBPostFilter >> filter: aCollection [
 	self context: newContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostFilter >> findBlog [
 	^ self context structure findAncestor: [ :each | each isBlog ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostFilter >> findPost [
 	^ self context structure findAncestor: [ :each | each isPost ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter >> maxItems [
 	^ maxItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter >> maxItems: anObject [
 	maxItems := anObject
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 PBPostFilter >> onChangeContext: aContext [
 	super onChangeContext: aContext.
 	self blog = self findBlog
 		ifFalse: [ self refresh ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter >> posts [
 	"Answer the currently displayed blog posts."
 	
 	^ self blog allPostsIn: self context
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PBPostFilter >> refresh [
 	blog := nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostFilter >> renderBlogOn: html [
 	self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostFilter >> renderContentOn: html [
 	self blog isNil
 		ifTrue: [ html text: '(no blog found)' ]
 		ifFalse: [ self renderBlogOn: html ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostFilter >> renderFilter: aCollection with: aRenderBlock on: html [
 	html anchor
 		callback: [ self filter: aCollection ];
@@ -116,12 +117,12 @@ PBPostFilter >> renderFilter: aCollection with: aRenderBlock on: html [
 		ifTrue: [ html text: ' ('; render: aCollection size; text: ')' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter >> showCount [
 	^ showCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostFilter >> showCount: anObject [
 	showCount := anObject
 ]

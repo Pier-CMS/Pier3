@@ -1,23 +1,24 @@
 Class {
-	#name : #PBPostTags,
-	#superclass : #PBPostFilter,
+	#name : 'PBPostTags',
+	#superclass : 'PBPostFilter',
 	#instVars : [
 		'tags'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostTags class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTags class >> label [
 	^ 'Tags'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostTags >> findTags [
 	| tagsMap tagsByCount |
 	tagsMap := Dictionary new.
@@ -33,13 +34,13 @@ PBPostTags >> findTags [
 	^ tagsByCount asSortedCollection: [ :a :b | a key < b key ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PBPostTags >> refresh [
 	super refresh.
 	tags := nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostTags >> renderBlogOn: html [
 	self tags isEmpty ifTrue: [ ^ self ].
 	html unorderedList: [
@@ -51,7 +52,7 @@ PBPostTags >> renderBlogOn: html [
 					on: html ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostTags >> tags [
 	^ tags ifNil: [ tags := self findTags ]
 ]

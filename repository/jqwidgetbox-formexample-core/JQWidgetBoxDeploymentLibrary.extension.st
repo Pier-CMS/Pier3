@@ -1,6 +1,6 @@
-Extension { #name : #JQWidgetBoxDeploymentLibrary }
+Extension { #name : 'JQWidgetBoxDeploymentLibrary' }
 
-{ #category : #'*jqwidgetbox-formexample-core' }
+{ #category : '*jqwidgetbox-formexample-core' }
 JQWidgetBoxDeploymentLibrary >> jqueryexampleminJs [
 	^ '/*
  * jQuery Form Example Plugin 1.4.2

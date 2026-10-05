@@ -7,49 +7,50 @@ Instance variables - see #setReports:
 
 "
 Class {
-	#name : #PRToDoView,
-	#superclass : #PRViewComponent,
+	#name : 'PRToDoView',
+	#superclass : 'PRViewComponent',
 	#instVars : [
 		'reports',
 		'names'
 	],
-	#category : #'Pier-ToDo'
+	#category : 'Pier-ToDo',
+	#package : 'Pier-ToDo'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDoView class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDoView class >> label [
 	^ 'ToDo'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRToDoView >> addTaskIn: aContext [
 	(self context isValidCommand: aContext command class)
 		ifFalse: [ self inform: 'Unable to add a task ' , aContext command label printString , ' in the current context.' ]
 		ifTrue: [ self context: aContext ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRToDoView >> buildDescriptionFrom: tasks [
 	^ (tasks detect: [ :e | true ] ifNone: [ PRToDoTask new ]) magritteDescription
 		select: [ :each | #('Title' 'Points') includes: each label ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 PRToDoView >> children [
 	^ self reports
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PRToDoView >> isVisible: aContext [
 	^ aContext command isEdit and: [ super isVisible: aContext ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRToDoView >> markComplete: aTask [
 	| editCommand |
 	self context structure: aTask command: (editCommand := PRCompleteToDoTaskCommand new).
@@ -57,7 +58,7 @@ PRToDoView >> markComplete: aTask [
 	editCommand execute
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PRToDoView >> open: aContext [
 	(self context isValidCommand: aContext command class)
 		ifFalse: [ self
@@ -67,7 +68,7 @@ PRToDoView >> open: aContext [
 		ifTrue: [ self context: aContext ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PRToDoView >> renderAccordionOn: html [
 	html div
 		script: html jQuery new accordion;
@@ -79,7 +80,7 @@ PRToDoView >> renderAccordionOn: html [
 							html div: [ self renderReport: report on: html ] ] ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PRToDoView >> renderContentOn: html [
 	self context structure isToDo
 		ifTrue: [ 
@@ -88,7 +89,7 @@ PRToDoView >> renderContentOn: html [
 		ifFalse: [ html render: 'Select "Add" then "ToDo" to create a ToDo list.' ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PRToDoView >> renderHeaderOn: html [
 	html render: self context structure pointsName , ' ' , self context structure totalPoints asString.
 	(self context isValidCommand: PREditCommand)
@@ -101,7 +102,7 @@ PRToDoView >> renderHeaderOn: html [
 						with: 'Add a task' ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PRToDoView >> renderReport: aReport on: html [
 	html table
 		with:
@@ -130,12 +131,12 @@ PRToDoView >> renderReport: aReport on: html [
 														with: 'Complete' ] ] ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PRToDoView >> reports [
 	^ reports ifNil: [ self setReports ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PRToDoView >> setReports [
 	"Display the open button if the user has edit permissions."
 

@@ -1,28 +1,29 @@
 Class {
-	#name : #PBPostArchive,
-	#superclass : #PBPostFilter,
+	#name : 'PBPostArchive',
+	#superclass : 'PBPostFilter',
 	#instVars : [
 		'archive'
 	],
-	#category : #'Pier-Blog-Seaside'
+	#category : 'pier-blog-seaside',
+	#package : 'pier-blog-seaside'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBPostArchive class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostArchive class >> label [
 	^ 'Archive'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBPostArchive >> archive [
 	^ archive ifNil: [ archive := self buildArchive ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PBPostArchive >> buildArchive [
 	| monthMap monthSorted |
 	monthMap := Dictionary new.
@@ -37,13 +38,13 @@ PBPostArchive >> buildArchive [
 	^ monthSorted
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PBPostArchive >> refresh [
 	super refresh.
 	archive := nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 PBPostArchive >> renderBlogOn: html [
 	self archive isEmpty ifTrue: [ ^ self ].
 	html unorderedList: [
