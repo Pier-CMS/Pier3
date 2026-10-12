@@ -31,6 +31,14 @@ PRScheduledTaskExamplesTest >> setUp [
 	task addChild: report
 ]
 
+{ #category : #running }
+PRScheduledTaskExamplesTest >> tearDown [
+
+	PRKernel remove: kernel name.
+
+	super tearDown
+]
+
 { #category : #tests }
 PRScheduledTaskExamplesTest >> testReportOfOnPageAt [
 
