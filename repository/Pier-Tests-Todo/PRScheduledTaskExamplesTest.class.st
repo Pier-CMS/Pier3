@@ -19,7 +19,10 @@ PRScheduledTaskExamplesTest >> setUp [
 
 	super setUp.
 
-	kernel := PRKernel instanceNamed: ('JustARandomMixFromLetterZoo' copy shuffle copyFrom: 1 to: 15).
+	kernel := PRKernel instanceNamed:
+		          ('JustARandomMixFromTheLetterZoo' copy shuffle
+			           copyFrom: 1
+			           to: 15).
 	root := PRPage named: 'root'.
 	todo := PRToDo named: 'todo'.
 	task := PRToDoTask named: 'task'.
@@ -37,6 +40,24 @@ PRScheduledTaskExamplesTest >> tearDown [
 	PRKernel remove: kernel name.
 
 	super tearDown
+]
+
+{ #category : #tests }
+PRScheduledTaskExamplesTest >> testReportOfBrokenLinksOnPageAtStartingFrom [
+	| childPage |
+	childPage := PRPage named: 'Child'.
+	childPage contents: 'First test is for a page with no links.'.
+	root addChild: childPage.
+	
+	(PRScheduledTaskExamples newForKernelNamed: kernel name)
+		reportOfBrokenLinksOnPageAt: report absolutePath 
+		startingFrom: childPage absolutePath.
+	self assert: report contents lines size equals: 3.
+	childPage contents: 'Second test is for a page with a *broken links>/This/Does/Not/Exist*.'.
+	(PRScheduledTaskExamples newForKernelNamed: kernel name)
+		reportOfBrokenLinksOnPageAt: report absolutePath 
+		startingFrom: childPage absolutePath.
+	self assert: report contents lines size equals: 4
 ]
 
 { #category : #tests }
