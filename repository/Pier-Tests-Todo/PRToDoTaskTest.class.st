@@ -47,29 +47,33 @@ PRToDoTaskTest >> testAutomate [
 
 { #category : #tests }
 PRToDoTaskTest >> testComplete [
+	"FYI - if this is ran at midnight, it may have issues."
+
 	self
 		deny: self instance completed;
-		assert: self folder totalPoints = 0.
+		assert: self folder totalPoints equals: 0.
 	self instance complete.
 	self
 		assert: self instance completed;
-		deny: self folder totalPoints = 0.
+		deny: self folder totalPoints equals: 0.
 	self instance completed: false.
 	self deny: self instance completed.
 	self instance
 		repeatingDuration: 1 day;
-		due: GRPlatform current magritteTimeStampClass current - 1 day - 10 minutes.
+		due:
+			GRPlatform current magritteTimeStampClass current - 1 day
+			- 10 minutes.
 	self instance complete.
 	self
 		deny: self instance completed;
-		assert: self instance due asDate = Date tomorrow.
+		assert: self instance due asDate equals: Date tomorrow.
 	self instance
 		repeatingDuration: 7 days;
 		due: GRPlatform current magritteTimeStampClass current - 6 days.
 	self instance complete.
 	self
 		deny: self instance completed;
-		assert: self instance due asDate = Date tomorrow
+		assert: self instance due asDate equals: Date tomorrow
 ]
 
 { #category : #tests }
@@ -77,18 +81,20 @@ PRToDoTaskTest >> testDescription [
 	"This confirms that the labels expected to be displayed are present.  Any time PRToDoTask descriptions are changed, PRToDoView>>buildDescription should also be checked.	"
 
 	self
-		assert:
-			(self instance magritteDescription
-				select: [ :description | #('Title' 'Due Date' 'Completed' 'Points') includes: description label ]) size = 4
+		assert: (self instance magritteDescription select: [ :description |
+				 #( 'Title' 'Due Date' 'Completed' 'Points' ) includes:
+					 description label ]) size
+		equals: 4
 ]
 
 { #category : #tests }
 PRToDoTaskTest >> testNameAsTitle [
+
 	self assert: self child nameAsTitle isString.
 	self child name: '2014-Aug-7'.
-	self assert: self child nameAsTitle = '2014-Aug-7'.
+	self assert: self child nameAsTitle equals: '2014-Aug-7'.
 	self child name: 'long-name'.
-	self assert: self child nameAsTitle = 'Long Name'
+	self assert: self child nameAsTitle equals: 'Long Name'
 ]
 
 { #category : #tests }
