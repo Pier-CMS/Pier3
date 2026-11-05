@@ -65,7 +65,7 @@ PRScheduledTaskExamplesTest >> testReportOfOnPageAt [
 
 	| testValue |
 	testValue := 'Test has not ran'.
-	PRScheduledTaskExamples new
+	(PRScheduledTaskExamples newForKernelNamed: kernel name)
 		reportOf: [ testValue := 'Test has ran' ]
 		onPageAt: report absolutePath.
 	self assert: testValue equals: 'Test has ran'
