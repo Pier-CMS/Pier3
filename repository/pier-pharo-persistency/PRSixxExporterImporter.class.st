@@ -26,7 +26,7 @@ PRSixxExporterImporter class >> sixxWriteStreamClass [
 
 { #category : #'accessing-configuration' }
 PRSixxExporterImporter >> emptyWriteStream [
-	^ self class sixxWriteStreamClass on: (RWBinaryOrTextStream on: ByteString new)
+	^ self class sixxWriteStreamClass on: (ReadWriteStream on: ByteString new)
 ]
 
 { #category : #accessing }
