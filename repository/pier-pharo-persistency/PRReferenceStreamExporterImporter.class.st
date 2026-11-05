@@ -16,7 +16,10 @@ PRReferenceStreamExporterImporter class >> label [
 
 { #category : #'accessing-configuration' }
 PRReferenceStreamExporterImporter >> emptyWriteStream [
-	^ ReferenceStream on: (RWBinaryOrTextStream on: ByteArray new)
+
+	"Old: ReferenceStream on: (RWBinaryOrTextStream on: ByteArray new)"
+
+	^ ReadWriteStream on: ByteArray new
 ]
 
 { #category : #accessing }
@@ -31,5 +34,7 @@ PRReferenceStreamExporterImporter >> mimeType [
 
 { #category : #'accessing-configuration' }
 PRReferenceStreamExporterImporter >> readStreamOn: aCollection [
-	^ ReferenceStream on: (RWBinaryOrTextStream with: aCollection asByteArray) reset
+
+	"Old: ReferenceStream on: (RWBinaryOrTextStream with: aCollection asByteArray) reset"
+	^ ReadWriteStream on: aCollection asByteArray
 ]
