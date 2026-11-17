@@ -1105,7 +1105,7 @@ PRBookKernelDistribution >> sampleContentSelectedDescription [
 	^ MABooleanDescription new
 		checkboxLabel: 'add sample content';
 		accessor: #sampleContentSelected;
-		componentClass: TWBSMagritteCheckboxComponent;
+		componentClass: MACheckboxComponent;
 		priority: 600;
 		yourself
 ]
