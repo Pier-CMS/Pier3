@@ -259,7 +259,7 @@ PRAbstractKernelSystemManagementDistribution >> showCustomizeUIOn: calleeCompone
 		ifFalse: [
 			calleeComponent call: ((theMagritteCustomizeUIDescription asComponentOn: self)
 				addDecoration: 
-					((TWBSMagritteFormDecoration buttons: (Array with: #save -> 'Create kernel'))
+					((MAFormDecoration buttons: (Array with: #save -> 'Create kernel'))
 						formCss: 'form-horizontal';
 						legend: 'Customize ', self class label;
 						yourself);

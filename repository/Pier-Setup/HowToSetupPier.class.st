@@ -65,9 +65,12 @@ HowToSetupPier >> exportPier [
 		  lesson: '"Code for exporting:"
 | problemChars count |
 "First stop the automated tasks:"
-PRToDo allInstancesDo: [ :todo | todo scheduler ifNotNil: [ :sched | sched stop ] ].
+ PRToDo allInstancesDo: [ :todo | todo scheduler ifNotNil: [ :sched | sched stop ] ].
 "Consider changing the password if this code is shared:
-PRKernel instances do: [ :kernel | kernel adminUser password: ''pier'' ]."
+ PRKernel instances do: [ :kernel | kernel adminUser password: ''pier'' ].
+or to default all accounts:
+ PUUser allInstancesDo: [ :user | user password: ''pier'' ].
+"
 count := 0.
 (problemChars := Dictionary new)
         at: (Character value: 8217) put: $'';
